@@ -1,0 +1,40 @@
+MEETING_TITLE: {{title}}
+MEETING_DATE: {{date}}
+
+CONTEXT (top-k snippets with citations):
+{{context_blocks}}
+
+---
+
+TASK: Create a MeetingBrief JSON with the following schema:
+
+{
+  "meeting_title": string,
+  "time_window": string or null (format: "YYYY-MM-DD..YYYY-MM-DD" if inferable),
+  "last_meeting_recap": string (brief summary of previous meeting, or "No prior meeting context available"),
+  "open_action_items": [
+    {
+      "owner": string (name or "TBD"),
+      "item": string (action description),
+      "due": string or null (YYYY-MM-DD format),
+      "status": "open" | "blocked" | "done"
+    }
+  ],
+  "key_topics_today": [string],
+  "proposed_agenda": [
+    {
+      "topic": string,
+      "minutes": int (estimated duration),
+      "owner": string or null
+    }
+  ],
+  "evidence": [
+    {
+      "source": string (format: "material_id#c{chunk_idx}"),
+      "snippet": string (relevant excerpt)
+    }
+  ]
+}
+
+Output ONLY valid JSON, no markdown, no extra text.
+
