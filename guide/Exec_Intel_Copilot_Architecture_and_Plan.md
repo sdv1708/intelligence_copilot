@@ -47,6 +47,19 @@
 ```
 
 ---
+## 1.1 Multi-Agent Workflow Overview
+
+The Executive Intelligence Copilot operates as a **multi-agent system** with four lightweight AI agents working in sequence:
+
+| Agent | Role | Core Function |
+|--------|------|----------------|
+| **Ingestion Agent** | Parses and embeds new materials | Extracts text, chunks content, generates embeddings |
+| **Recall Agent** | Retrieves past context | Finds relevant previous discussions and briefs |
+| **Synthesis Agent** | Generates structured brief | Uses Gemini 1.5 Flash to produce meeting summary JSON |
+| **Memory Agent** | Stores and recalls meeting history | Saves briefs to SQLite and supports “What happened last time?” queries |
+
+All four agents are executed in a linear workflow — no complex orchestration or concurrency required.
+
 
 ## 2) Tech Choices (Why)
 
