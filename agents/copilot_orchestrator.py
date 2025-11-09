@@ -196,4 +196,6 @@ class CopilotOrchestrator:
         """Recall previous brief."""
         log_message("INFO", "[MemoryTool] Recalling previous brief")
         result = self.db.get_latest_brief(meeting_id)
-        return result["brief"] if result else None
+        if result:
+            return MeetingBrief(**result["brief"])
+        return None

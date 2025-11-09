@@ -52,6 +52,57 @@ def init_orchestrator():
     return CopilotOrchestrator(provider=provider)
 
 
+def convert_brief_to_markdown(brief: MeetingBrief) -> str:
+    """Convert a MeetingBrief to Markdown format."""
+    
+    md = "# Meeting Brief\n\n"
+    md += "_Generated: {}_\n\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    md += "---\n\n"
+    
+    md += "## Last Meeting Recap\n\n"
+    md += "{}\n\n".format(brief.last_meeting_recap)
+    
+    md += "## Open Action Items\n\n"
+    if brief.open_action_items:
+        for item in brief.open_action_items:
+            status_emoji = "✅" if item.status == "done" else "🔴" if item.status == "blocked" else "🔵"
+            md += "- {} **{}**\n".format(status_emoji, item.item)
+            md += "  - Owner: {}\n".format(item.owner)
+            md += "  - Due: {}\n".format(item.due or "Not set")
+            md += "  - Status: {}\n\n".format(item.status)
+    else:
+        md += "_No action items found_\n\n"
+    
+    md += "## Key Topics Today\n\n"
+    if brief.key_topics_today:
+        for i, topic in enumerate(brief.key_topics_today, 1):
+            md += "{}. {}\n".format(i, topic)
+        md += "\n"
+    else:
+        md += "_No topics identified_\n\n"
+    
+    md += "## Proposed Agenda\n\n"
+    if brief.proposed_agenda:
+        total_minutes = sum([item.minutes for item in brief.proposed_agenda])
+        for i, agenda_item in enumerate(brief.proposed_agenda, 1):
+            md += "{}. **{}** ({} min)\n".format(i, agenda_item.topic, agenda_item.minutes)
+            if agenda_item.owner:
+                md += "   - Owner: {}\n".format(agenda_item.owner)
+        md += "\n_Total duration: {} minutes_\n\n".format(total_minutes)
+    else:
+        md += "_No agenda items found_\n\n"
+    
+    md += "## Evidence & Sources\n\n"
+    if brief.evidence:
+        for i, evidence in enumerate(brief.evidence, 1):
+            md += "### Source [{}]: {}\n\n".format(i, evidence.source)
+            md += "```\n{}\n```\n\n".format(evidence.snippet)
+    else:
+        md += "_No evidence found_\n\n"
+    
+    return md
+
+
 def render_brief(brief: MeetingBrief):
     """Render a MeetingBrief object in the UI."""
     
@@ -112,6 +163,8 @@ def main():
         st.session_state.materials_added = []
     if "generated_brief" not in st.session_state:
         st.session_state.generated_brief = None
+    if "show_download_options" not in st.session_state:
+        st.session_state.show_download_options = False
     
     # Title
     st.title("🧠 Executive Intelligence Copilot")
@@ -281,26 +334,21 @@ def main():
         st.subheader("⚡ Actions")
         
         col1, col2, col3 = st.columns(3)
+        
         with col1:
-            # NEW CODE - Using LangChain Orchestrator
             if st.button("🎯 Generate Brief", use_container_width=True):
                 if not st.session_state.current_meeting_id:
                     st.warning("Please select a meeting first")
                 else:
-                    # Check if meeting has materials
                     materials = db.get_materials(st.session_state.current_meeting_id)
                     if not materials:
                         st.warning("No materials found. Upload or paste materials first!")
                     else:
                         try:
                             with st.spinner("Generating brief..."):
-                                # Initialize orchestrator (cached)
                                 orchestrator = init_orchestrator()
-                                
-                                # Get meeting details
                                 current_meeting = db.get_meeting(st.session_state.current_meeting_id)
                                 
-                                # Use orchestrator to generate brief
                                 result = orchestrator.generate_brief(
                                     meeting_id=st.session_state.current_meeting_id,
                                     title=current_meeting['title'],
@@ -308,7 +356,6 @@ def main():
                                 )
                                 
                                 if result.get("success"):
-                                    # Store in session state
                                     st.session_state.generated_brief = result["brief"]
                                     provider = result.get("provider", "unknown")
                                     st.success("Brief generated successfully (provider: {})".format(provider))
@@ -318,33 +365,106 @@ def main():
                         
                         except Exception as e:
                             st.error("Error generating brief: {}".format(str(e)))
-                    
-                    with col2:
-                        if st.button("🔍 What happened last time?", use_container_width=True):
-                            if st.session_state.current_meeting_id:
-                                try:
-                                    orchestrator = init_orchestrator()
-                                    previous_brief = orchestrator.recall_previous_brief(
-                                        st.session_state.current_meeting_id
-                                    )
-                                    if previous_brief:
-                                        st.session_state.generated_brief = previous_brief
-                                        st.success("Previous brief retrieved successfully")
-                                        st.rerun()
-                                    else:
-                                        st.warning("No previous brief found")
-                                except Exception as e:
-                                    st.error("Error recalling previous brief: {}".format(str(e)))
-
-                            else:
-                                st.warning("Please select a meeting first")
-                
-                with col3:
-                    if st.button("💾 Download Brief", use_container_width=True):
-                        st.info("Download feature coming in Day 4")
+        
+        with col2:
+            if st.button("🔍 What happened last time?", use_container_width=True):
+                if st.session_state.current_meeting_id:
+                    try:
+                        orchestrator = init_orchestrator()
+                        previous_brief = orchestrator.recall_previous_brief(
+                            st.session_state.current_meeting_id
+                        )
+                        if previous_brief:
+                            st.session_state.generated_brief = previous_brief
+                            st.success("Previous brief retrieved successfully")
+                            st.rerun()
+                        else:
+                            st.warning("No previous brief found for this meeting")
+                    except Exception as e:
+                        st.error("Error recalling previous brief: {}".format(str(e)))
+                else:
+                    st.warning("Please select a meeting first")
+        
+        with col3:
+            if st.button("💾 Download Brief", use_container_width=True):
+                if st.session_state.generated_brief:
+                    st.session_state.show_download_options = True
+                else:
+                    st.warning("Generate a brief first")
+        
+        # Download options (shown when button clicked)
+        if st.session_state.get("show_download_options", False) and st.session_state.generated_brief:
+            st.divider()
+            st.subheader("💾 Download Options")
             
-            # Main content area
-            st.header("📊 Meeting Brief")
+            download_col1, download_col2, download_col3 = st.columns([1, 1, 2])
+            
+            with download_col1:
+                brief_dict = st.session_state.generated_brief.model_dump()
+                json_str = json.dumps(brief_dict, indent=2)
+                st.download_button(
+                    label="📄 Download JSON",
+                    data=json_str,
+                    file_name="meeting_brief_{}.json".format(
+                        datetime.now().strftime("%Y%m%d_%H%M%S")
+                    ),
+                    mime="application/json",
+                    use_container_width=True
+                )
+            
+            with download_col2:
+                markdown_content = convert_brief_to_markdown(st.session_state.generated_brief)
+                st.download_button(
+                    label="📝 Download Markdown",
+                    data=markdown_content,
+                    file_name="meeting_brief_{}.md".format(
+                        datetime.now().strftime("%Y%m%d_%H%M%S")
+                    ),
+                    mime="text/markdown",
+                    use_container_width=True
+                )
+            
+            with download_col3:
+                if st.button("❌ Close", use_container_width=True):
+                    st.session_state.show_download_options = False
+                    st.rerun()
+        
+        # Brief History Dropdown
+        if st.session_state.current_meeting_id:
+            st.divider()
+            brief_history = db.get_brief_history(st.session_state.current_meeting_id)
+            
+            if brief_history and len(brief_history) > 1:
+                st.subheader("📚 Brief History")
+                
+                history_options = [
+                    "Generated on {} using {}".format(
+                        b['created_at'][:19], 
+                        b['model'].upper()
+                    ) 
+                    for b in brief_history
+                ]
+                
+                selected_brief_idx = st.selectbox(
+                    "View previous versions",
+                    range(len(history_options)),
+                    format_func=lambda x: history_options[x]
+                )
+                
+                if st.button("📖 Load Selected Brief", use_container_width=True):
+                    try:
+                        selected_brief_id = brief_history[selected_brief_idx]['id']
+                        brief_data = db.get_brief_by_id(selected_brief_id)
+                        
+                        if brief_data:
+                            st.session_state.generated_brief = MeetingBrief(**brief_data["brief"])
+                            st.success("Historical brief loaded")
+                            st.rerun()
+                    except Exception as e:
+                        st.error("Error loading brief: {}".format(str(e)))
+    
+    # Main content area
+    st.header("📊 Meeting Brief")
     
     # Show current meeting info
     if st.session_state.current_meeting_id:
