@@ -157,13 +157,38 @@ class CopilotOrchestrator:
             response = self.llm.invoke(messages)
             response_text = response.content
             
-            # Parse JSON
-            if "" in response_text:
-                start = response_text.find("") + 7
-                end = response_text.find("```", start)
-                response_text = response_text[start:end].strip()
+            # Parse JSON - handle markdown code fences robustly
+            response_text = response_text.strip()
             
-            brief_dict = json.loads(response_text)
+            if "```json" in response_text:
+                start = response_text.find("```json") + 7
+                end = response_text.find("```", start)
+                if end != -1:
+                    response_text = response_text[start:end].strip()
+            elif "```" in response_text:
+                start = response_text.find("```") + 3
+                newline_pos = response_text.find("\n", start)
+                if newline_pos != -1:
+                    start = newline_pos + 1
+                end = response_text.find("```", start)
+                if end != -1:
+                    response_text = response_text[start:end].strip()
+            
+            # If still no JSON object, try to extract it
+            if not response_text.startswith("{"):
+                start = response_text.find("{")
+                end = response_text.rfind("}") + 1
+                if start != -1 and end > start:
+                    response_text = response_text[start:end]
+            
+            # Parse JSON with better error handling
+            try:
+                brief_dict = json.loads(response_text)
+            except json.JSONDecodeError as e:
+                log_message("ERROR", "[Step 2] JSON parse error: {}".format(str(e)))
+                log_message("ERROR", "[Step 2] Response preview: {}".format(response_text[:200]))
+                return {"success": False, "error": "Failed to parse LLM response: {}".format(str(e))}
+            
             brief = MeetingBrief(**brief_dict)
             
             log_message("OK", "[Step 2] Brief synthesized")
