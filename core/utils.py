@@ -56,3 +56,39 @@ def log_message(level: str, message: str):
     elif level.upper() == "DEBUG":
         logger.debug(message)
 
+
+def get_storage_path(path_type: str = "data") -> str:
+    """
+    Get appropriate storage path for environment (local vs Streamlit Cloud).
+    
+    Args:
+        path_type: Type of path - "data", "faiss", "db"
+    
+    Returns:
+        Appropriate path for the environment
+    """
+    if os.path.exists("/tmp"):
+        # Running on Streamlit Cloud - use /tmp
+        if path_type == "faiss":
+            path = "/tmp/faiss"
+            os.makedirs(path, exist_ok=True)
+            return path
+        elif path_type == "db":
+            return "/tmp/briefs.db"
+        else:
+            path = "/tmp/data"
+            os.makedirs(path, exist_ok=True)
+            return path
+    else:
+        # Running locally - use ./data
+        if path_type == "faiss":
+            path = "./data/faiss"
+            os.makedirs(path, exist_ok=True)
+            return path
+        elif path_type == "db":
+            os.makedirs("./data", exist_ok=True)
+            return "./data/briefs.db"
+        else:
+            path = "./data"
+            os.makedirs(path, exist_ok=True)
+            return path

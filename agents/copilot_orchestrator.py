@@ -57,8 +57,9 @@ class CopilotOrchestrator:
             embeddings = encode(chunks)
             
             # Index in FAISS
+            from core.utils import get_storage_path
             faiss_path = "{}/{}.index".format(
-                os.getenv("FAISS_PATH", "./data/faiss"),
+                os.getenv("FAISS_PATH", get_storage_path("faiss")),
                 meeting_id
             )
             index = build_or_load_index(faiss_path)

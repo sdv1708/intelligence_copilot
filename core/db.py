@@ -11,7 +11,23 @@ class Database:
     """SQLite database manager for meetings, materials, and briefs."""
 
     def __init__(self, db_path: Optional[str] = None):
-        self.db_path = db_path or get_env("DB_PATH", "./data/briefs.db")
+        import os
+        
+        if db_path:
+            self.db_path = db_path
+        else:
+            # Streamlit Cloud compatibility
+            if os.path.exists("/tmp"):
+                # Running on Streamlit Cloud - use /tmp
+                self.db_path = "/tmp/briefs.db"
+                log_message("INFO", "Using Streamlit Cloud temp storage: /tmp/briefs.db")
+            else:
+                # Running locally - use ./data
+                self.db_path = get_env("DB_PATH", "./data/briefs.db")
+                # Ensure local data directory exists
+                os.makedirs("./data", exist_ok=True)
+                log_message("INFO", "Using local storage: ./data/briefs.db")
+        
         self.init_db()
 
     def get_connection(self):

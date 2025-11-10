@@ -245,6 +245,11 @@ def main():
     st.title("🧠 Executive Intelligence Copilot")
     st.markdown("_Prepare for meetings in minutes, not hours._")
     
+    # Streamlit Cloud storage warning
+    import os
+    if os.path.exists("/tmp"):
+        st.info("ℹ️ **Demo Mode**: Running on Streamlit Cloud with temporary storage. Data will be reset when the app restarts. For production use with persistent storage, please contact us.")
+    
     # Sidebar
     with st.sidebar:
         st.header("Meeting Preparation")

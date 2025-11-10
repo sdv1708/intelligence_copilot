@@ -62,7 +62,8 @@ def recall_context(db_conn: sqlite3.Connection, meeting_id: str,
         query_emb = encode([" ".join(all_chunks[:5])])  # Use first 5 chunks as representative
     
     # Load or create FAISS index for this meeting
-    faiss_path = get_env("FAISS_PATH", "./data/faiss")
+    from core.utils import get_storage_path
+    faiss_path = get_env("FAISS_PATH", get_storage_path("faiss"))
     index_path = f"{faiss_path}/{meeting_id}.index"
     
     try:
