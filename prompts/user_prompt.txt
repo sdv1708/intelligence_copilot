@@ -74,3 +74,9 @@ SCHEMA:
 }
 
 Output ONLY valid JSON, no markdown, no extra text.
+
+CRITICAL JSON RULES:
+- Double quotes for all strings
+- No trailing commas (e.g., NOT: ["item1", "item2",])
+- Escape quotes inside strings with \"
+- Close all brackets properly

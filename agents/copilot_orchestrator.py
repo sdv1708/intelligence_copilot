@@ -8,9 +8,10 @@ from core.recall import recall_context, format_context_blocks
 from core.synth import load_prompt_template
 from core.schema import MeetingBrief
 from core.llm_providers import get_llm_provider
-from core.utils import log_message
+from core.utils import log_message, generate_id
 import json
 import os
+import re
 
 
 class CopilotOrchestrator:
@@ -182,13 +183,31 @@ class CopilotOrchestrator:
                 if start != -1 and end > start:
                     response_text = response_text[start:end]
             
+            # Clean common JSON syntax errors
+            # Remove trailing commas before closing brackets/braces
+            response_text = re.sub(r',(\s*[}\]])', r'\1', response_text)
+            # Remove any comments (// style)
+            response_text = re.sub(r'//[^\n]*', '', response_text)
+            # Remove any comments (/* */ style)
+            response_text = re.sub(r'/\*.*?\*/', '', response_text, flags=re.DOTALL)
+            
             # Parse JSON with better error handling
             try:
                 brief_dict = json.loads(response_text)
             except json.JSONDecodeError as e:
                 log_message("ERROR", "[Step 2] JSON parse error: {}".format(str(e)))
-                log_message("ERROR", "[Step 2] Response preview: {}".format(response_text[:200]))
-                return {"success": False, "error": "Failed to parse LLM response: {}".format(str(e))}
+                log_message("ERROR", "[Step 2] Problematic JSON (first 500 chars): {}".format(response_text[:500]))
+                
+                # Save full response for debugging
+                try:
+                    debug_file = "debug_json_error_{}.txt".format(generate_id())
+                    with open(debug_file, 'w', encoding='utf-8') as f:
+                        f.write(response_text)
+                    log_message("ERROR", "[Step 2] Full response saved to: {}".format(debug_file))
+                except Exception as save_error:
+                    log_message("ERROR", "[Step 2] Could not save debug file: {}".format(str(save_error)))
+                
+                return {"success": False, "error": "Failed to parse LLM response: {}. Please try again.".format(str(e))}
             
             brief = MeetingBrief(**brief_dict)
             

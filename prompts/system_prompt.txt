@@ -24,3 +24,11 @@ BALANCE:
 - 30% strategic insights and recommendations grounded in meeting context
 
 OUTPUT ONLY JSON.
+
+CRITICAL JSON FORMATTING:
+- Use double quotes (") for all strings, never single quotes (')
+- NO trailing commas after the last item in arrays or objects
+- NO comments in the JSON
+- Escape quotes in strings with \"
+- Ensure all brackets and braces are properly closed
+- Return ONLY the JSON object, nothing before or after
