@@ -1,21 +1,38 @@
-"""Embedding and FAISS index management."""
+"""Embedding and FAISS index management with GPU support."""
 
 from typing import List, Optional
 import numpy as np
 import os
+import torch
 from core.utils import get_env, log_message
 
 # Lazy-load the model
 _model = None
+_device = None
+
+
+def get_device():
+    """Detect and return the best available device (GPU/CPU)."""
+    global _device
+    if _device is None:
+        if torch.cuda.is_available():
+            _device = "cuda"
+            log_message("INFO", f"GPU detected: {torch.cuda.get_device_name(0)}")
+        else:
+            _device = "cpu"
+            log_message("INFO", "No GPU detected, using CPU")
+    return _device
 
 
 def get_model():
-    """Get or load the SentenceTransformer model."""
+    """Get or load the SentenceTransformer model with GPU support."""
     global _model
     if _model is None:
         from sentence_transformers import SentenceTransformer
-        log_message("INFO", "Loading SentenceTransformer model (all-MiniLM-L6-v2)...")
-        _model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+        device = get_device()
+        log_message("INFO", f"Loading SentenceTransformer model (all-MiniLM-L6-v2) on {device.upper()}...")
+        _model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device=device)
+        log_message("INFO", f"Model loaded successfully on {device.upper()}")
     return _model
 
 
@@ -60,12 +77,14 @@ def save_index(index, path: str):
         log_message("ERROR", f"Failed to save FAISS index: {str(e)}")
 
 
-def encode(chunks: List[str]) -> np.ndarray:
+def encode(chunks: List[str], batch_size: int = 32, show_progress: bool = False) -> np.ndarray:
     """
-    Encode a list of text chunks into embeddings.
+    Encode a list of text chunks into embeddings with GPU acceleration.
     
     Args:
         chunks: List of text strings
+        batch_size: Batch size for encoding (larger on GPU, smaller on CPU)
+        show_progress: Show progress bar
     
     Returns:
         Normalized embeddings as float32 numpy array (shape: [len(chunks), 384])
@@ -74,10 +93,25 @@ def encode(chunks: List[str]) -> np.ndarray:
         return np.array([], dtype="float32").reshape(0, 384)
     
     model = get_model()
-    log_message("INFO", f"Encoding {len(chunks)} chunks...")
-    embeddings = model.encode(chunks, normalize_embeddings=True)
+    device = get_device()
+    
+    # Adjust batch size based on device
+    if device == "cuda":
+        batch_size = 64  # Larger batches on GPU
+        log_message("INFO", f"Encoding {len(chunks)} chunks on GPU (batch_size={batch_size})...")
+    else:
+        batch_size = 16  # Smaller batches on CPU
+        log_message("INFO", f"Encoding {len(chunks)} chunks on CPU (batch_size={batch_size})...")
+    
+    embeddings = model.encode(
+        chunks, 
+        normalize_embeddings=True,
+        batch_size=batch_size,
+        show_progress_bar=show_progress,
+        convert_to_numpy=True
+    )
     result = np.array(embeddings).astype("float32")
-    log_message("INFO", f"Encoded shape: {result.shape}")
+    log_message("INFO", f"Encoded shape: {result.shape} on {device.upper()}")
     return result
 
 

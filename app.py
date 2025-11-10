@@ -45,11 +45,19 @@ def init_database():
     """Initialize and return database connection."""
     return Database()
 
-@st.cache_resource
+@st.cache_resource(show_spinner="Loading AI models...")
 def init_orchestrator():
     """Initialize orchestrator with configured provider."""
     provider = os.getenv("LLM_PROVIDER", "gemini")
     return CopilotOrchestrator(provider=provider)
+
+@st.cache_resource(show_spinner="Loading embedding model...")
+def preload_embedding_model():
+    """Preload the embedding model to cache it."""
+    from core.embed import get_model, get_device
+    device = get_device()
+    model = get_model()
+    return {"device": device, "model_loaded": True}
 
 
 def convert_brief_to_markdown(brief: MeetingBrief) -> str:
@@ -229,6 +237,9 @@ def main():
     # Initialize database
     db = init_database()
     
+    # Preload embedding model (cached, only runs once)
+    model_info = preload_embedding_model()
+    
     # Initialize session state
     if "current_meeting_id" not in st.session_state:
         st.session_state.current_meeting_id = None
@@ -244,6 +255,11 @@ def main():
     # Title
     st.title("🧠 Executive Intelligence Copilot")
     st.markdown("_Prepare for meetings in minutes, not hours._")
+    
+    # Device info badge
+    device_emoji = "🚀" if model_info["device"] == "cuda" else "💻"
+    device_text = "GPU Accelerated" if model_info["device"] == "cuda" else "CPU Mode"
+    st.caption(f"{device_emoji} {device_text}")
     
     # Streamlit Cloud storage warning
     import os
@@ -350,8 +366,17 @@ def main():
                     success_count = 0
                     error_count = 0
                     
-                    for uploaded_file in uploaded_files:
+                    # Create progress bar
+                    progress_bar = st.progress(0)
+                    status_text = st.empty()
+                    
+                    for idx, uploaded_file in enumerate(uploaded_files):
                         try:
+                            # Update progress
+                            progress = (idx + 1) / len(uploaded_files)
+                            progress_bar.progress(progress)
+                            status_text.text(f"Processing {uploaded_file.name}...")
+                            
                             # Read file content
                             file_bytes = uploaded_file.read()
                             
@@ -374,6 +399,10 @@ def main():
                         except Exception as e:
                             error_count += 1
                             st.error(f"❌ Error uploading {uploaded_file.name}: {str(e)}")
+                    
+                    # Clear progress indicators
+                    progress_bar.empty()
+                    status_text.empty()
                     
                     if success_count > 0:
                         st.session_state.generated_brief = None
