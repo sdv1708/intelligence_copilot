@@ -199,3 +199,99 @@ class CopilotOrchestrator:
         if result:
             return MeetingBrief(**result["brief"])
         return None
+    
+    def answer_question(self, meeting_id: str, question: str) -> dict:
+        """
+        Answer a user question based on meeting materials.
+        
+        Args:
+            meeting_id: Meeting ID
+            question: User's question
+        
+        Returns:
+            Dict with answer, sources, and metadata
+        """
+        log_message("INFO", "[QA] Answering question: {}".format(question[:50]))
+        
+        try:
+            # Step 1: Recall context for the question
+            log_message("INFO", "[QA-Step 1] Recalling relevant context")
+            
+            db_conn = self.db.get_connection()
+            from core.recall import recall_context, format_context_blocks
+            context = recall_context(db_conn, meeting_id, query=question, k=5)
+            db_conn.close()
+            
+            if not context:
+                log_message("WARNING", "[QA] No relevant context found")
+                return {
+                    "success": True,
+                    "answer": "I could not find relevant information in the documents to answer this question.",
+                    "sources": [],
+                    "provider": self.provider_name
+                }
+            
+            context_blocks = format_context_blocks(context)
+            
+            # Step 2: Load QA prompts
+            log_message("INFO", "[QA-Step 2] Loading QA prompts")
+            qa_system_prompt = load_prompt_template("prompts/qa_system_prompt.txt")
+            qa_user_template = load_prompt_template("prompts/qa_user_prompt.txt")
+            
+            # Step 3: Build final prompt
+            log_message("INFO", "[QA-Step 3] Building prompt with question")
+            qa_user_prompt = qa_user_template.replace("{{question}}", question)
+            qa_user_prompt = qa_user_prompt.replace("{{context_blocks}}", context_blocks)
+            
+            # Step 4: Call LLM
+            log_message("INFO", "[QA-Step 4] Calling LLM for answer")
+            from langchain_core.messages import HumanMessage, SystemMessage
+            
+            messages = [
+                SystemMessage(content=qa_system_prompt),
+                HumanMessage(content=qa_user_prompt)
+            ]
+            
+            response = self.llm.invoke(messages)
+            answer = response.content
+            
+            # Step 5: Extract sources from context
+            log_message("INFO", "[QA-Step 5] Extracting sources")
+            sources = self._extract_sources_from_context(context_blocks)
+            
+            log_message("OK", "[QA] Question answered successfully")
+            
+            return {
+                "success": True,
+                "answer": answer,
+                "sources": sources,
+                "provider": self.provider_name
+            }
+        
+        except Exception as e:
+            log_message("ERROR", "[QA] Error answering question: {}".format(str(e)))
+            return {"success": False, "error": str(e)}
+    
+    def _extract_sources_from_context(self, context_blocks: str) -> list:
+        """
+        Extract source citations from context blocks.
+        
+        Args:
+            context_blocks: Formatted context string
+        
+        Returns:
+            List of unique sources
+        """
+        import re
+        sources = []
+        
+        # Extract source references like "Source: mat_xxxxx#c5"
+        pattern = r"Source: ([^\n]+)"
+        matches = re.findall(pattern, context_blocks)
+        
+        # Get unique sources
+        for match in matches:
+            if match not in sources:
+                sources.append(match)
+        
+        return sources[:5]  # Return top 5 sources

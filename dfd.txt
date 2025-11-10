@@ -1,0 +1,183 @@
+┌──────────────────────────────────────────────────────────────────┐
+│                          USER (Streamlit UI)                     │
+│                            app.py                                │
+└────────────────┬─────────────────────────────────┬───────────────┘
+                 │                                 │
+        ┌────────▼─────────┐            ┌─────────▼────────┐
+        │  UPLOAD FILES    │            │  PASTE TEXT      │
+        │  PDF/DOCX/PPTX   │            │  Meeting notes   │
+        └────────┬─────────┘            └─────────┬────────┘
+                 │                                 │
+        ┌────────▼─────────────────────────────────▼────────────┐
+        │   AGENT 1: INGESTION AGENT                           │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 1a: Parse Files                         │    │
+        │   │ • core/parsing.py:parse_file()               │    │
+        │   │ • Extract text from PDF/DOCX/PPTX           │    │
+        │   │ • Return: raw_text                           │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 1b: Chunk Text                          │    │
+        │   │ • core/chunk.py:chunk_text()                 │    │
+        │   │ • Split into 1200-char chunks (120 overlap)  │    │
+        │   │ • Return: list of chunks                     │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 1c: Generate Embeddings                 │    │
+        │   │ • core/embed.py:encode()                     │    │
+        │   │ • MiniLM model (384-dimensional vectors)     │    │
+        │   │ • Return: embeddings array                   │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 1d: Index in FAISS                      │    │
+        │   │ • core/embed.py:build_or_load_index()        │    │
+        │   │ • Store embeddings in FAISS                  │    │
+        │   │ • Save to: data/faiss/{meeting_id}.index     │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 1e: Save to Database                    │    │
+        │   │ • core/db.py:add_material()                  │    │
+        │   │ • Store filename, media_type, text           │    │
+        │   │ • Table: materials                           │    │
+        │   └──────────────────────────────────────────────┘    │
+        └────────┬─────────────────────────────────────────────┘
+                 │
+                 │ [Materials now stored in DB + indexed in FAISS]
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
+        │   USER CLICKS: "Generate Brief"                      │
+        │   app.py line 339                                    │
+        └────────┬──────────────────────────────────────────────┘
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
+        │   AGENT 2: RECALL AGENT                              │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 2a: Retrieve Materials from DB          │    │
+        │   │ • core/recall.py:recall_context()            │    │
+        │   │ • Query: materials WHERE meeting_id = ?      │    │
+        │   │ • Return: all text for meeting               │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 2b: Chunk All Materials                 │    │
+        │   │ • Re-chunk materials in recall               │    │
+        │   │ • Build chunk metadata array                 │    │
+        │   │ • Return: chunks with IDs                    │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 2c: Vector Search (FAISS)               │    │
+        │   │ • Load FAISS index: data/faiss/{id}.index    │    │
+        │   │ • Create query embedding (avg of chunks)     │    │
+        │   │ • Search top-k=8 similar chunks              │    │
+        │   │ • Return: top-8 chunks + similarity scores   │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 2d: Format Context Blocks               │    │
+        │   │ • core/recall.py:format_context_blocks()     │    │
+        │   │ • Build: "[1] Source: mat_id#chunk_5"        │    │
+        │   │ • Include: score, snippet (500 chars)        │    │
+        │   │ • Return: formatted_context string           │    │
+        │   └──────────────────────────────────────────────┘    │
+        └────────┬──────────────────────────────────────────────┘
+                 │
+                 │ [formatted_context has top-8 relevant chunks]
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
+        │   AGENT 3: SYNTHESIS AGENT (LLM-based)               │
+        │   Location: agents/copilot_orchestrator.py (114-189)  │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 3a: Load Prompts                        │    │
+        │   │ • system_prompt.txt → SystemMessage          │    │
+        │   │ • user_prompt.txt → template                 │    │
+        │   │                                              │    │
+        │   │ prompts/system_prompt.txt (14 lines):        │    │
+        │   │ "You are Executive Intelligence Copilot..."  │    │
+        │   │ "Return VALID JSON matching schema"          │    │
+        │   │ "Be specific and actionable"                 │    │
+        │   │ "Use only provided CONTEXT"                  │    │
+        │   │                                              │    │
+        │   │ prompts/user_prompt.txt (41 lines):          │    │
+        │   │ "MEETING_TITLE: {{title}}"                   │    │
+        │   │ "MEETING_DATE: {{date}}"                     │    │
+        │   │ "CONTEXT (top-k snippets):"                  │    │
+        │   │ "{{context_blocks}}"                         │    │
+        │   │ "TASK: Create MeetingBrief JSON..."          │    │
+        │   │ [defines full schema]                        │    │
+        │   │ "Output ONLY valid JSON"                     │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 3b: Build Final Prompt                  │    │
+        │   │ • user_template.replace("{{title}}", "Q4 Board") │
+        │   │ • user_template.replace("{{date}}", date)    │    │
+        │   │ • user_template.replace("{{context_blocks}}", ...) │
+        │   │ • Return: complete_user_prompt               │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 3c: Create LangChain Messages           │    │
+        │   │ • messages = [                               │    │
+        │   │     SystemMessage(system_prompt),            │    │
+        │   │     HumanMessage(user_prompt)                │    │
+        │   │   ]                                          │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 3d: Call LLM                            │    │
+        │   │ • self.llm.invoke(messages)                  │    │
+        │   │ • LLM = ChatGoogleGenerativeAI OR            │    │
+        │   │         ChatOpenAI OR                        │    │
+        │   │         ChatAnthropic                        │    │
+        │   │ • API Key from: .env                         │    │
+        │   │ • Provider from: LLM_PROVIDER env var        │    │
+        │   │ • Return: response.content (JSON string)     │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 3e: Parse JSON Response                 │    │
+        │   │ • Extract JSON from markdown (if present)    │    │
+        │   │ • json.loads(response_text)                  │    │
+        │   │ • Validate against schema                    │    │
+        │   │ • Create MeetingBrief object                 │    │
+        │   │ • Return: brief object                       │    │
+        │   └──────────────────────────────────────────────┘    │
+        └────────┬──────────────────────────────────────────────┘
+                 │
+                 │ [brief object created with 5 sections]
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
+        │   AGENT 4: MEMORY AGENT                              │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 4a: Serialize Brief                     │    │
+        │   │ • brief.model_dump() → Python dict           │    │
+        │   │ • json.dumps(dict) → JSON string             │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 4b: Save to Database                    │    │
+        │   │ • core/db.py:save_brief()                    │    │
+        │   │ • INSERT into briefs table:                  │    │
+        │   │   - id: brief_xxxxx                          │    │
+        │   │   - meeting_id: meeting_xxxxx                │    │
+        │   │   - created_at: timestamp                    │    │
+        │   │   - model: "gemini"/"openai"/"anthropic"     │    │
+        │   │   - brief_json: JSON string                  │    │
+        │   └──────────────────────────────────────────────┘    │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 4c: Return Brief ID                     │    │
+        │   │ • Return: brief_id                           │    │
+        │   └──────────────────────────────────────────────┘    │
+        └────────┬──────────────────────────────────────────────┘
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
+        │   RETURN TO UI                                       │
+        │   • result = {                                       │
+        │       "success": True,                               │
+        │       "brief": MeetingBrief object,                  │
+        │       "brief_id": brief_xxxxx,                       │
+        │       "provider": "gemini"                           │
+        │     }                                                │
+        │   • Display brief in 5 sections                      │
+        │   • Show success message                            │
+        └────────┬──────────────────────────────────────────────┘
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
+        │   USER ACTIONS FROM BRIEF                            │
+        │   • Click "What happened last time?"                 │
+        │   • Click "Download JSON/Markdown"                   │
+        │   • Click "Load Selected Brief" from history         │
+        └────────────────────────────────────────────────────────┘

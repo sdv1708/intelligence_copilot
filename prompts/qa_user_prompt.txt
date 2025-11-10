@@ -1,0 +1,17 @@
+EXECUTIVE QUESTION: {{question}}
+
+CONTEXT FROM MEETING MATERIALS (top-5 relevant excerpts):
+{{context_blocks}}
+
+---
+
+TASK: Answer the executive's question based ONLY on the provided context.
+
+FORMAT YOUR RESPONSE AS:
+1. Direct answer (2-3 sentences max)
+2. Key details (bullet points with numbers/dates/names)
+3. Source citations (list documents where you found this info)
+4. If info not available: "This information is not available in the provided documents"
+
+Output plain text, no JSON.
+

@@ -103,6 +103,79 @@ def convert_brief_to_markdown(brief: MeetingBrief) -> str:
     return md
 
 
+def render_qa_section():
+    """Render the Q&A interface below the brief."""
+    
+    db = init_database()
+    
+    st.divider()
+    st.subheader("💬 Ask Questions About Your Documents")
+    
+    # Check if meeting is selected
+    if not st.session_state.current_meeting_id:
+        st.info("👈 Select a meeting first to ask questions")
+        return
+    
+    # Check if materials exist
+    materials = db.get_materials(st.session_state.current_meeting_id)
+    if not materials:
+        st.info("📎 Upload materials first to enable Q&A")
+        return
+    
+    # Question input
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        question = st.text_input(
+            "Ask a question about your documents:",
+            placeholder="e.g., What are the top risks? Who owns the hiring plan? What budget was approved?",
+            key="qa_question_input"
+        )
+    
+    with col2:
+        ask_button = st.button("💬 Ask", use_container_width=True)
+    
+    # Handle question submission
+    if ask_button:
+        if not question.strip():
+            st.warning("Please enter a question")
+        else:
+            try:
+                with st.spinner("Searching documents and generating answer..."):
+                    orchestrator = init_orchestrator()
+                    
+                    result = orchestrator.answer_question(
+                        meeting_id=st.session_state.current_meeting_id,
+                        question=question
+                    )
+                    
+                    if result.get("success"):
+                        st.session_state.qa_history.append({
+                            "question": question,
+                            "answer": result["answer"],
+                            "sources": result["sources"]
+                        })
+                        st.rerun()
+                    else:
+                        st.error("Error: {}".format(result.get("error", "Unknown error")))
+            
+            except Exception as e:
+                st.error("Error answering question: {}".format(str(e)))
+    
+    # Display Q&A history
+    if st.session_state.qa_history:
+        st.subheader("📚 Conversation History")
+        
+        for i, qa in enumerate(reversed(st.session_state.qa_history)):
+            with st.expander("**Q:** {}".format(qa["question"]), expanded=(i == 0)):
+                st.write("**Answer:**")
+                st.info(qa["answer"])
+                
+                if qa["sources"]:
+                    st.write("**Sources:**")
+                    for source in qa["sources"]:
+                        st.caption("📄 {}".format(source))
+
+
 def render_brief(brief: MeetingBrief):
     """Render a MeetingBrief object in the UI."""
     
@@ -165,6 +238,8 @@ def main():
         st.session_state.generated_brief = None
     if "show_download_options" not in st.session_state:
         st.session_state.show_download_options = False
+    if "qa_history" not in st.session_state:
+        st.session_state.qa_history = []
     
     # Title
     st.title("🧠 Executive Intelligence Copilot")
@@ -465,6 +540,9 @@ def main():
     
     # Main content area
     st.header("📊 Meeting Brief")
+    
+    # Q&A Section (render after actions)
+    render_qa_section()
     
     # Show current meeting info
     if st.session_state.current_meeting_id:

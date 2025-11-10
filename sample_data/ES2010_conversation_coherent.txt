@@ -1,0 +1,2234 @@
+A: here's our project We're gonna make a new remote control 71.63 74.77 ES2010a.A.spurt.26
+B: Method of our design i i think i just a realistic that some of the things that we actually need to put into this we need a power source for gonna need a smart chip if we're gonna make it multifunctional 718.96 728.64 ES2010b.B.spurt.263
+C: Um a certain restrictions to apply here though uh wait x. t. k. do solar power with a latex one so if they want so what i saw squishy rubber or they can't have the solar powered option 720.78 731.29 ES2010c.B.spurt.264
+D: Additional signals on the side so was i gonna be an extra one on each side is No that is is is that should use it for our story because of what each side one on top i mean it's fine it's it just comes up the same as twenty nine what was happening okay 615.29 631.49 ES2010d.D.spurt.310
+A: Our first ideas about this new remote anything that you can bring to the table for this project 418.8 423.44 ES2010a.A.spurt.153
+B: well in the speech recognition could be part of the lost and found device to if we said find remote looking remote or something 1397.85 1405.42 ES2010b.A.spurt.536
+C: With the power source nurse the circuit Chip senses the connection to produces morse code infrared signal 591.03 597.48 ES2010c.B.spurt.231
+D: And then on the side you have the buttons 102.32 104.19 ES2010d.C.spurt.54
+A: The technical fun functions design making sure it does everything that we need the remote to do the functionality of it Operating all those different things 601.98 609.24 ES2010a.A.spurt.254
+B: extra functions will probably need an additional chip Either that or the smart chip will have to be 730.47 736.3 ES2010b.B.spurt.265
+C: They suggested power options solar cells hand dynamo In kinetic power so you shake it and in creases the power 686.43 694.45 ES2010c.B.spurt.251
+D: it's it's it's so it's it's the opposite side but it's it's it's yeah 570.61 578.6 ES2010d.D.spurt.285
+A: To get a pretty good habitat in a pretty sometimes sometimes vicious but that's okay 261.74 266.47 ES2010a.D.spurt.72
+B: i'm gonna put the minutes i put them as for the first mean already in the project documents folder if you'd like to review them and i'm gonna take up minutes for this one as well 1717.56 1724.33 ES2010b.A.spurt.653
+C: contact disks for the buttons plastic for the casing and a Power source whatever power source we've actually to turn and we want 648.6 655.91 ES2010c.B.spurt.242
+D: What actually wanting to what we want to tell them and one for this one each for each side of it 589.14 595.43 ES2010d.D.spurt.296
+A: i'm andy and i'm the project manager and i know my name's again courtney 26.68 31.44 ES2010a.A.spurt.9
+B: Users might chip is just a chip that's been programmed in designed so that it can be complete Of fair range of functions 741.45 749.26 ES2010b.B.spurt.268
+C: Like this We're we put the buttons around like we put a big on off button or something else um no i mean it could be the arrows are red or for for channel up and down and then put the numbers around in like it will fashion dial shape 240.66 251.88 ES2010c.D.spurt.106
+D: A scroll on the side it's a push button 597.1 598.92 ES2010d.B.spurt.299
+A: a tool training We're going to oh i guess figure out what to do on this project with our individual roles 57.75 64.35 ES2010a.A.spurt.23
+B: Gonna come to a decision on the functions of the remote control and then gonna close the meeting 114.08 118.86 ES2010b.A.spurt.49
+C: Specific to that button So you press the button a produces a a signal it's encoded specifically for that button 597.96 604.71 ES2010c.B.spurt.232
+D: So these are the creek here we're gonna ask is it easy to use it fashionable 213.52 217.93 ES2010d.D.spurt.117
+A: Um we make a project plan and then have some time for discussion and close the meeting 64.73 69.11 ES2010a.A.spurt.24
+B: But they'll the role of secretary take the meeting minutes And we're gonna have three presentations one from each of you Then we're gonna discuss some new project requirements 103.97 112.39 ES2010b.A.spurt.47
+C: we're now for options for casing such as straight curved double curved You know very specific to the customer 704.79 710.66 ES2010c.B.spurt.256
+D: fashionable 314.06 314.82 ES2010d.D.spurt.155
+A: Just the basic overview of the project and then we're going to 104.66 108.14 ES2010a.A.spurt.34
+B: Well then then they put the voice recognition d. put there like receiver on the actual television In the base or in the actual remote "'cause" then you've already got them and then hand wages can speak to the remote 1381.04 1391.5 ES2010b.C.spurt.532
+C: Double curved he can't do titanium um that would be to curvature so would actually if you the shape of your hand you curve here in you curve here 731.76 741.02 ES2010c.B.spurt.265
+D: Yeah but you know i mean like an l. i think it's very fashionable she 316.02 320.26 ES2010d.D.spurt.156
+A: Um for our new product that we're gonna be designing 22.94 25.32 ES2010a.A.spurt.7
+B: welcome to our second meeting this is the functional design meeting 87.05 90.71 ES2010b.A.spurt.42
+C: You say at the bottom is kind of difficult c. b. have like a sort of Division between the bottom like where the logo is and if we have a replaceable section it's like the top 1653.52 1662.63 ES2010c.C.spurt.730
+D: Then an a fashion 337.35 338.33 ES2010d.C.spurt.169
+A: We're gonna have to discuss the functional design first 90.03 92.63 ES2010a.A.spurt.30
+B: i i think we can make a decision on that later out will still put that as a point do we need to discuss so that would include battery source 1308.04 1314.9 ES2010b.A.spurt.503
+C: Either that or just have it by shape for example you have a specific triangular shape it you know you're looking at the up and down a row and the round once it's sort of feel by you know the third one down a sort of things that sort of looking into 442.73 454.28 ES2010c.C.spurt.172
+D: Have technologically advanced should be and a half fashionable 747.33 750.33 ES2010d.A.spurt.380
+A: Same thing with conceptual design 102.09 103.86 ES2010a.A.spurt.33
+B: The thing sits black they all the different age groups have different designs for speech recognition 1354.64 1359.92 ES2010b.D.spurt.520
+C: Transistors amplify that signal and it goes to the t. v.s sender which interprets a signal responds accordingly changes channel et cetera 605.28 612.92 ES2010c.B.spurt.233
+D: And more fashion forward and you can 751.71 753.7 ES2010d.D.spurt.383
+A: And then the detailed design just more in depth get the actual Schematics of the 113.74 119.05 ES2010a.A.spurt.36
+B: Yeah "'cause" we need to we definitely need have buttons for like subtitles and things like that is because the foreign film market is expanding and stuff and Like on television like i know for a living in los angeles It's time the spanish network television if it has 1603.46 1618.19 ES2010b.D.spurt.612
+C: that we need of real reaction mother colour scheme obviously that's one of work he calls or rubber product and i was thinking about different times a designs and i came up or something 224.43 233.62 ES2010c.D.spurt.103
+D: Logically and that's you right brain taken over what one in the artistic the fashionable the hip 848.66 854.31 ES2010d.A.spurt.433
+A: That the design of the product how it feels in your hand 489.62 492.53 ES2010a.A.spurt.192
+B: Um power source i figured batteries "'cause" 770.3 773.42 ES2010b.B.spurt.278
+C: We need rubber for buttons uh well known for battery contacts integrated circuit which consists of a diode transistor resonator resistors and a capacitor 626.05 635.4 ES2010c.B.spurt.236
+D: I went to school that's old fashioned to me 869.29 871.23 ES2010d.C.spurt.447
+A: You're going to think about the working design uh-huh 588.65 591.62 ES2010a.A.spurt.247
+B: Well even if we kept the regular standard size of remote if we reduce the buttons down to the ones that people are saying that they use the most often and a couple extra "'cause" are saying they only use ten percent of them 1107.26 1118.09 ES2010b.B.spurt.414
+C: All those basic things that make a circuit function 635.84 638.3 ES2010c.B.spurt.237
+D: Fashion a bit more pilots oh i will probably be a desire for sure you know he's it's not a problem with 917.35 927.76 ES2010d.D.spurt.474
+A: Do individual work me that's pretty much the the whole process for today 109.18 113.0 ES2010a.A.spurt.35
+B: You are already audio settings and screen settings we need those like audio settings mono stereo pitch screen settings like brightness colour or do we just want that excess Access from the television itself 1574.33 1586.12 ES2010b.D.spurt.607
+C: uh since we're going with batteries instead of solar power 1169.24 1171.8 ES2010c.B.spurt.478
+D: I try i found out or just 8.09 9.9 ES2010d.D.spurt.1
+A: You know they're all wanna vascular system think it's pretty cool yeah 256.75 260.48 ES2010a.D.spurt.69
+B: Well if you have a base You start putting a charger and then you have a different kind of battery 1295.89 1299.99 ES2010b.C.spurt.497
+C: Okay i kinda brings us to this looks but if we can decide what kind of energy source we want to have first and foremost 948.13 954.5 ES2010c.A.spurt.365
+D: Oh i 11.15 11.89 ES2010d.D.spurt.2
+A: It's pretty much impossible to tell that's a cat 279.75 281.65 ES2010a.B.spurt.80
+B: Of the users are not technically happy with current remote controls seventy five percent think they're ugly 425.29 430.96 ES2010b.D.spurt.137
+C: And then on the right you have what's really big trend right now is the ipod's becoming really fast thing and so you have this sort of very very simplistic menu Section 369.66 380.15 ES2010c.C.spurt.149
+D: Oh oh no 13.54 15.09 ES2010d.D.spurt.3
+A: they pretty much know what they want to get it 288.97 290.71 ES2010a.B.spurt.89
+B: And then lastly we're going to that and then it's working design How exactly will perform its functions that's the whole technical side of 151.7 159.07 ES2010b.A.spurt.57
+C: In addition to that in for our for and all those different options to the customer for producing their remote 788.73 794.46 ES2010c.B.spurt.284
+D: Uh-huh 18.93 19.44 ES2010d.D.spurt.4
+A: yeah if you're running from one pretty time 306.5 308.32 ES2010a.D.spurt.103
+B: People will say that they typically was as you saw for now because probably those remote control the time much like any small pointer cellphone 504.79 512.57 ES2010b.D.spurt.177
+C: It's a cute we call it changed to yellow bright yellow for like a But for the company logo 467.88 473.64 ES2010c.C.spurt.183
+D: looking at 19.44 19.94 ES2010d.D.spurt.5
+A: Remote 119.62 120.07 ES2010a.A.spurt.37
+B: But it also is so the channel the volume and the power buttons are most important 559.07 564.05 ES2010b.D.spurt.200
+C: Findings wheel which where the required materials for the basic internal construction so all the really simplistic functions that we just discussed 617.18 625.43 ES2010c.B.spurt.235
+D: Okay 19.53 19.95 ES2010d.A.spurt.6
+A: The selling price for our remote is going to be twenty five euro 380.54 384.27 ES2010a.A.spurt.145
+B: Or this channel go to channel nine ten volume up etcetera 241.48 244.63 ES2010b.C.spurt.88
+C: Um if we find another company you can produce the required chips 666.88 670.27 ES2010c.B.spurt.245
+D: Ah yes yes yes or no it's uh 20.93 24.32 ES2010d.D.spurt.7
+A: I production cost to make that profit is gonna be max of twelve fifty euro per remote 397.02 402.62 ES2010a.A.spurt.149
+B: And you have a mute button and the numbers need that The power buttons like to see two different had the more complex and more simple version 339.49 346.33 ES2010b.C.spurt.113
+C: I think we'd have to decide on the power options maybe So the we could reduce cost 941.6 946.62 ES2010c.B.spurt.361
+D: Um here's the agenda 20.97 22.25 ES2010d.A.spurt.8
+A: hear some topics that we might be able discuss expect our experiences with remote controls um 412.71 418.39 ES2010a.A.spurt.152
+B: They we need something simple because most people all thirty four percent Say that it's just too much time to learn how to use a new one and we don't wanna do we wanna very too far from the normal 514.81 525.67 ES2010b.D.spurt.179
+C: Casing l. e. d. any additional materials we decide we require at a less expensive rate then we are cells are producing we should go for 670.8 677.82 ES2010c.B.spurt.246
+D: Um 23.83 24.64 ES2010d.A.spurt.9
+A: Well we wanna make a multifunctional remote way 430.99 433.35 ES2010a.B.spurt.159
+B: Yeah it's like black black and white kind of 1007.41 1009.65 ES2010b.C.spurt.370
+C: The menu button i don't know but you know if we're gonna put our company logo on there and somebody could just get 1535.81 1541.19 ES2010c.A.spurt.675
+D: Yeah we have a presentation i'm going to discuss you know it's it's yeah 25.98 32.55 ES2010d.D.spurt.10
+A: One remote for everything 433.86 435.1 ES2010a.B.spurt.161
+B: Mine meeting minutes 1208.95 1210.01 ES2010b.A.spurt.453
+C: Options for materials plastic rubber titanium wood 711.16 714.32 ES2010c.B.spurt.257
+D: The opening we're going to have a 26.01 27.36 ES2010d.A.spurt.11
+A: It needs to be compatible "'cause" universal remote controls are never universal 454.99 458.47 ES2010a.D.spurt.177
+B: I think we should definitely go with buttons they don't look like a normal remote "'cause" most remotes have small square buttons i think we should do something like Maybe big earn round like bowls 925.0 933.52 ES2010b.D.spurt.342
+C: Um personal preferences uh to save money for the components the remote should be mass produced in basic material should be but on that as 658.97 666.48 ES2010c.B.spurt.244
+D: Mm case and then we're going to discuss the evaluation criteria 28.31 32.24 ES2010d.A.spurt.12
+A: Oh we need insanely good instruction booklet because you always have to reconfigure all your Interactions to go with remote anyways 475.47 482.38 ES2010a.D.spurt.188
+B: Although we could if we had a speech recognition and we can start naming it as like a another kind of more handicapped 1331.68 1336.72 ES2010b.C.spurt.510
+C: They have to versus functional and then it has to also be technologically innovative and yet easy to use so because we're basically is confusions they don't know exactly what they what they want us to tell them 129.33 141.86 ES2010c.D.spurt.70
+D: it's a it's a 32.55 34.32 ES2010d.D.spurt.13
+A: Anybody have any experiences with remote control that they can remember that 520.35 523.52 ES2010a.A.spurt.208
+B: Oh finding kind of device or I'll think of a 1254.43 1258.24 ES2010b.A.spurt.473
+C: it's sense we do put the fashion in electronics it is kind of important how what our product box so i guess we know hiding 103.95 110.55 ES2010c.D.spurt.65
+D: Our remote 34.19 34.87 ES2010d.A.spurt.14
+A: So the start writing on here do you have to start by pressing anything on this page okay 5.61 10.09 ES2010a.A.spurt.1
+B: Yeah so you don't have to stay right that in for right "'cause" you know when the battery start sign in your remote currently you have to actually stay right that bulb and go okay 873.26 881.54 ES2010b.B.spurt.317
+C: You know you're in the dark you know wanna be looking at your remote control and the picture particularly is point yeah if you look at the top volume button 410.54 418.27 ES2010c.C.spurt.162
+D: Then we're going to evaluate though 35.36 37.27 ES2010d.A.spurt.15
+A: Well my folder but as 11.61 13.17 ES2010a.D.spurt.2
+B: What exactly is a smart chip 739.72 741.14 ES2010b.D.spurt.267
+C: Yeah like using the menu to be like in your name into the screen like on the menu options of the way there 885.07 890.45 ES2010c.D.spurt.331
+D: Right right we know that and that's right that's that is 35.6 42.04 ES2010d.D.spurt.16
+A: Meter 13.26 13.84 ES2010a.A.spurt.3
+B: Um smart chip that preferred so that permits sorry 807.92 811.28 ES2010b.B.spurt.288
+C: I'd double curved in rubber um 799.18 802.56 ES2010c.B.spurt.286
+D: The whole production process and then when to close that we have forty minutes so 38.61 42.21 ES2010d.A.spurt.17
+A: That's cool 13.81 14.56 ES2010a.D.spurt.4
+B: Power source 827.94 829.0 ES2010b.B.spurt.295
+C: After this meeting a team or reach a decision on the concepts of the remote control 64.29 68.13 ES2010c.A.spurt.42
+D: Sorry oh no but i'm project presentation 43.82 46.55 ES2010d.A.spurt.18
+A: Okay 19.2 19.93 ES2010a.A.spurt.5
+B: Over here we're gonna have this which obviously between the power source and the rest of it you're gonna need to switch 829.44 834.83 ES2010b.B.spurt.296
+C: Just give you ideas and and down at the bottom you have the logo is not we could put the r. r. 522.23 526.36 ES2010c.C.spurt.199
+D: Yeah 45.33 45.51 ES2010d.D.spurt.19
+A: hi everybody welcome to our kick-off meeting 19.93 22.47 ES2010a.A.spurt.6
+B: Power source rather 1317.23 1318.38 ES2010b.A.spurt.504
+C: And here's what we're each of us going to do the ideas going to be the look and feel design the u. i. d. the user interface design 1794.39 1801.85 ES2010c.A.spurt.787
+D: Yeah 49.85 50.1 ES2010d.D.spurt.20
+A: Um 25.92 26.68 ES2010a.A.spurt.8
+B: the chip and of course the infrared bulb so we can communicate with the various devices that he needs to talk to 849.94 855.56 ES2010b.B.spurt.305
+C: That squishy A squishy 1480.14 1481.78 ES2010c.D.spurt.647
+D: Yeah 51.74 51.89 ES2010d.D.spurt.21
+A: For now or 32.67 33.24 ES2010a.A.spurt.10
+B: And Cents our findings found that people are willing to pay more money For a remote For it to be more High class 641.37 648.46 ES2010b.D.spurt.224
+C: Uh with the round buttons and it's Sort of like you have the base of the kinda trendy it had but also very sleek and 380.62 387.98 ES2010c.C.spurt.151
+D: Uh-huh 53.84 54.51 ES2010d.D.spurt.22
+A: And in 33.67 34.34 ES2010a.A.spurt.11
+B: Specifications like how how technically literate are these people we're going to be using a remote 1154.21 1158.55 ES2010b.A.spurt.437
+C: So scroll buttons on the side and the buttons on top 1442.24 1444.69 ES2010c.D.spurt.627
+D: That's it Well it's it's a it's a it's a 55.5 59.76 ES2010d.D.spurt.23
+A: Yep 35.43 35.79 ES2010a.B.spurt.12
+B: And also we found to our team the mets speech recognition 632.48 635.37 ES2010b.D.spurt.221
+C: So you say about like What if we use our sales try and then at all gonna reach a colour or is it gonna be the kind of thing where people come back and swap it 1198.9 1207.15 ES2010c.C.spurt.492
+D: Well cents 56.93 58.01 ES2010d.C.spurt.24
+A: Alright 35.53 35.8 ES2010a.A.spurt.13
+B: we can go and side the brightness the screen things like that all the more complicated functions and then use 287.07 292.92 ES2010b.C.spurt.100
+C: And then on the left you have an example of the round buttons and and simpler design 504.94 510.21 ES2010c.C.spurt.194
+D: I'm just gonna translate 61.67 62.96 ES2010d.C.spurt.25
+A: Okay 36.54 37.12 ES2010a.A.spurt.14
+B: Again which we need to replied that email and then we're gonna have lunch break and after lunch thirty minutes of individual work time 1709.8 1716.45 ES2010b.A.spurt.651
+C: Yeah the problem is we're using latex over listen to it actually would go over top of everything and have holes for the buttons 1679.6 1685.76 ES2010c.B.spurt.740
+D: So you choose to use 61.79 63.87 ES2010d.D.spurt.26
+A: so first let's go to this powerpoint 37.12 40.01 ES2010a.A.spurt.15
+B: You were side your presentation the engineering versus the user Specified remote i think that we should go with something that's more user-friendly 586.3 594.48 ES2010b.D.spurt.208
+C: Honestly i think the customer would be kind of irritated by the fact that it has a base if we did you do a nice small compact 1049.87 1056.8 ES2010c.B.spurt.405
+D: Uh-huh but it's it's you can just be so 64.63 67.99 ES2010d.D.spurt.27
+A: What what button press 42.16 43.43 ES2010a.A.spurt.16
+B: The target group and the functions and just different things that we need to do and then we'll close the meeting 1061.58 1066.73 ES2010b.A.spurt.399
+C: If it's within our price to get that kind of chip that would you know technology 907.88 913.31 ES2010c.A.spurt.344
+D: The base 64.9 65.32 ES2010d.C.spurt.28
+A: Just in and if you arrow 44.57 46.26 ES2010a.C.spurt.17
+B: Most channel on off button volume 1213.1 1215.78 ES2010b.C.spurt.454
+C: So a basic remote operation runs as well as That's button and makes a connection 584.71 590.21 ES2010c.B.spurt.230
+D: Which is what we decided that's good 66.92 68.55 ES2010d.C.spurt.29
+A: Yeah 47.07 47.49 ES2010a.A.spurt.18
+B: Well i could be you know you could just double up with like the channel or the volume buttons 1633.24 1637.46 ES2010b.C.spurt.621
+C: Because we could produce you know how cellphones have those overlay is that you can change the colour 1176.53 1182.15 ES2010c.B.spurt.480
+D: Um 70.16 70.79 ES2010d.C.spurt.30
+A: are and i just click 47.49 48.57 ES2010a.A.spurt.19
+B: Well the function of a remote control as what um 230.04 233.89 ES2010b.C.spurt.85
+C: On the bottom we probably wouldn't need that is more for like a d. v. d. function which are not gonna be you think 510.75 516.39 ES2010c.C.spurt.195
+D: Mm 71.08 71.11 ES2010d.A.spurt.31
+A: Okay here's our agenda for this meeting 49.11 51.23 ES2010a.A.spurt.20
+B: Well how much extra would be additional chip be second a push us over production costs 749.52 754.67 ES2010b.C.spurt.269
+C: Clear or white or whatever so if you pressed it would all the make yellow So you're blue and yellow The touch buttons 1738.46 1744.52 ES2010c.D.spurt.765
+D: Useful it's it's just 71.15 72.59 ES2010d.D.spurt.32
+A: Um where start with our opening which was a introductions really get to know each other little bit better 51.75 56.76 ES2010a.A.spurt.21
+B: Bland looking is just text on the screen not even yeah just black with Just text 1005.44 1011.04 ES2010b.A.spurt.369
+C: So you could have two curves and match the shape of the hand to make it more palatable to whole 741.44 744.99 ES2010c.B.spurt.268
+D: Just what you see as read um 72.34 74.23 ES2010d.C.spurt.33
+A: Um 57.23 57.75 ES2010a.A.spurt.22
+B: Because they only use ten percent buttons really 491.7 493.46 ES2010b.D.spurt.165
+C: Which i think if we make it curved is like a a like a hand shape 1431.77 1435.21 ES2010c.B.spurt.621
+D: Uh 73.92 75.04 ES2010d.D.spurt.34
+A: Okay 70.98 71.63 ES2010a.A.spurt.25
+B: a make a know if you don't wanna keep the number buttons down correct because people use ten percent 1222.9 1227.36 ES2010b.A.spurt.461
+C: I i think we should just focus on one design and one concept right now i'm not sure that we'll have the time and money to 1142.69 1150.11 ES2010c.A.spurt.466
+D: That can be replaceable 74.54 75.39 ES2010d.C.spurt.35
+A: That's um 75.23 76.26 ES2010a.A.spurt.27
+B: You push the button to find it it finds 1280.61 1283.16 ES2010b.B.spurt.488
+C: And then we're going to come to a decision on the remote control concepts and then we're gonna close that We have forty minutes yeah 53.14 60.22 ES2010c.A.spurt.36
+D: it's it's 75.04 75.89 ES2010d.D.spurt.36
+A: original trendy and also user-friendly 76.26 79.08 ES2010a.A.spurt.28
+B: Just to clarify that speech recognition you mean they would say channel five and i think we can try 650.05 654.79 ES2010b.A.spurt.227
+C: We need to decide well also we can figure out how big it's gonna be like exactly what buttons we wanna and exactly 991.0 997.49 ES2010c.D.spurt.380
+D: Right 76.82 77.11 ES2010d.A.spurt.37
+A: And how we're going to do it is each of us is going to um 84.5 88.69 ES2010a.A.spurt.29
+B: As well as the age range So we need a him but not corny marketing scheme for Promoting our product 624.36 631.95 ES2010b.D.spurt.220
+C: Yeah it's it's in classes were produce a chip taking would be more expensive 1118.28 1121.55 ES2010c.D.spurt.450
+D: Um and then the button You kind of poking through rather than 77.32 80.12 ES2010d.C.spurt.38
+A: Oh how is it can be used what's the actual goal here has to operate t. v. bulb uh-huh 93.18 98.86 ES2010a.A.spurt.31
+B: I mean young an old are all age ranges all um 1128.25 1131.6 ES2010b.A.spurt.423
+C: Okay we're back for the conceptual design meeting 36.42 39.02 ES2010c.A.spurt.24
+D: Oh well that's true 77.34 79.63 ES2010d.D.spurt.39
+A: and we're going to do individual work on that and then me to 98.86 101.59 ES2010a.A.spurt.32
+B: so we're going to go anywhere from tends to wood all in the age range 1141.68 1146.03 ES2010b.A.spurt.431
+C: But it's sort of like just taking aspect of it and say well i have this one we like you know the round section of um or we'd like 543.04 550.67 ES2010c.C.spurt.206
+D: Oh the buttons would be much longer 81.1 83.45 ES2010d.D.spurt.40
+A: Right 122.13 122.65 ES2010a.A.spurt.38
+B: Well it shouldn't be larger buttons in general you know like if the examples i had there's like quite small so should we trying go for So it has a larger buttons 910.12 918.84 ES2010b.C.spurt.340
+C: fibreglass something copper wire to create the actual circuit board itself 639.44 642.9 ES2010c.B.spurt.239
+D: No much slider but 82.45 83.49 ES2010d.C.spurt.41
+A: First were gonna start off by using our Tools 123.35 126.45 ES2010a.A.spurt.39
+B: We could just have the logo in yellow Or maybe a yellow light for the keys 1511.55 1515.99 ES2010b.A.spurt.582
+C: I'm kind of I'm kind of leaning in that direction of this kind of 1072.84 1075.95 ES2010c.A.spurt.418
+D: Once it's it's slides 84.1 87.16 ES2010d.D.spurt.42
+A: And the whiteboard thing do you guys wanna give that a try to know the ink wasn't working already won do it on here 127.69 133.09 ES2010a.A.spurt.40
+B: Selection button for various entertainment devices so you want something that will permit you to select 797.11 801.87 ES2010b.B.spurt.286
+C: Yeah because i mean if even looking at cell phones right now 1080.01 1082.96 ES2010c.D.spurt.425
+D: A see-through Just a very pale blue on a light up yellow and whole 84.27 88.4 ES2010d.C.spurt.43
+A: I think we should for go to be whiteboard since we can't actually see what we're writing 134.97 138.47 ES2010a.B.spurt.41
+B: And then we're going to determine the technical functions 137.94 140.9 ES2010b.A.spurt.54
+C: That's like you know what i can add cell phone it's like the the screen 1695.12 1698.49 ES2010c.C.spurt.748
+D: Hold it like that and just uh 88.09 91.91 ES2010d.D.spurt.44
+A: We could 137.05 137.4 ES2010a.D.spurt.42
+B: Examples and see if there's anything which was used technical functions 1567.89 1571.36 ES2010b.A.spurt.603
+C: Well it's sort of like have a the uh yellow strip at the bottom 1518.3 1521.76 ES2010c.C.spurt.666
+D: huh 91.91 92.05 ES2010d.D.spurt.45
+A: We did it on here 138.92 139.68 ES2010a.D.spurt.43
+B: Like what functions so we want it to include and how simple complex it should be 352.94 357.49 ES2010b.C.spurt.115
+C: Alright but it's not gonna be voice activated in the fact that you would say channel up and it would work right 1295.77 1300.54 ES2010c.A.spurt.547
+D: Um and then the bottom we have our logo 93.29 95.43 ES2010d.C.spurt.46
+A: Alright let's go for it then 139.8 140.98 ES2010a.A.spurt.44
+B: And so personally i think that we need a moderate eye-catching design but it it it really need to be simple so 577.8 584.21 ES2010b.D.spurt.206
+C: A certain select number Produced with all those options 805.17 809.0 ES2010c.B.spurt.288
+D: No but you will 93.29 95.42 ES2010d.D.spurt.47
+A: Yeah 140.9 141.2 ES2010a.C.spurt.45
+B: and we also need to determine The specific functions of this 1190.45 1194.04 ES2010b.A.spurt.450
+C: I mean these are three examples sort of looking at it if you have be quite a section for the main controls there 496.05 502.34 ES2010c.C.spurt.192
+D: Um 96.06 96.7 ES2010d.C.spurt.48
+A: Um right now so we are gonna draw our favourite animal and then sum up my favourite characteristics of that animal 141.36 146.75 ES2010a.A.spurt.46
+B: On off volume mute channel up and down um the numbers 1546.79 1551.39 ES2010b.A.spurt.599
+C: It's a v. and so you you kinda feeling a v. like volume up 418.86 422.93 ES2010c.C.spurt.163
+D: Uh-huh 96.07 96.48 ES2010d.D.spurt.49
+A: Even if you know to draw are like me 147.99 149.42 ES2010a.A.spurt.47
+B: The only use ten percent of their brains uh-huh 494.72 497.02 ES2010b.B.spurt.168
+C: But there's a plastic right or not titanium i kind of like that look 1564.28 1568.14 ES2010c.A.spurt.686
+D: bright yellow 96.7 97.3 ES2010d.C.spurt.50
+A: It to six kills an l. o. 150.55 152.19 ES2010a.B.spurt.48
+B: This one and i'm gonna go back to my powerpoint "'cause" we need to discuss the new project requirements which may very seen forced upon screen better later 944.26 952.19 ES2010b.A.spurt.349
+C: And uh suggested functions for the buttons scrolling 749.07 753.49 ES2010c.B.spurt.271
+D: Uh-huh 98.11 98.51 ES2010d.D.spurt.51
+A: Um 153.09 153.41 ES2010a.A.spurt.49
+B: The power button on slash off 258.65 260.59 ES2010b.C.spurt.92
+C: We do a voice activated locator no we're gonna have been looking at a more substantial chip 1021.58 1026.3 ES2010c.B.spurt.394
+D: But well actually look like or logo 100.09 101.78 ES2010d.C.spurt.52
+A: Let's see 164.97 165.38 ES2010a.A.spurt.50
+B: Put it in project documents yeah 203.21 205.03 ES2010b.C.spurt.77
+C: Yeah and we don't have multiple things i have to control just as control the t. v. 983.7 987.86 ES2010c.A.spurt.378
+D: So should we do 100.19 101.53 ES2010d.D.spurt.53
+A: Well thanks 165.48 166.1 ES2010a.D.spurt.51
+B: Company colour being yellow 1050.97 1052.44 ES2010b.C.spurt.397
+C: The next so what they wanna right now customers what fancy versus functional um 111.08 117.39 ES2010c.D.spurt.66
+D: It has a lot 102.35 103.86 ES2010d.D.spurt.55
+A: Uh-huh 182.66 183.02 ES2010a.A.spurt.52
+B: The colour being yellow 1504.22 1505.31 ES2010b.C.spurt.575
+C: and very simple But technologically advanced so if you wanna do that but if we could find a way of sort of like 389.32 394.94 ES2010c.C.spurt.153
+D: They're one button but they kind of push up 105.26 106.84 ES2010d.C.spurt.56
+A: I 183.49 184.22 ES2010a.D.spurt.53
+B: For after the meeting 22.07 23.06 ES2010b.B.spurt.12
+C: Double curved a wooden 821.31 822.64 ES2010c.B.spurt.293
+D: What about so 105.46 106.8 ES2010d.D.spurt.57
+A: Uh-huh 184.02 184.54 ES2010a.A.spurt.54
+B: Okay here's the agenda for the meeting After the opening a um 96.98 100.66 ES2010b.A.spurt.45
+C: And also buttons all the meeting point and she said that in your design with the ball 214.96 219.22 ES2010c.D.spurt.99
+D: It's 108.96 109.2 ES2010d.D.spurt.58
+A: Okay i like i mean great five 187.24 188.75 ES2010a.B.spurt.55
+B: First i want to discuss the goals of this meeting first we need to determine the user requirements and the question that we could ask ourselves is what needs and desires are to be filled 124.64 133.92 ES2010b.A.spurt.52
+C: Make uh one battery menu by 1366.67 1368.07 ES2010c.B.spurt.586
+D: No 110.25 110.49 ES2010d.B.spurt.59
+A: Who would do uh 189.93 190.58 ES2010a.A.spurt.56
+B: And that meeting what 457.14 458.68 ES2010b.C.spurt.146
+C: Are basically just covered with fruit and vegetable patch and it's 154.82 159.41 ES2010c.D.spurt.76
+D: It is buttons 112.26 113.12 ES2010d.B.spurt.60
+A: Uh-huh 197.89 198.42 ES2010a.A.spurt.57
+B: Bring out of this meeting 1684.36 1685.77 ES2010b.A.spurt.644
+C: "'cause" i was thinking if we wanted to get the high end market then you could produce if you in titanium 1127.37 1131.49 ES2010c.B.spurt.457
+D: Right yeah 113.08 113.58 ES2010d.C.spurt.61
+A: Okay about one one minute 218.88 219.94 ES2010a.A.spurt.58
+B: Right after this meeting will be sent a questionnaire 1705.08 1707.72 ES2010b.A.spurt.649
+C: If you see it on the on the sides of of the remote you have to sort of scroll down so you have that option right there 358.88 364.56 ES2010c.C.spurt.147
+D: And then yeah the buttons 114.26 115.95 ES2010d.C.spurt.62
+A: Mm 227.15 227.22 ES2010a.D.spurt.59
+B: But it's becoming outdated now because of the internet nobody needs to go to the teletext channel to check the news at and we have twenty four hour news channels now to sell as our new product requirements 1030.46 1041.06 ES2010b.A.spurt.387
+C: And they also have a longer battery life than most batteries 1351.37 1354.15 ES2010c.B.spurt.579
+D: Yeah 114.46 114.66 ES2010d.D.spurt.63
+A: Well 233.18 233.33 ES2010a.D.spurt.60
+B: Like a specific statistics concerning to know how much each button is used but those are the devil at a point 567.86 574.23 ES2010b.D.spurt.202
+C: and what size batteries 1325.53 1327.28 ES2010c.A.spurt.567
+D: On off switch 117.65 118.66 ES2010d.B.spurt.64
+A: Mm 238.62 238.67 ES2010a.D.spurt.61
+B: Even though we need a small number buttons we also need to take and 613.18 616.28 ES2010b.D.spurt.217
+C: But that could also drive up the price of the actual remote itself if they know that we only produced five thousand 813.55 819.37 ES2010c.B.spurt.290
+D: It's 118.04 118.24 ES2010d.D.spurt.65
+A: Okay 245.56 246.34 ES2010a.A.spurt.62
+B: now rival companies manufacturer remote that You could press the button on t. v. you know what a remote would beep so that if you have lost it 668.35 675.84 ES2010b.A.spurt.239
+C: If this was a successful remote we might Then produce a higher and version of it i think 1154.66 1160.23 ES2010c.A.spurt.471
+D: Yeah 118.83 118.97 ES2010d.D.spurt.66
+A: can you would like to start stuff 246.34 247.77 ES2010a.A.spurt.63
+B: It's sort of strep kind of that at the bottom of the base of it's just like yellow with the r. r. 1525.95 1531.81 ES2010b.C.spurt.592
+C: They have several types of chips And they've just developed a sample sensor or or sample speaker chip 768.4 775.4 ES2010c.B.spurt.278
+D: Yes 119.92 120.34 ES2010d.D.spurt.67
+A: I'll go 249.4 249.85 ES2010a.D.spurt.64
+B: And we and do this on that forty minutes 119.73 121.46 ES2010b.A.spurt.50
+C: Are we gonna have certain chips are gonna require a bigger size that period 1033.93 1037.04 ES2010c.C.spurt.400
+D: Even notice on our prototype um they've ended up with occur 121.02 123.74 ES2010d.B.spurt.68
+A: Um 250.6 251.31 ES2010a.D.spurt.65
+B: Something that'll allow us to skip over between devices 815.19 818.11 ES2010b.B.spurt.290
+C: But like you know if we get more complicated than uh it's gonna have to be bigger to just a comedy the chip size 1043.79 1049.51 ES2010c.C.spurt.403
+D: Yes 121.13 121.5 ES2010d.D.spurt.69
+A: this is my picture 251.31 252.25 ES2010a.D.spurt.66
+B: The device 848.33 849.14 ES2010b.B.spurt.303
+C: Oh we stick say when we put the latex currents we'll have to like have a little square or something 1512.11 1516.85 ES2010c.B.spurt.664
+D: Uh-huh 122.95 123.15 ES2010d.D.spurt.70
+A: A fish 252.89 253.74 ES2010a.D.spurt.67
+B: I mean we we need a like a homing device 1255.41 1257.72 ES2010b.D.spurt.475
+C: And also the spongy feel is in in contrast to last year i don't know really i mean i guess spongy could relate to the buttons 163.59 170.75 ES2010c.D.spurt.78
+D: Oh 125.22 125.39 ES2010d.D.spurt.71
+A: I like fish because um 254.19 255.81 ES2010a.D.spurt.68
+B: So fifteen minutes 1422.69 1424.37 ES2010b.C.spurt.543
+C: Well we could give it a specific code you know remote missing 1261.37 1264.58 ES2010c.B.spurt.529
+D: Sort of thing 126.15 126.79 ES2010d.B.spurt.72
+A: Mm 256.86 256.92 ES2010a.C.spurt.70
+B: Buy this remote control 134.51 135.95 ES2010b.A.spurt.53
+C: Well we have a two options i don't think wood is a viable option and 1105.5 1108.5 ES2010c.B.spurt.443
+D: So 126.21 126.42 ES2010d.D.spurt.73
+A: um 260.48 260.81 ES2010a.D.spurt.71
+B: The current remote controls not 473.69 475.08 ES2010b.A.spurt.157
+C: Big in the middle which is like the old phones there's like that Just like piece of metal or like a picture or something and then all 1407.37 1413.05 ES2010c.D.spurt.607
+D: Yeah 128.57 128.89 ES2010d.D.spurt.74
+A: Only for a promise 267.26 268.32 ES2010a.A.spurt.73
+B: It is important for the remote control world 535.22 536.96 ES2010b.D.spurt.185
+C: Okay what kind of chip would we need for this guy 1233.27 1236.1 ES2010c.A.spurt.515
+D: Mm it's it's it's 131.61 133.2 ES2010d.D.spurt.75
+A: Yeah 268.29 268.72 ES2010a.D.spurt.74
+B: I think which was a know as remote control experts 555.42 557.88 ES2010b.D.spurt.198
+C: "'cause" if it was only on the back really on tennessee it is when you drop it or when you change the battery 1624.76 1629.59 ES2010c.A.spurt.714
+D: Is that 133.99 134.3 ES2010d.D.spurt.76
+A: but they're easy you know 268.72 270.4 ES2010a.D.spurt.75
+B: And so the system or the buttons to use in ideas one example And then on the right it's a lot more simply it's got volume it's got the play that like circle set which is player wind it also 319.67 331.22 ES2010b.C.spurt.110
+C: There's nothing saying that we have to put the logo on the front 1618.11 1620.52 ES2010c.B.spurt.708
+D: Nice to start 135.78 136.68 ES2010d.B.spurt.77
+A: Right 272.6 272.82 ES2010a.A.spurt.76
+B: Including the voice recognition if we have any like Settings for voice recognition no 1657.13 1661.59 ES2010b.C.spurt.639
+C: In a remote control and sort of 397.07 398.6 ES2010c.C.spurt.156
+D: Next 135.87 136.58 ES2010d.D.spurt.78
+A: You want to go next 274.66 275.56 ES2010a.A.spurt.77
+B: So we need up down inside the side buttons 1630.51 1632.76 ES2010b.D.spurt.620
+C: I i kind of like your idea about the retro phone dial and that 1391.27 1396.39 ES2010c.A.spurt.602
+D: Yeah 138.99 139.39 ES2010d.D.spurt.79
+A: Okay 276.76 277.05 ES2010a.B.spurt.78
+B: And you can cite if that's what we what they find um if we want to include that in the remote if that's something that would stay on the t. v. itself for example 294.84 301.89 ES2010b.C.spurt.101
+C: To latex covers 1220.38 1221.89 ES2010c.B.spurt.503
+D: I'm sorry 139.16 139.66 ES2010d.C.spurt.80
+A: I tricky 278.15 278.88 ES2010a.B.spurt.79
+B: We can just try out different types of speech recognition 662.77 665.44 ES2010b.D.spurt.235
+C: Latex covers 1507.91 1509.01 ES2010c.A.spurt.662
+D: Which is quite buttons 140.16 141.37 ES2010d.B.spurt.81
+A: Oh i see it 282.04 283.1 ES2010a.D.spurt.81
+B: We have seen to deal issue that you mention of speech recognition if we want 1325.75 1329.5 ES2010b.A.spurt.508
+C: So what we could two is something like a a fashion telephone 236.29 240.26 ES2010c.D.spurt.105
+D: It's it's buttons 140.22 141.35 ES2010d.D.spurt.82
+A: But i love cats 282.06 283.72 ES2010a.B.spurt.82
+B: Well there is the people who desire speech recognition there's the different of the demographics have 1341.68 1347.49 ES2010b.D.spurt.514
+C: Uh there are fashion in orange away me that that was in there 298.29 301.37 ES2010c.C.spurt.130
+D: R. c. 141.89 142.62 ES2010d.D.spurt.83
+A: Oh yeah 282.56 283.09 ES2010a.C.spurt.83
+B: it's like they just have this channel where it just has news and weather kind of sports it's very um 998.92 1004.4 ES2010b.A.spurt.368
+C: The the buttons size and this 551.11 552.82 ES2010c.C.spurt.207
+D: He's been changed 144.19 145.56 ES2010d.D.spurt.84
+A: Now i can 283.01 283.87 ES2010a.A.spurt.84
+B: We've been informed it is basically to send messages to the television set 234.43 238.18 ES2010b.C.spurt.86
+C: so i think maybe putting another button is probably a good idea 1549.98 1552.45 ES2010c.B.spurt.680
+D: Uh-huh 146.56 147.02 ES2010d.D.spurt.85
+A: yeah 283.09 283.33 ES2010a.C.spurt.85
+B: We tested a hundred subjects in our lab and We just we watch them and we also made of a questionnaire we found that 416.25 424.44 ES2010b.D.spurt.136
+C: I'm just really where is the putting anything on a button 1594.79 1597.3 ES2010c.C.spurt.697
+D: Uh these are the numbers 146.87 147.93 ES2010d.B.spurt.86
+A: Yeah it does look like a 283.71 284.84 ES2010a.D.spurt.86
+B: Found easily 1248.24 1249.32 ES2010b.B.spurt.468
+C: And scroll requires more complicated chip 781.53 783.92 ES2010c.B.spurt.282
+D: use 147.02 147.32 ES2010d.D.spurt.87
+A: I love cats because they're independent 285.34 287.28 ES2010a.B.spurt.87
+B: A way of deferring the power to different parts of the 845.42 847.81 ES2010b.B.spurt.302
+C: Yeah because that's awfully text definitely a squishy that then 1225.6 1228.73 ES2010c.D.spurt.509
+D: Okay 149.03 149.53 ES2010d.D.spurt.88
+A: Um 288.11 288.97 ES2010a.B.spurt.88
+B: The power to the 1046.99 1047.62 ES2010b.A.spurt.394
+C: Well i mean squishy or the mike 1229.18 1230.42 ES2010c.D.spurt.510
+D: Yeah neither so 151.23 151.93 ES2010d.B.spurt.89
+A: They move on 291.26 291.79 ES2010a.B.spurt.90
+B: Make tennis of the chips pretty cheap 761.81 763.47 ES2010b.B.spurt.273
+C: We could think about it come back to our next meeting someone really 1370.01 1372.81 ES2010c.D.spurt.589
+D: So 151.67 151.89 ES2010d.D.spurt.90
+A: I love cats tail and a cat person 294.06 296.19 ES2010a.A.spurt.91
+B: And we need to promote our company more so we need to somehow include a colour and our company slogan on the remote 978.22 986.03 ES2010b.A.spurt.358
+C: Basically about fifty per cent of what they like of the product that they want Describe i like the 117.87 123.52 ES2010c.D.spurt.67
+D: And then the last thing is that uh we black labelling on top just 153.74 157.3 ES2010d.C.spurt.91
+A: I'm allergic to cats 296.29 297.45 ES2010a.D.spurt.92
+B: Like we know the batteries working 872.75 874.5 ES2010b.D.spurt.315
+C: "'cause" they're all killed older generation and like separate rooms call So it's 252.32 256.84 ES2010c.D.spurt.107
+D: Uh the last thing is that what 153.79 155.88 ES2010d.D.spurt.92
+A: Oh 297.61 298.16 ES2010a.C.spurt.93
+B: Rechargeable batteries it cheaper usual way 1303.43 1306.0 ES2010b.B.spurt.500
+C: Yes a one and i think it's good to sell basic thing and then sell 1210.38 1213.89 ES2010c.A.spurt.499
+D: True 158.26 158.44 ES2010d.C.spurt.93
+A: I'm allergic to cats too 297.77 298.78 ES2010a.B.spurt.94
+B: Run strictly have batteries 1323.58 1324.99 ES2010b.A.spurt.507
+C: And uh so the bottom of it 1525.83 1526.92 ES2010c.C.spurt.670
+D: You can uh 159.27 160.94 ES2010d.D.spurt.94
+A: Uh-huh 298.21 298.5 ES2010a.D.spurt.95
+B: Okay let's get started 94.64 95.71 ES2010b.A.spurt.44
+C: I can find it again 1635.33 1636.24 ES2010c.A.spurt.719
+D: huh sure 160.94 161.5 ES2010d.D.spurt.95
+A: Oh okay 299.06 299.52 ES2010a.D.spurt.96
+B: I would like to start stuff 185.18 186.24 ES2010b.A.spurt.65
+C: in yours was called a 1639.76 1641.14 ES2010c.A.spurt.723
+D: Is that 163.02 164.2 ES2010d.D.spurt.96
+A: Uh-huh 299.64 300.18 ES2010a.B.spurt.97
+B: It needs to be open to a wide range of consumers so 609.97 612.33 ES2010b.D.spurt.216
+C: This new technology that they've developed on the voice recognition 841.81 845.14 ES2010c.C.spurt.306
+D: Uh-huh 165.81 166.19 ES2010d.C.spurt.97
+A: If you're round when i had a roommate he was 299.95 301.83 ES2010a.A.spurt.98
+B: We'll come to a decision later about all the components that we need to include that um wrap up 938.71 943.54 ES2010b.A.spurt.348
+C: So we'll have to make setup make sure we produce enough of everyone 809.61 812.81 ES2010c.B.spurt.289
+D: It's it's it's not yeah 167.43 170.41 ES2010d.D.spurt.98
+A: It may next right 299.97 300.88 ES2010a.C.spurt.99
+B: What we're going to do right now is come to some decisions the federal that we can all agree on About um 1053.72 1060.72 ES2010b.A.spurt.398
+C: Produce a whole way of 1150.76 1151.95 ES2010c.A.spurt.469
+D: Single 168.48 169.0 ES2010d.C.spurt.99
+A: Um 302.19 302.64 ES2010a.A.spurt.100
+B: As long as they're not childish lee large like even technically 1097.48 1100.6 ES2010b.A.spurt.410
+C: But we don't know if we have scroll thing on the side we definitely have time labelled 1456.6 1460.24 ES2010c.D.spurt.629
+D: Big enough to 170.29 170.93 ES2010d.A.spurt.100
+A: Allergic but if she was my my cat forever she became used to it you know we're in 303.15 307.35 ES2010a.A.spurt.101
+B: Technical um 1152.84 1153.85 ES2010b.A.spurt.436
+C: The central Button could have maybe a a logo on it 1397.22 1400.99 ES2010c.A.spurt.603
+D: yeah 170.41 170.71 ES2010d.D.spurt.101
+A: Yeah 306.03 306.5 ES2010a.D.spurt.102
+B: So so they need know technical experience To operate 1167.73 1171.53 ES2010b.A.spurt.445
+C: Just a few examples you just don't ever see the logo on a button at all was on the actual casing 1607.72 1613.15 ES2010c.C.spurt.705
+D: Right 172.03 172.34 ES2010d.C.spurt.102
+A: As a can't sleep with them in there 308.4 309.94 ES2010a.B.spurt.104
+B: I know what i needed to complete inflation profits "'cause" You know some of it also has to be considered and it's gonna be hopefully one time thing 361.78 369.4 ES2010b.C.spurt.117
+C: Button itself though because people are able to change the covers 1528.91 1532.23 ES2010c.A.spurt.672
+D: So you should so it's uh 172.59 174.01 ES2010d.D.spurt.103
+A: Uh-huh 310.29 310.88 ES2010a.A.spurt.105
+B: Eighty percent white people are willing to spend more which is good news for us um 431.39 436.48 ES2010b.D.spurt.138
+C: With the buttons be too small if it was enough to fit on it 1422.53 1425.35 ES2010c.C.spurt.616
+D: Yeah i think it's a bit of all of us yeah 176.87 180.4 ES2010d.D.spurt.104
+A: Oh yeah 310.34 310.98 ES2010a.D.spurt.106
+B: Basically you we just need something that really i mean there's some other point of there But they it needs to be shit has e. and it but yet simple sell 440.72 449.73 ES2010b.D.spurt.141
+C: How complicated are we gonna go with the voice activated 1237.2 1239.75 ES2010c.B.spurt.516
+D: Good job yeah it's a really good 181.21 183.19 ES2010d.D.spurt.105
+A: the summer n. o. I'd love cats is crazy 310.98 314.47 ES2010a.D.spurt.107
+B: Uh we need we need it to be simple if you get it's 451.98 454.54 ES2010b.D.spurt.143
+C: "'cause" that a wide type of yeah for voice activation would it be like a certain turn well we say like 1248.46 1254.03 ES2010c.D.spurt.524
+D: Well thank you 181.91 182.61 ES2010d.C.spurt.106
+A: Yeah 316.12 316.44 ES2010a.A.spurt.108
+B: Do we really need to provide more information on what r. s. time 545.01 548.68 ES2010b.B.spurt.191
+C: They voice activation would be good 1291.94 1293.35 ES2010c.D.spurt.544
+D: Yeah 187.56 187.73 ES2010d.D.spurt.107
+A: Um 316.13 316.75 ES2010a.C.spurt.109
+B: Turn on and off just basic simple stuff like this so if you have something to say it in one or two 1202.61 1208.17 ES2010b.A.spurt.452
+C: there's the idea of like be able to do it by feel as well spy 405.15 408.48 ES2010c.C.spurt.160
+D: Uh-huh 192.43 193.01 ES2010d.D.spurt.108
+A: i do encounter 316.75 317.53 ES2010a.C.spurt.110
+B: We were just an idea or just time 1667.35 1669.36 ES2010b.D.spurt.641
+C: How we want to do it by feel 455.08 456.73 ES2010c.C.spurt.174
+D: Yes you know it's 193.51 194.7 ES2010d.D.spurt.109
+A: Cool huh 318.78 319.75 ES2010a.D.spurt.111
+B: A good presentation thank you 381.65 383.39 ES2010b.A.spurt.122
+C: I'm not sure exactly how it's gonna work is to you program the reprogram Their sponsors and the question is does that mean that the user then have task Does specific question 866.8 876.77 ES2010c.C.spurt.320
+D: Mission criteria 194.39 195.23 ES2010d.A.spurt.110
+A: Yay 318.94 320.08 ES2010a.B.spurt.112
+B: I'm ready for our last presentation in there 685.96 687.99 ES2010b.A.spurt.249
+C: What's the button twelve all that was the button do and how do you know that that is what about that 1599.23 1604.31 ES2010c.C.spurt.700
+D: Okay 196.58 197.42 ES2010d.D.spurt.111
+A: Mm badger 319.23 320.16 ES2010a.A.spurt.113
+B: extra bulb could just be Four 835.93 838.58 ES2010b.B.spurt.298
+C: And that could also tie in with the colour scheme 221.07 223.3 ES2010c.D.spurt.101
+D: so are pressed 197.42 198.45 ES2010d.D.spurt.112
+A: Well yeah 319.98 320.56 ES2010a.C.spurt.114
+B: A specific instructions will be sent to you by your personal coach 1738.51 1741.94 ES2010b.A.spurt.659
+C: Colour 1504.57 1505.04 ES2010c.C.spurt.660
+D: I don't really know exactly what we should uh 199.94 201.7 ES2010d.D.spurt.113
+A: Could show is by that or 320.76 322.38 ES2010a.A.spurt.115
+B: Volume going up and down and then mute 266.69 268.86 ES2010b.C.spurt.94
+C: In these simple one so you showed us there is one that had the scroll buttons on the side 1426.52 1431.24 ES2010c.B.spurt.618
+D: Oh no it's under evaluation 202.42 203.85 ES2010d.D.spurt.114
+A: Um 321.8 322.13 ES2010a.C.spurt.116
+B: Volume 1216.07 1216.56 ES2010b.A.spurt.456
+C: The scroll button on the side 1437.44 1438.9 ES2010c.B.spurt.623
+D: Alright 210.6 211.6 ES2010d.D.spurt.115
+A: I know the ground be in nocturnal and 323.03 325.5 ES2010a.C.spurt.117
+B: I feel like a yeah i feel like a yellow one would be to be rich 1508.4 1511.54 ES2010b.D.spurt.578
+C: Well there are so is that sort of a scroll you just have the buttons are on the side which are on the side 1482.58 1487.23 ES2010c.C.spurt.648
+D: Um 212.42 212.89 ES2010d.D.spurt.116
+A: Mm 325.52 325.74 ES2010a.D.spurt.118
+B: yellow could be a make it doesn't have to be huge 1519.0 1521.64 ES2010b.B.spurt.589
+C: Function could be very 753.96 755.51 ES2010c.B.spurt.273
+D: Oh i see i just wish like this to switch our first um 218.75 221.5 ES2010d.D.spurt.118
+A: It can use it just think 326.96 328.22 ES2010a.B.spurt.119
+B: Can we do that after one button something a menu button that pops up at the menu on the t. v. that says you know audio 1621.14 1627.11 ES2010b.A.spurt.615
+C: hiding top get a good lunch 33.96 35.62 ES2010c.A.spurt.22
+D: Feel good meaning what 230.64 231.88 ES2010d.C.spurt.119
+A: It 327.14 327.37 ES2010a.C.spurt.120
+B: Except the entire screen 1018.8 1020.74 ES2010b.C.spurt.378
+C: Channels that only this show watch To say that are watching on c. b. v.s or something like that 485.63 491.05 ES2010c.C.spurt.188
+D: You like 230.77 232.16 ES2010d.D.spurt.120
+A: Mm 328.6 328.66 ES2010a.A.spurt.121
+B: It's the entire screen is just whining information and i think 1020.29 1024.31 ES2010b.B.spurt.379
+C: And keep them away from other channels 491.68 493.4 ES2010c.C.spurt.189
+D: Does it feel good like yeah physically 232.66 234.81 ES2010d.D.spurt.121
+A: I have a little bit like you have um 328.73 330.84 ES2010a.C.spurt.122
+B: Yeah it's the whole screen 1020.69 1021.81 ES2010b.A.spurt.380
+C: In order for it to be recogniser can it be all sweetness certain way or just the actual use a program it to say channel mean to us 879.08 885.27 ES2010c.C.spurt.327
+D: I 247.98 248.52 ES2010d.D.spurt.122
+A: mm and then she knew windows badge yeah 330.84 334.37 ES2010a.C.spurt.123
+B: On our company website you can find 564.5 567.09 ES2010b.D.spurt.201
+C: "'cause" i'm pretty sure we can get them pretty cheap on top 1368.67 1370.94 ES2010c.B.spurt.588
+D: That's just for the current trends 250.76 252.15 ES2010d.D.spurt.123
+A: Oh okay 334.44 335.11 ES2010a.D.spurt.124
+B: So you can put it in the dark 887.82 889.44 ES2010b.B.spurt.325
+C: Volume or channel 1467.86 1468.74 ES2010c.B.spurt.636
+D: It doesn't look at guess 252.89 254.08 ES2010d.D.spurt.124
+A: Yeah 335.07 335.48 ES2010a.C.spurt.125
+B: Like if this is gonna get lost any take a rich how are we going to A comedy to be quick ability to find it 1256.36 1263.19 ES2010b.B.spurt.476
+C: Doesn't necessarily replace the entire top 1663.25 1665.49 ES2010c.C.spurt.731
+D: Yeah it's a little difficult to incorporate be cat 257.61 259.86 ES2010d.B.spurt.125
+A: and and i don't know if you know branch out 335.48 337.58 ES2010a.C.spurt.126
+B: I think people would find that to foreign 1451.77 1453.41 ES2010b.B.spurt.557
+C: you have the shapes that's a simplistic and friendly looking 474.87 477.73 ES2010c.C.spurt.185
+D: So 257.86 258.19 ES2010d.D.spurt.126
+A: Use But i mean idea 338.11 339.95 ES2010a.C.spurt.127
+B: Save it in the project documents okay 203.11 205.27 ES2010b.A.spurt.76
+C: pushbutton requires a simple shape 779.16 781.01 ES2010c.B.spurt.281
+D: He or she 259.5 260.76 ES2010d.D.spurt.127
+A: Oh right 339.95 340.41 ES2010a.A.spurt.128
+B: I guess we're gonna discuss the project i mean thing later 1480.79 1483.88 ES2010b.A.spurt.569
+C: Do we wanna go for battery is or a 959.27 961.94 ES2010c.A.spurt.367
+D: You cherry for a day 260.4 261.66 ES2010d.B.spurt.128
+A: Um 340.7 341.18 ES2010a.C.spurt.129
+B: for example that What it needs to include it's the numbers you know zero to nine so you can move to channel 252.47 258.17 ES2010b.C.spurt.91
+C: Rechargeable batteries 972.39 973.47 ES2010c.A.spurt.374
+D: But it's so we do have a mobile covers right yes yeah all done that 263.47 266.93 ES2010d.D.spurt.129
+A: sound and that's right That will that kind of books 341.18 343.92 ES2010a.C.spurt.130
+B: The channel going up and down 263.45 265.3 ES2010b.C.spurt.93
+C: What's as a battery um 994.14 995.68 ES2010c.A.spurt.382
+D: Yes 265.49 266.02 ES2010d.B.spurt.130
+A: At your school and and and 344.48 345.75 ES2010a.C.spurt.131
+B: What is the like the weather channel word scale like the ticker running on about um 1015.13 1018.64 ES2010b.D.spurt.376
+C: A battery like this guy 1061.87 1063.3 ES2010c.A.spurt.412
+D: I think are very have that 267.75 269.27 ES2010d.D.spurt.131
+A: Okay 347.02 347.36 ES2010a.A.spurt.132
+B: So it's like a separate channel from like what you're watching 1027.95 1030.24 ES2010b.D.spurt.384
+C: But you can you're kinda department mate 1304.15 1306.51 ES2010c.D.spurt.556
+D: Yes 275.45 275.73 ES2010d.D.spurt.132
+A: And um last okay 348.13 350.27 ES2010a.A.spurt.133
+B: I think they got a change between disney channel cartoon or 1137.86 1141.46 ES2010b.D.spurt.428
+C: "'cause" you know the lithium batteries are doing quite well yeah and most other 1342.47 1346.26 ES2010c.B.spurt.576
+D: Yeah 278.04 278.3 ES2010d.D.spurt.133
+A: welcome i said said giraffe No no no it doesn't look like some kind of a dinosaur but whatever 350.27 355.59 ES2010a.A.spurt.134
+B: Just to get it all on paper so we said it needs to send messages to the t. v. needs to change the channel 1194.83 1201.86 ES2010b.A.spurt.451
+C: Well we are making the chip 912.94 914.44 ES2010c.B.spurt.346
+D: Okay so reason that criteria a first points "'kay" 278.69 282.99 ES2010d.D.spurt.134
+A: No that's good idea 351.65 352.94 ES2010a.D.spurt.135
+B: And channel yeah 1217.28 1218.64 ES2010b.D.spurt.458
+C: Our production cost is for the chip itself anyway 922.67 925.29 ES2010c.B.spurt.351
+D: Yeah and it's 283.78 284.76 ES2010d.D.spurt.135
+A: I don't know even much about giraffe's but i just love the way they look they just such a ride creatures you know 356.1 362.5 ES2010a.A.spurt.136
+B: Unless you can see the channel 1449.57 1450.96 ES2010b.A.spurt.556
+C: It's a brain you chip one introduce a nice way 1320.11 1322.48 ES2010c.B.spurt.562
+D: So we need to discuss how we feel 285.28 287.98 ES2010d.D.spurt.136
+A: I like that they're so unique in individual 363.5 365.51 ES2010a.A.spurt.137
+B: Channels just up and down 1639.65 1640.9 ES2010b.C.spurt.626
+C: Then Sort of harder to mention the basis for it that was quite a substantial a size sort of standing up 977.25 983.62 ES2010c.C.spurt.377
+D: It falls within the strange so for easy to use 288.66 291.52 ES2010d.D.spurt.137
+A: I don't know much about their behaviour anything no 366.4 368.33 ES2010a.A.spurt.138
+B: A mute function 270.44 271.42 ES2010b.C.spurt.95
+C: Like if we put that 1435.95 1436.74 ES2010c.B.spurt.622
+D: To filter easy to use 293.09 294.48 ES2010d.D.spurt.138
+A: Within a couple of this 368.95 370.13 ES2010a.A.spurt.139
+B: And then functions for a v. h. s. t. v. d. for example flavour wind fast forward stop parts and there 271.94 277.75 ES2010b.C.spurt.96
+C: So just in casing option it's okay 701.94 704.79 ES2010c.B.spurt.255
+D: Well it's i think i guess 295.18 297.5 ES2010d.D.spurt.139
+A: You know yeah do you feel like um 369.47 371.7 ES2010a.D.spurt.140
+B: What is the past four is also like next on the menu So you have functions that are uh 332.21 337.73 ES2010b.C.spurt.111
+C: you know each option should have 802.56 804.7 ES2010c.B.spurt.287
+D: Visually were a with a 296.27 297.48 ES2010d.A.spurt.140
+A: Yeah but you can appreciate the way they work 370.5 372.35 ES2010a.A.spurt.141
+B: And what functions it needs to complete 358.45 361.19 ES2010b.C.spurt.116
+C: I thought you are offering some of those options for different materials that it could be made of different you know 934.89 940.91 ES2010c.B.spurt.360
+D: Alright 297.99 298.5 ES2010d.D.spurt.141
+A: Okay 372.75 373.1 ES2010a.A.spurt.142
+B: When you said that that should be in fact ago but we have to include the functions that can allow to set up from the first place 369.95 376.26 ES2010b.C.spurt.118
+C: Options 1214.84 1215.47 ES2010c.A.spurt.501
+D: Okay 299.84 300.3 ES2010d.D.spurt.142
+A: Alright yes again straight back to business here 376.08 378.58 ES2010a.A.spurt.143
+B: Functional requirements 400.61 401.74 ES2010b.A.spurt.132
+C: Yeah option is 1630.54 1631.48 ES2010c.C.spurt.717
+D: How easy it is 301.31 302.92 ES2010d.D.spurt.143
+A: Um 379.12 379.77 ES2010a.A.spurt.144
+B: Right now have courtney with the functional requirements 410.67 413.9 ES2010b.A.spurt.134
+C: So depends on what we decide we wanna do 784.73 787.98 ES2010c.B.spurt.283
+D: Um 301.37 302.01 ES2010d.A.spurt.144
+A: And our profit aim is fifty million euro 384.93 387.65 ES2010a.A.spurt.146
+B: The functionality of the product really nice to be considered 601.45 604.29 ES2010b.D.spurt.212
+C: Phone or that would wow Pat heard yeah 1098.36 1101.62 ES2010c.D.spurt.440
+D: easy to 302.01 302.4 ES2010d.A.spurt.145
+A: We're going to make this an international product market it in the states in europe in asia 388.84 394.68 ES2010a.A.spurt.147
+B: Working design 700.68 701.44 ES2010b.C.spurt.252
+C: And so what are we gonna do it like bright yellow with the r. r. 1701.63 1704.56 ES2010c.C.spurt.752
+D: No 303.56 303.85 ES2010d.D.spurt.146
+A: And um 395.43 396.42 ES2010a.A.spurt.148
+B: Working design 700.71 701.72 ES2010b.B.spurt.253
+C: And then if we do have them although many upon contact eliminate yellow 1722.44 1727.08 ES2010c.D.spurt.759
+D: Oh it that's false oh 305.16 306.49 ES2010d.D.spurt.147
+A: Okay 408.22 408.7 ES2010a.A.spurt.150
+B: Fifty second design 824.6 826.23 ES2010b.B.spurt.294
+C: Yellow i like that idea 1726.99 1728.31 ES2010c.A.spurt.761
+D: Okay 307.87 308.39 ES2010d.D.spurt.148
+A: So we're gonna talk for a little while um 410.07 412.71 ES2010a.A.spurt.151
+B: I think we should like i think that would be in it and Like in for the design sorry um 919.17 924.59 ES2010b.D.spurt.341
+C: I like the yellow elimination idea 1745.25 1747.56 ES2010c.A.spurt.768
+D: I'd say two as well 308.89 309.84 ES2010d.B.spurt.149
+A: Oh 424.89 425.17 ES2010a.A.spurt.154
+B: We're trying out that over Complicate things so no d. v. d. no t. the most a real savvy be multi function 967.1 974.07 ES2010b.A.spurt.354
+C: so we design preferences um 204.28 206.38 ES2010c.D.spurt.96
+D: It's as well 309.14 309.81 ES2010d.D.spurt.150
+A: Yeah 426.25 426.53 ES2010a.C.spurt.155
+B: The functional requirements 1571.88 1572.86 ES2010b.A.spurt.606
+C: It'll be copy of component design 571.16 574.11 ES2010c.B.spurt.224
+D: Yeah true 310.28 310.8 ES2010d.C.spurt.151
+A: Yeah 427.21 427.59 ES2010a.A.spurt.156
+B: The ten point 534.35 535.04 ES2010b.A.spurt.184
+C: Design 1388.03 1388.61 ES2010c.A.spurt.598
+D: Till 310.89 311.18 ES2010d.D.spurt.152
+A: Last r. s. off anybody have anything to offer 428.31 430.62 ES2010a.A.spurt.157
+B: So do we have to include the company colour 1041.93 1044.39 ES2010b.B.spurt.389
+C: Yeah "'cause" we know how big it's gonna be and how heavy 945.28 948.09 ES2010c.D.spurt.363
+D: Um so i said 311.69 312.41 ES2010d.D.spurt.153
+A: Mm 430.01 430.28 ES2010a.C.spurt.158
+B: To go for it we need to include the colour 1498.71 1500.84 ES2010b.A.spurt.573
+C: It's only gonna be big because it 1271.56 1273.82 ES2010c.D.spurt.532
+D: Okay 313.62 314.06 ES2010d.D.spurt.154
+A: Right 433.53 433.81 ES2010a.A.spurt.160
+B: What are people pick up the remote and use it for 146.94 149.18 ES2010b.A.spurt.56
+C: Trend watching 89.14 89.77 ES2010c.A.spurt.56
+D: At the moment no 316.02 317.64 ES2010d.B.spurt.157
+A: And everything being 436.05 437.3 ES2010a.C.spurt.162
+B: Standard remote 526.39 527.29 ES2010b.D.spurt.180
+C: Oh that's the thing or time earlier 846.59 848.38 ES2010c.D.spurt.309
+D: Well 318.07 318.24 ES2010d.A.spurt.158
+A: Right 436.06 436.36 ES2010a.D.spurt.163
+B: So like what the remote phone use it or 675.12 677.11 ES2010b.C.spurt.240
+C: And it is the current trend 924.71 925.93 ES2010c.D.spurt.352
+D: I mean it's a a very chic 319.04 320.44 ES2010d.A.spurt.159
+A: Wait we have But sound system 438.46 440.7 ES2010a.C.spurt.164
+B: Very easily available typically a um remote has either two double a. "'s" or four triple it's sometimes three 773.83 780.55 ES2010b.B.spurt.279
+C: The higher technological 926.43 927.93 ES2010c.D.spurt.355
+D: I i would give it a one one 320.66 322.38 ES2010d.D.spurt.160
+A: Um 438.48 439.06 ES2010a.B.spurt.165
+B: Uh it really kinda depends on the size of the actual remote itself 781.25 784.84 ES2010b.B.spurt.280
+C: To double a.s 1037.19 1038.19 ES2010c.D.spurt.401
+D: One 322.06 322.47 ES2010d.A.spurt.161
+A: T. v. 441.74 442.46 ES2010a.C.spurt.166
+B: So the red would be the front of the remote there right okay 862.78 865.79 ES2010b.A.spurt.310
+C: Those trends the smaller the 1083.44 1085.05 ES2010c.D.spurt.426
+D: I give it a one 322.88 323.54 ES2010d.A.spurt.162
+A: D. v. d. 443.37 444.13 ES2010a.C.spurt.167
+B: You know product requirements first it's only going to be a t. v. remote 962.66 966.57 ES2010b.A.spurt.353
+C: We could do uh one that fits in with the trends of the year so here's this here's a fruit 1182.62 1188.16 ES2010c.B.spurt.481
+D: Well it's it's it's well that's that's just like i said tickle a it's a prototype we think that 323.11 330.96 ES2010d.D.spurt.163
+A: Be a chance 444.75 445.67 ES2010a.C.spurt.168
+B: Looking for a remote that's 1268.84 1270.6 ES2010b.D.spurt.482
+C: Because if people would just be talking and we don't want to one off all the time 1254.97 1258.24 ES2010c.D.spurt.526
+D: Oh and a it's a product hey right 326.25 328.84 ES2010d.A.spurt.164
+A: Uh 446.68 447.39 ES2010a.C.spurt.169
+B: It's useful for the remote from 1287.04 1288.64 ES2010b.B.spurt.492
+C: Double a. or triple a. 1328.01 1329.14 ES2010c.A.spurt.568
+D: Well i'd give it like three or four 331.03 332.7 ES2010d.C.spurt.165
+A: I think they'll be facing v. h. s. a. shortly 447.09 449.62 ES2010a.B.spurt.170
+B: And if we did you say when they're at this stage they're going to probably i was by remote that has 1376.04 1380.37 ES2010b.A.spurt.530
+C: There will be time to that later 1782.74 1784.11 ES2010c.A.spurt.782
+D: Okay 333.42 333.95 ES2010d.D.spurt.166
+A: t. bell 447.39 448.02 ES2010a.C.spurt.171
+B: As if you just speaking done on you don't have to have a remote in your hand and like to look at it 1392.45 1397.1 ES2010b.C.spurt.534
+C: We wanna go for plastic or what would you recommend for materials 1163.57 1166.54 ES2010c.A.spurt.476
+D: About a two 335.97 336.74 ES2010d.A.spurt.167
+A: Yeah it's you know 448.19 449.03 ES2010a.D.spurt.172
+B: Way on the remote itself 1439.14 1440.44 ES2010b.D.spurt.549
+C: So we could do like of a hard base plastic and then we could to give 1214.22 1219.07 ES2010c.B.spurt.500
+D: See yeah to to uh 336.36 337.77 ES2010d.D.spurt.168
+A: To you though 449.1 449.88 ES2010a.A.spurt.173
+B: Nice to have a remote that's not 1460.73 1462.06 ES2010b.A.spurt.562
+C: so hard plastic 1231.96 1233.14 ES2010c.D.spurt.514
+D: Two or three 337.93 338.72 ES2010d.A.spurt.170
+A: But it's still there so 450.53 451.9 ES2010a.C.spurt.174
+B: Mm yes it your own remote or digital cable 1471.85 1474.46 ES2010b.A.spurt.567
+C: Just kind of minor uh-huh 79.4 80.82 ES2010c.B.spurt.50
+D: Two point oh 339.73 340.39 ES2010d.A.spurt.171
+A: Okay 452.19 452.54 ES2010a.B.spurt.175
+B: The all the light up a kind of 872.55 874.85 ES2010b.A.spurt.314
+C: Kind of a used a 896.87 897.78 ES2010c.C.spurt.338
+D: If that's okay 339.76 341.19 ES2010d.D.spurt.172
+A: For gonna do it 453.56 454.37 ES2010a.C.spurt.176
+B: You can also get a kind of the t. v. guide so um 1012.2 1015.26 ES2010b.B.spurt.373
+C: Okay so what kind of material do we want to be 1101.53 1104.1 ES2010c.A.spurt.441
+D: yeah 341.19 341.45 ES2010d.D.spurt.173
+A: They're never universal that's right it's a special if you buy uh 457.96 461.79 ES2010a.A.spurt.178
+B: Kind of 1018.74 1019.41 ES2010b.A.spurt.377
+C: I mean more What kind of package 1332.96 1335.15 ES2010c.D.spurt.572
+D: No they're all all the customer 342.64 344.22 ES2010d.B.spurt.174
+A: Uh 462.29 462.68 ES2010a.A.spurt.179
+B: Kind of 1375.05 1375.44 ES2010b.A.spurt.528
+C: Kind of grey 1579.77 1580.76 ES2010c.A.spurt.695
+D: Oh well let's see does it feel to it 342.69 345.74 ES2010d.D.spurt.175
+A: Not be product d. v. d. player say usually doesn't work if it's not one 463.29 467.54 ES2010a.A.spurt.180
+B: and you can see on the left it's got a lot more buttons and and uh if you can read it that says that 305.58 311.39 ES2010b.C.spurt.104
+C: Like a little cut out kind of 1692.29 1694.05 ES2010c.A.spurt.745
+D: I'd say like 347.67 348.36 ES2010d.D.spurt.176
+A: I have just a like a sony if it's like a 466.61 468.29 ES2010a.C.spurt.181
+B: Like i guess is the buttons one 461.15 462.82 ES2010b.D.spurt.149
+C: All others but that would be useful kind of 1718.97 1721.04 ES2010c.D.spurt.757
+D: The shape of it uh 348.64 349.34 ES2010d.B.spurt.177
+A: Yeah 468.12 468.69 ES2010a.A.spurt.182
+B: Match well the operating behaviour of the user like they have to press buttons 475.73 479.34 ES2010b.A.spurt.158
+C: "'kay" here's the agenda for today's meeting 42.9 45.34 ES2010c.A.spurt.29
+D: And it's It is very ergonomically designed it's gonna be 350.99 354.36 ES2010d.A.spurt.179
+A: Yeah 469.34 469.71 ES2010a.A.spurt.183
+B: Users are we need all of The buttons that are contained on there 487.3 491.14 ES2010b.D.spurt.164
+C: We have to make sure that the logo all 1509.62 1511.34 ES2010c.B.spurt.663
+D: Yes Is there should be first 350.99 355.08 ES2010d.D.spurt.178
+A: Okay 469.44 469.7 ES2010a.C.spurt.184
+B: Whatever buttons we really need on it's 605.88 608.06 ES2010b.D.spurt.214
+C: a logo is available 1518.38 1519.51 ES2010c.B.spurt.667
+D: Hmm 355.48 355.75 ES2010d.D.spurt.180
+A: So we'll have to figure out how to cover all the different 470.11 472.49 ES2010a.B.spurt.185
+B: a large on off button 786.51 787.94 ES2010b.B.spurt.282
+C: Another one or they are gonna have a company logo on them 1542.25 1544.58 ES2010c.A.spurt.676
+D: I think it feels good it's 358.23 359.61 ES2010d.D.spurt.181
+A: I mean concerns 470.16 470.86 ES2010a.A.spurt.186
+B: Older generation of people so A large on off button would probably be good 791.87 796.29 ES2010b.B.spurt.285
+C: You're losing it and so that's a say when you have the logo 1670.9 1673.82 ES2010c.C.spurt.736
+D: I think so too 359.17 359.97 ES2010d.A.spurt.182
+A: Variances in signals 473.46 475.2 ES2010a.B.spurt.187
+B: May push this button is it working 881.98 883.66 ES2010b.B.spurt.319
+C: So i was thinking me be in stating that we could do is leave space for a with a logo should be 1686.2 1692.35 ES2010c.B.spurt.741
+D: I didn't feel 360.22 360.83 ES2010d.D.spurt.183
+A: Yeah 480.01 480.4 ES2010a.A.spurt.189
+B: The buttons 888.54 889.16 ES2010b.A.spurt.326
+C: Um the next meeting is to the start and thirty minutes 1791.08 1793.64 ES2010c.A.spurt.786
+D: You 362.33 362.6 ES2010d.D.spurt.184
+A: Okay and um 485.38 486.6 ES2010a.A.spurt.190
+B: Anything you wanna have a personal preferences though if you sorry that we need a large on off button you think 899.95 904.91 ES2010b.A.spurt.336
+C: Well thank you for their project meeting 1829.75 1831.58 ES2010c.A.spurt.798
+D: Mm 363.52 363.75 ES2010d.D.spurt.185
+A: another thing that i think it's important is 486.6 488.58 ES2010a.A.spurt.191
+B: I think that that's a good idea because you know that's one of the most important buttons 905.33 909.65 ES2010b.B.spurt.337
+C: Um i'm not sure have a hand dynamo work say that to get back to be on that 695.11 698.26 ES2010c.B.spurt.252
+D: We think it's 366.05 367.06 ES2010d.D.spurt.186
+A: If it's just flat and kinda boring 493.02 495.4 ES2010a.A.spurt.193
+B: We could just be universal for everyone you think because i think even if something has large buttons 1091.46 1096.63 ES2010b.A.spurt.408
+C: Now if you wanna that you can do titanium 745.78 748.16 ES2010c.B.spurt.270
+D: I'd say it 366.64 367.26 ES2010d.B.spurt.187
+A: Does don't Nobody wants to buy those anymore they want ergonomic ones 496.65 500.43 ES2010a.A.spurt.194
+B: We should be able to accommodate fairly decent size buttons 1119.56 1122.89 ES2010b.B.spurt.418
+C: Let's go back to you um 831.5 833.26 ES2010c.A.spurt.299
+D: Right and which is true 367.72 369.02 ES2010d.A.spurt.188
+A: They want the flashy like it's a like a skin from las vegas 500.09 503.32 ES2010a.D.spurt.195
+B: You know many buttons so we've pretty much paired down to 1542.97 1546.27 ES2010b.A.spurt.598
+C: Well titanium 1109.58 1110.47 ES2010c.C.spurt.446
+D: Okay 367.96 368.21 ES2010d.D.spurt.189
+A: Yeah 501.03 501.59 ES2010a.A.spurt.196
+B: It's have the sort of box and that were it's like the buttons you don't use as much but occasionally you will use 1597.12 1602.77 ES2010b.C.spurt.611
+C: As a saying the titanium if we're being restricted than 1111.57 1114.46 ES2010c.C.spurt.448
+D: Is it technologically innovative And he can we do have here you go right ahead 370.27 375.14 ES2010d.A.spurt.190
+A: Ones that 502.22 502.72 ES2010a.A.spurt.197
+B: So we just have a back at a menu button then for the various things needed 1651.92 1656.53 ES2010b.C.spurt.637
+C: We could do for a cherry cover for this year and then if x. array stripes or solids 1191.37 1197.22 ES2010c.B.spurt.489
+D: That was thinking oh no it's fine here in your project manager of 370.93 376.95 ES2010d.D.spurt.191
+A: Ones that look 503.63 504.87 ES2010a.A.spurt.198
+B: I 0.64 0.98 ES2010b.D.spurt.1
+C: So it cover that first category 1382.09 1383.82 ES2010c.A.spurt.595
+D: Yeah 377.68 378.15 ES2010d.D.spurt.192
+A: High-tech to do 505.5 506.65 ES2010a.A.spurt.199
+B: Uh 2.37 2.43 ES2010b.C.spurt.2
+C: Every cover 1545.03 1545.75 ES2010c.A.spurt.677
+D: i mean and it had to have voiced i mean the phrase recognition on it 378.15 381.68 ES2010d.D.spurt.193
+A: But at the same time simple 506.85 508.15 ES2010a.C.spurt.200
+B: Yeah 5.23 5.32 ES2010b.D.spurt.3
+C: On the back that visible to the telly though 1621.52 1624.22 ES2010c.A.spurt.711
+D: Right we're able to deal with that kind of chip 385.03 388.02 ES2010d.A.spurt.194
+A: Right 508.25 508.68 ES2010a.A.spurt.201
+B: Mm 6.73 6.78 ES2010b.C.spurt.4
+C: We should probably make it we have to do press it to activate it then 1475.45 1478.15 ES2010c.B.spurt.643
+D: Right and you you so you see what you know there's a recharger so now i'm here but i think it's it's it's it should be discussed uh yeah 385.04 398.05 ES2010d.D.spurt.195
+A: Yeah 508.26 508.69 ES2010a.D.spurt.202
+B: Uh 9.56 9.67 ES2010b.C.spurt.5
+C: This is something really really small 974.9 976.66 ES2010c.C.spurt.376
+D: The chip yeah 389.2 389.76 ES2010d.B.spurt.196
+A: So that people like my mother can use 510.17 511.87 ES2010a.A.spurt.203
+B: Mm 10.39 10.51 ES2010b.C.spurt.6
+C: So we can make it small of we have like all locating device 1018.66 1021.44 ES2010c.D.spurt.392
+D: A bit on the prototype 392.49 393.62 ES2010d.B.spurt.197
+A: Do something with the curvature or like that matches the curvature of the hand 510.5 514.14 ES2010a.B.spurt.204
+B: Mm 11.38 11.41 ES2010b.D.spurt.7
+C: I think if we had a locating device that a small one i think that seems way more advanced 1068.2 1072.94 ES2010c.D.spurt.417
+D: That's because it's on 394.05 395.35 ES2010d.B.spurt.198
+A: Yeah 514.36 514.68 ES2010a.A.spurt.205
+B: Minimum get here um 16.24 17.78 ES2010b.C.spurt.8
+C: Or we could do one small with him 1339.88 1341.5 ES2010c.B.spurt.575
+D: Right 394.1 394.52 ES2010d.A.spurt.199
+A: Mm 518.34 518.73 ES2010a.C.spurt.206
+B: Was questionnaire suppose people them 18.99 20.98 ES2010b.B.spurt.9
+C: Interface concept know 293.35 294.97 ES2010c.C.spurt.127
+D: Okay and we just 396.36 397.15 ES2010d.A.spurt.200
+A: Okay 519.4 519.78 ES2010a.A.spurt.207
+B: Mm 19.36 19.49 ES2010b.D.spurt.10
+C: Interface concept is new 296.16 298.41 ES2010c.A.spurt.129
+D: sell 398.05 398.6 ES2010d.D.spurt.201
+A: This past half 524.02 524.9 ES2010a.C.spurt.209
+B: Uh-huh 19.46 19.88 ES2010b.C.spurt.11
+C: looking at the interface concept is gonna be mostly examples of possibilities of 345.45 349.3 ES2010c.C.spurt.142
+D: Included 398.07 398.73 ES2010d.A.spurt.202
+A: Yeah 525.04 525.49 ES2010a.A.spurt.210
+B: Now are 22.32 23.12 ES2010b.A.spurt.13
+C: User interface concept 1384.44 1386.16 ES2010c.A.spurt.596
+D: They'd yes and i would well what 399.31 401.0 ES2010d.D.spurt.203
+A: true that's true 525.49 526.76 ES2010a.A.spurt.211
+B: Mm mm 23.36 24.7 ES2010b.C.spurt.14
+C: Interface concept 1641.74 1642.75 ES2010c.A.spurt.724
+D: It doesn't 401.71 402.35 ES2010d.D.spurt.204
+A: Um 526.99 527.6 ES2010a.C.spurt.212
+B: We just got 24.12 24.7 ES2010b.A.spurt.15
+C: If we want to do rather than like a hard click e. button that you final like some mobiles and stuff you like a soft or 171.17 177.83 ES2010c.D.spurt.79
+D: What else let me for to be technologically innovative but we don't have to teach and it doesn't cover anything other than t. v. so i'd probably give it a three 402.94 412.57 ES2010d.D.spurt.205
+A: What kind of battery would we wanna use Because battery changing is usually 529.02 533.47 ES2010a.B.spurt.213
+B: I would give us to do a really fast 25.54 27.15 ES2010b.A.spurt.16
+C: we need easy to read like warren should buttons clearly labelled so that I mean "'cause" we talked about that being a problem um 206.38 214.63 ES2010c.D.spurt.97
+D: Well we don't have 405.51 406.14 ES2010d.A.spurt.206
+A: Double a. 532.75 533.31 ES2010a.C.spurt.214
+B: That one 25.59 26.01 ES2010b.B.spurt.17
+C: Uh you could see how many buttons are 502.78 504.5 ES2010c.C.spurt.193
+D: Oh like change the channel l. a. 407.4 409.0 ES2010d.A.spurt.207
+A: Double a. 533.36 533.98 ES2010a.D.spurt.215
+B: Mm 25.67 25.7 ES2010b.D.spurt.18
+C: In stead of actual buttons themselves 757.86 760.52 ES2010c.B.spurt.275
+D: Yeah 412.98 413.53 ES2010d.B.spurt.208
+A: Yeah 534.39 534.56 ES2010a.B.spurt.216
+B: Mm mm 26.0 26.78 ES2010b.C.spurt.19
+C: That that thing is like it even if it's got a few buttons we want it to be bigger than s. 997.37 1001.43 ES2010c.C.spurt.384
+D: Uh-huh 413.06 413.48 ES2010d.D.spurt.209
+A: This enemies triple a.s though 535.51 536.95 ES2010a.A.spurt.217
+B: Mm uh-huh 27.87 28.92 ES2010b.C.spurt.20
+C: "'cause" it's still fits in your hand see still wanna something that's comfortable on substantial but not necessarily full of buttons 1002.58 1008.19 ES2010c.C.spurt.386
+D: Didn't know what it is for just a t. v. remote it's a very advanced 414.49 417.53 ES2010d.D.spurt.210
+A: Yes um is triple a.s so double or triple 537.33 540.07 ES2010a.D.spurt.218
+B: Or are we 29.02 29.56 ES2010b.A.spurt.21
+C: Have you have the circle and the button and the middle then is it gonna get a wider than your if your hands are 1415.59 1420.37 ES2010c.C.spurt.612
+D: But it's just a t. v. 418.2 419.29 ES2010d.D.spurt.211
+A: So on but 538.51 539.14 ES2010a.C.spurt.219
+B: Mm mm 30.94 31.99 ES2010b.C.spurt.22
+C: No buttons 1484.87 1485.83 ES2010c.D.spurt.649
+D: Yeah 421.16 421.35 ES2010d.D.spurt.212
+A: Okay 538.8 539.07 ES2010a.A.spurt.220
+B: Uh-huh 33.11 34.05 ES2010b.C.spurt.23
+C: Which buttons 1531.05 1531.68 ES2010c.C.spurt.673
+D: Uh-huh 426.0 426.36 ES2010d.D.spurt.213
+A: Yeah 540.48 541.06 ES2010a.C.spurt.221
+B: Uh-huh 35.92 36.54 ES2010b.C.spurt.24
+C: I dunno maybe on off button something so um 1532.66 1535.33 ES2010c.A.spurt.674
+D: He wants it it it is to switch but that that is little bit yeah 428.22 436.83 ES2010d.D.spurt.214
+A: i guess that that's 541.06 541.96 ES2010a.C.spurt.222
+B: Mm mm 38.41 39.5 ES2010b.C.spurt.25
+C: Yeah buttons wear off 1599.53 1600.56 ES2010c.D.spurt.701
+D: Last criteria is it 429.77 431.19 ES2010d.A.spurt.215
+A: We nice teacher play we can but but people use they have the ways around 543.78 547.51 ES2010a.C.spurt.223
+B: Uh-huh 40.67 41.22 ES2010b.C.spurt.26
+C: Well some of those buttons that are blue based um 1715.68 1718.62 ES2010c.D.spurt.756
+D: Squishy oh 432.23 432.9 ES2010d.C.spurt.216
+A: Okay 547.68 548.17 ES2010a.A.spurt.224
+B: Mm mm 41.58 42.17 ES2010b.C.spurt.27
+C: With the button is actually blue but the number itself Is 1734.32 1737.8 ES2010c.D.spurt.764
+D: Well we've cover 433.64 434.27 ES2010d.A.spurt.217
+A: yeah 548.17 548.5 ES2010a.A.spurt.225
+B: Uh-huh 44.64 45.95 ES2010b.C.spurt.28
+C: Do we finalise what buttons or including or did we just everything that we said before 1776.36 1779.8 ES2010c.C.spurt.780
+D: It's just trendy basically 434.87 436.37 ES2010d.C.spurt.218
+A: But that has to do with the size of a two 549.5 551.25 ES2010a.A.spurt.226
+B: Mm uh-huh 51.28 52.41 ES2010b.C.spurt.29
+C: I think you're going to get a lot of i mean the final say what buttons okay but 1802.32 1806.19 ES2010c.A.spurt.788
+D: so i'd give it to 436.83 438.6 ES2010d.D.spurt.219
+A: Yeah 551.89 552.1 ES2010a.B.spurt.227
+B: It's quite 52.16 52.59 ES2010b.A.spurt.30
+C: Right people don't buy a new remote every so often 191.89 194.54 ES2010c.A.spurt.88
+D: It's capable of being squishy and fruity 440.01 442.68 ES2010d.B.spurt.221
+A: Well well as long as we know that issue is 551.99 554.38 ES2010a.A.spurt.228
+B: Mm 55.38 55.41 ES2010b.C.spurt.31
+C: I have four of those remote 556.52 558.19 ES2010c.D.spurt.211
+D: If you use so it's a very clear all things question for it 440.01 443.8 ES2010d.D.spurt.220
+A: Yeah for want it to be more sedentary probably go with the triple a. 555.22 558.32 ES2010a.D.spurt.229
+B: Uh-huh 58.04 58.33 ES2010b.C.spurt.32
+C: Remotes 823.19 823.92 ES2010c.B.spurt.294
+D: Very 442.11 442.42 ES2010d.A.spurt.222
+A: Here we can 555.57 556.22 ES2010a.A.spurt.230
+B: Mm 61.46 61.54 ES2010b.C.spurt.33
+C: Remote read to 890.87 891.77 ES2010c.D.spurt.335
+D: Yeah 447.08 449.05 ES2010d.D.spurt.223
+A: Triple a. 557.83 558.36 ES2010a.A.spurt.231
+B: Uh-huh 66.01 66.17 ES2010b.C.spurt.34
+C: It's not gonna be huge universal remote 988.46 990.6 ES2010c.A.spurt.379
+D: okay 449.05 449.67 ES2010d.D.spurt.224
+A: Kevin go with a small lithium battery 558.92 560.93 ES2010a.B.spurt.232
+B: Mm 70.75 70.78 ES2010b.C.spurt.35
+C: Remotes 1153.25 1153.95 ES2010c.A.spurt.470
+D: Next slide sell our model slower so we try it was just cook a pear is a winner and a half of what was a way that's a good idea 450.31 460.34 ES2010d.D.spurt.225
+A: But 559.05 559.26 ES2010a.A.spurt.233
+B: Oh okay 72.41 72.87 ES2010b.A.spurt.36
+C: If you like voice recognition would be 898.39 900.73 ES2010c.D.spurt.339
+D: I don't know why it's low isn't it was yeah 461.45 466.95 ES2010d.D.spurt.226
+A: It's okay we don't have to decide about it now just as long as we remember battery type in size is important 561.0 566.21 ES2010a.A.spurt.234
+B: To to 72.99 73.41 ES2010b.C.spurt.37
+C: I don't think we should do voice i think we should just do um 1239.79 1242.47 ES2010c.A.spurt.518
+D: Hmm 461.56 461.76 ES2010d.C.spurt.227
+A: Uh-huh 565.57 566.19 ES2010a.C.spurt.235
+B: Oh there we go 74.15 74.69 ES2010b.A.spurt.38
+C: How then maybe voice 1289.27 1290.76 ES2010c.D.spurt.541
+D: yeah it's true that it's it's think 466.95 469.66 ES2010d.D.spurt.228
+A: mm 566.19 566.45 ES2010a.C.spurt.236
+B: Uh-huh 75.35 75.48 ES2010b.C.spurt.39
+C: It might be the four way scroll to i mean if 1402.09 1405.02 ES2010c.A.spurt.604
+D: Very good alright 469.44 470.81 ES2010d.A.spurt.229
+A: Okay 567.21 567.8 ES2010a.A.spurt.237
+B: Okay 85.25 85.7 ES2010b.A.spurt.40
+C: Mm mm 0.4 1.06 ES2010c.B.spurt.1
+D: Mm 474.33 475.19 ES2010d.D.spurt.230
+A: anything else 567.8 568.52 ES2010a.A.spurt.238
+B: Um 86.55 87.05 ES2010b.A.spurt.41
+C: Uh-huh 1.83 2.76 ES2010c.B.spurt.2
+D: Oops 483.55 483.92 ES2010d.A.spurt.231
+A: Right uh-huh 574.56 575.78 ES2010a.A.spurt.239
+B: And i hope you all had did individual work and uh 91.32 94.02 ES2010b.A.spurt.43
+C: Uh-huh 4.67 5.25 ES2010c.B.spurt.3
+D: Okay so now 487.45 488.4 ES2010d.A.spurt.232
+A: Uh-huh 577.18 577.92 ES2010a.A.spurt.240
+B: a i am going to 100.66 102.67 ES2010b.A.spurt.46
+C: Mm 4.97 5.03 ES2010c.A.spurt.4
+D: Yes 487.58 487.97 ES2010d.D.spurt.233
+A: close the meeting 577.92 578.67 ES2010a.A.spurt.241
+B: Um 112.78 113.41 ES2010b.A.spurt.48
+C: But i know 6.79 7.49 ES2010c.D.spurt.5
+D: And initially excel spreadsheet and 490.67 492.78 ES2010d.A.spurt.234
+A: Next meeting is gonna start in thirty minutes 579.37 581.46 ES2010a.A.spurt.242
+B: Okay 123.39 123.86 ES2010b.A.spurt.51
+C: Both my known 7.57 8.31 ES2010c.B.spurt.6
+D: It's it's that's that's you want so it's yeah it's a one or c. 490.87 497.86 ES2010d.D.spurt.235
+A: Here's what we're going to do 582.07 583.11 ES2010a.A.spurt.243
+B: What is the effect of the apparatus what actually is it supposed to do 141.93 146.5 ES2010b.A.spurt.55
+C: Mm india 8.31 8.92 ES2010c.A.spurt.7
+D: All in together based on what components we're In our remote and see if it's under twelve fifty euro 493.65 499.85 ES2010d.A.spurt.236
+A: Um 584.03 584.66 ES2010a.A.spurt.244
+B: Just give you know it look like to make some don't 163.59 165.9 ES2010b.A.spurt.58
+C: Uh-huh 9.32 10.42 ES2010c.B.spurt.8
+D: If so we can proceed if that we need to 500.49 502.74 ES2010d.A.spurt.237
+A: i. d. which is too 584.66 586.51 ES2010a.A.spurt.245
+B: Okay 169.79 170.17 ES2010b.A.spurt.59
+C: Yeah 11.64 11.82 ES2010c.A.spurt.9
+D: So as you know 500.63 502.3 ES2010d.D.spurt.238
+A: Okay 586.99 587.46 ES2010a.A.spurt.246
+B: Well let's go ahead and 173.25 175.25 ES2010b.A.spurt.60
+C: Mm uh-huh 11.75 13.11 ES2010c.B.spurt.10
+D: Okay 504.88 505.51 ES2010d.A.spurt.239
+A: Okay 593.17 593.49 ES2010a.A.spurt.248
+B: Right right 175.76 176.28 ES2010b.A.spurt.61
+C: Mm 12.81 12.84 ES2010c.A.spurt.11
+D: Mm 505.5 505.73 ES2010d.D.spurt.240
+A: I 594.83 595.64 ES2010a.A.spurt.249
+B: Yes 177.07 177.54 ES2010b.A.spurt.62
+C: Uh-huh 14.36 15.8 ES2010c.B.spurt.12
+D: me 505.51 505.94 ES2010d.A.spurt.241
+A: Yeah yeah 595.1 595.82 ES2010a.D.spurt.250
+B: So what i wanna do right now is here from a t. v. or 179.33 181.74 ES2010b.A.spurt.63
+C: Mm mm 17.15 18.61 ES2010c.B.spurt.13
+D: Yeah 506.72 507.0 ES2010d.D.spurt.242
+A: Okay 598.46 599.19 ES2010a.A.spurt.251
+B: On your research that you just turn 182.31 184.39 ES2010b.A.spurt.64
+C: Uh-huh 20.15 21.52 ES2010c.B.spurt.14
+D: Uh-huh 511.59 511.82 ES2010d.D.spurt.243
+A: in u. i. d. 599.19 600.12 ES2010a.A.spurt.252
+B: And i like them first 190.17 191.28 ES2010b.C.spurt.66
+C: Yeah 21.62 21.91 ES2010c.C.spurt.15
+D: Um it's not He and and that's 513.16 515.21 ES2010d.A.spurt.244
+A: Uh-huh 600.58 600.92 ES2010a.C.spurt.253
+B: Okay 191.6 191.92 ES2010b.A.spurt.67
+C: Uh-huh 22.78 24.3 ES2010c.B.spurt.16
+D: Uh 513.19 513.47 ES2010d.D.spurt.245
+A: Okay 609.72 610.49 ES2010a.A.spurt.255
+B: Um mm do you have a powerpoint or no 193.03 194.94 ES2010b.A.spurt.68
+C: Uh-huh 25.51 27.0 ES2010c.B.spurt.17
+D: E. r. 514.56 515.82 ES2010d.D.spurt.246
+A: and the marketing 610.49 611.95 ES2010a.A.spurt.256
+B: Yeah it should be in them 194.86 196.29 ES2010b.C.spurt.69
+C: Mm mm mm 28.18 29.7 ES2010c.B.spurt.18
+D: Yep 516.48 516.85 ES2010d.B.spurt.247
+A: Per se 612.44 613.0 ES2010a.A.spurt.257
+B: Okay 196.55 196.95 ES2010b.A.spurt.70
+C: Mm 31.05 31.53 ES2010c.B.spurt.19
+D: Uh-huh 520.5 520.8 ES2010d.D.spurt.248
+A: Courtney is going to do the user requirements specification 613.9 617.3 ES2010a.A.spurt.258
+B: To the store powerpoints now or 196.83 198.53 ES2010b.D.spurt.71
+C: Uh-huh 32.91 34.46 ES2010c.B.spurt.20
+D: One 523.92 524.32 ES2010d.D.spurt.249
+A: I guess that means specifying um 619.13 621.5 ES2010a.A.spurt.259
+B: In a could you could 198.2 199.06 ES2010b.C.spurt.72
+C: Okay 33.29 33.96 ES2010c.A.spurt.21
+D: Are you are 524.58 525.21 ES2010d.A.spurt.250
+A: what exactly 621.5 622.52 ES2010a.A.spurt.260
+B: To yourself actually 199.98 201.1 ES2010b.C.spurt.73
+C: Uh-huh 35.61 36.64 ES2010c.B.spurt.23
+D: Yeah 526.17 527.71 ES2010d.D.spurt.251
+A: The user is going to be looking for right 624.02 626.62 ES2010a.A.spurt.261
+B: Well 201.31 201.64 ES2010b.A.spurt.74
+C: Uh-huh 38.66 40.15 ES2010c.B.spurt.25
+D: but it is you know you worked with 527.71 533.96 ES2010d.D.spurt.252
+A: Right 626.76 627.12 ES2010a.D.spurt.262
+B: Did you said that 201.76 202.41 ES2010b.B.spurt.75
+C: Um 39.55 40.77 ES2010c.A.spurt.26
+D: Continuity 530.91 531.72 ES2010d.A.spurt.253
+A: I would think so okay 627.1 628.23 ES2010a.A.spurt.263
+B: Mm mm mm 211.63 212.77 ES2010b.A.spurt.78
+C: let's get started 40.77 41.53 ES2010c.A.spurt.27
+D: Triple a.s were gonna do At one battery 533.39 535.62 ES2010d.A.spurt.254
+A: And you gonna get more specific instructions email to you know in just a little while 628.61 632.68 ES2010a.A.spurt.264
+B: This one 217.02 217.34 ES2010b.A.spurt.79
+C: Uh-huh 41.36 42.68 ES2010c.B.spurt.28
+D: So 536.4 536.61 ES2010d.D.spurt.255
+A: Okay 633.4 633.81 ES2010a.A.spurt.265
+B: Sure 218.18 218.66 ES2010b.C.spurt.80
+C: Uh-huh 43.99 45.29 ES2010c.B.spurt.30
+D: Yeah 537.49 538.1 ES2010d.D.spurt.256
+A: so does anybody have anything they want same for close the meeting 633.81 636.34 ES2010a.A.spurt.266
+B: Yeah 222.12 222.47 ES2010b.C.spurt.81
+C: Um 45.92 46.72 ES2010c.A.spurt.31
+D: that's uh still of them 538.1 539.33 ES2010d.D.spurt.257
+A: Okay 638.12 638.56 ES2010a.A.spurt.267
+B: Yeah 224.73 224.95 ES2010b.B.spurt.82
+C: Uh-huh 46.68 47.88 ES2010c.B.spurt.32
+D: I think i i think the people who 539.68 541.44 ES2010d.A.spurt.258
+A: Meeting is officially over 639.78 640.97 ES2010a.A.spurt.268
+B: Right 225.71 225.99 ES2010b.B.spurt.83
+C: i'm gonna open it and i'm gonna keep the minutes as price manager when have three presentations one from each of you again 46.72 52.67 ES2010c.A.spurt.33
+D: Okay i were to that so 539.82 541.48 ES2010d.D.spurt.259
+B: Um 228.61 229.19 ES2010b.C.spurt.84
+C: Uh-huh 49.31 50.36 ES2010c.B.spurt.34
+D: So it's not leave it yeah 542.06 544.66 ES2010d.D.spurt.260
+B: For example switch on off switch off 238.97 241.01 ES2010b.C.spurt.87
+C: Uh-huh 52.05 53.27 ES2010c.B.spurt.35
+D: Yeah 545.7 546.31 ES2010d.D.spurt.261
+B: Um 249.32 250.01 ES2010b.C.spurt.89
+C: Uh-huh 54.86 56.01 ES2010c.B.spurt.37
+D: Damn thing like try 545.71 546.38 ES2010d.A.spurt.262
+B: so the considerations it's just um 250.01 252.47 ES2010b.C.spurt.90
+C: Mm mm 57.78 58.61 ES2010c.B.spurt.38
+D: that's 546.31 546.7 ES2010d.D.spurt.263
+B: And enter be for like you know the menus but um 278.29 281.14 ES2010b.C.spurt.97
+C: Uh-huh 59.91 62.11 ES2010c.B.spurt.39
+D: Uh start 547.27 548.09 ES2010d.D.spurt.264
+B: And then at the menus for a t. v. as well as t. v. 281.82 284.67 ES2010b.C.spurt.98
+C: And just to reiterate um 62.04 63.91 ES2010c.A.spurt.40
+D: Um section 547.32 548.14 ES2010d.A.spurt.265
+B: Whether that means like um 285.14 287.07 ES2010b.C.spurt.99
+C: Uh-huh 63.41 64.74 ES2010c.B.spurt.41
+D: We're gonna be it's right yeah 549.18 550.92 ES2010d.D.spurt.266
+B: Okay 301.99 302.37 ES2010b.A.spurt.102
+C: Uh-huh 66.45 67.91 ES2010c.B.spurt.43
+D: We're gonna need this 549.2 549.99 ES2010d.A.spurt.267
+B: Yes there are two examples um 303.38 305.58 ES2010b.C.spurt.103
+C: Uh-huh 69.11 70.16 ES2010c.B.spurt.44
+D: Just do the voice 550.62 551.63 ES2010d.A.spurt.268
+B: Go to freeze 311.89 313.46 ES2010b.C.spurt.105
+C: Okay 70.87 71.41 ES2010c.A.spurt.45
+D: yeah 550.92 551.37 ES2010d.D.spurt.269
+B: Um 314.0 314.58 ES2010b.C.spurt.106
+C: Uh-huh 71.77 73.15 ES2010c.B.spurt.46
+D: it's 551.37 551.65 ES2010d.D.spurt.270
+B: Slow 314.89 315.54 ES2010b.C.spurt.107
+C: Let's go ahead and start off with your presentations would like to go first 72.26 76.63 ES2010c.A.spurt.47
+D: It is the single 554.27 555.22 ES2010d.A.spurt.271
+B: Repeated 316.61 317.28 ES2010b.C.spurt.108
+C: Uh-huh 74.52 75.95 ES2010c.B.spurt.48
+D: It's single curve 554.28 555.62 ES2010d.D.spurt.272
+B: Programme mute 318.05 319.13 ES2010b.C.spurt.109
+C: Uh-huh 77.24 78.88 ES2010c.B.spurt.49
+D: Mm 556.24 556.3 ES2010d.D.spurt.273
+B: duplicating 337.73 338.41 ES2010b.C.spurt.112
+C: Um corny would you mind saying stuff 81.82 83.45 ES2010c.A.spurt.51
+D: Mm 557.01 557.04 ES2010d.D.spurt.274
+B: And then lastly is the questions are we want to consider 349.43 352.38 ES2010b.C.spurt.114
+C: Mm 82.78 83.39 ES2010c.B.spurt.52
+D: Uh 558.22 558.66 ES2010d.D.spurt.275
+B: Okay 378.43 378.72 ES2010b.A.spurt.119
+C: Yeah 83.04 83.4 ES2010c.D.spurt.53
+D: it 558.66 558.82 ES2010d.D.spurt.276
+B: So that's it 378.65 379.2 ES2010b.C.spurt.120
+C: Mm 85.06 86.78 ES2010c.B.spurt.54
+D: Yeah 560.58 560.81 ES2010d.D.spurt.277
+B: Right 380.69 381.05 ES2010b.A.spurt.121
+C: Uh-huh 88.09 89.4 ES2010c.B.spurt.55
+D: yeah 560.81 561.23 ES2010d.D.spurt.278
+B: Speak was the he hum 384.84 386.14 ES2010b.A.spurt.123
+C: Yep 90.24 90.57 ES2010c.D.spurt.57
+D: Here we are plastic and special colour 562.06 567.4 ES2010d.D.spurt.279
+B: Mm 386.87 387.26 ES2010b.C.spurt.124
+C: Uh-huh 90.82 92.55 ES2010c.B.spurt.58
+D: Your case 562.47 563.1 ES2010d.A.spurt.280
+B: Okay 387.99 388.39 ES2010b.A.spurt.125
+C: Uh-huh 94.02 95.29 ES2010c.B.spurt.59
+D: Last week 563.31 564.07 ES2010d.C.spurt.281
+B: Who would like to um file that or not 389.28 391.26 ES2010b.A.spurt.126
+C: Uh-huh 97.56 99.21 ES2010c.B.spurt.60
+D: Okay 567.35 567.63 ES2010d.C.spurt.282
+B: Yeah that we discussed okay 392.52 393.94 ES2010b.A.spurt.127
+C: Okay 100.43 101.07 ES2010c.D.spurt.61
+D: Yeah 569.86 570.61 ES2010d.D.spurt.283
+B: I can go 392.79 393.39 ES2010b.D.spurt.128
+C: Uh-huh 100.69 101.68 ES2010c.B.spurt.62
+D: I'm here interface 569.89 570.94 ES2010d.A.spurt.284
+B: Do you want me to run it or you wanna 394.26 396.02 ES2010b.A.spurt.129
+C: so trendwatching 101.07 102.27 ES2010c.D.spurt.63
+D: Oh that's just 574.64 575.17 ES2010d.A.spurt.286
+B: Yeah you sure 395.67 396.32 ES2010b.D.spurt.130
+C: Uh 103.33 103.95 ES2010c.D.spurt.64
+D: That's a pushbutton see right there 575.72 577.4 ES2010d.B.spurt.287
+B: You mean 398.41 399.15 ES2010b.A.spurt.131
+C: In order of how much they want fifty percent of 123.99 126.83 ES2010c.D.spurt.68
+D: it's all 578.6 579.2 ES2010d.D.spurt.288
+B: Yes 402.01 403.18 ES2010b.D.spurt.133
+C: The decision of what it should look like 127.34 128.85 ES2010c.D.spurt.69
+D: And it's it's it's 579.64 583.92 ES2010d.D.spurt.289
+B: Yes okay so 414.01 415.82 ES2010b.D.spurt.135
+C: They want everything but simply okay 142.11 144.82 ES2010c.B.spurt.71
+D: It it scroll-wheel or push the 580.0 581.42 ES2010d.B.spurt.290
+B: If we make it look fancy or 437.03 438.55 ES2010b.D.spurt.139
+C: Yes 143.42 144.11 ES2010c.D.spurt.72
+D: The phase 583.34 583.9 ES2010d.B.spurt.291
+B: And 439.15 439.83 ES2010b.D.spurt.140
+C: Exactly 144.53 145.24 ES2010c.D.spurt.73
+D: Or we can just go 584.62 585.28 ES2010d.A.spurt.292
+B: That's really what we need to do 450.32 451.56 ES2010b.D.spurt.142
+C: So we know next okay 145.68 147.86 ES2010c.D.spurt.74
+D: Mm 584.83 584.95 ES2010d.D.spurt.293
+B: It needs to be high-tech looking 455.14 456.51 ES2010b.D.spurt.144
+C: So in milan and paris recently the terms of in showing that clothing shoes and furniture 148.25 153.94 ES2010c.D.spurt.75
+D: Uh 585.99 586.32 ES2010d.D.spurt.294
+B: So 457.03 457.49 ES2010b.D.spurt.145
+C: So i don't know what if we want to go with that so um 159.87 163.1 ES2010c.D.spurt.77
+D: But well we 587.46 588.62 ES2010d.D.spurt.295
+B: Like 458.78 459.17 ES2010b.D.spurt.147
+C: Mm 171.23 171.58 ES2010c.A.spurt.80
+D: So 589.6 589.74 ES2010d.A.spurt.297
+B: They 460.24 460.58 ES2010b.D.spurt.148
+C: Patch i mean you guys know i mean 178.27 179.7 ES2010c.D.spurt.81
+D: Type a button where have 594.77 595.7 ES2010d.B.spurt.298
+B: I dunno 465.5 466.0 ES2010b.D.spurt.150
+C: Right yes 179.63 180.44 ES2010c.A.spurt.82
+D: So so it's 597.15 598.39 ES2010d.D.spurt.300
+B: It's from my uh research 466.47 467.95 ES2010b.D.spurt.151
+C: Yeah 179.93 180.59 ES2010c.B.spurt.83
+D: Oh 600.04 600.25 ES2010d.D.spurt.301
+B: Okay would you 469.03 469.6 ES2010b.A.spurt.152
+C: Um 180.88 181.36 ES2010c.D.spurt.84
+D: That twenty nine means like you have both scrolls uh 600.28 602.77 ES2010d.C.spurt.302
+B: My team wasn't very clear that the "'kay" 469.24 471.76 ES2010b.D.spurt.153
+C: But as for the fruit and vegetable patterns i don't know if we really want to go with that because it is just to try and and our product we want to stay around for 181.71 189.34 ES2010c.D.spurt.85
+D: So yeah 602.07 602.96 ES2010d.D.spurt.303
+B: At least 470.04 470.53 ES2010b.C.spurt.154
+C: Right 187.44 187.78 ES2010c.A.spurt.86
+D: Pushbuttons 604.23 604.9 ES2010d.C.spurt.304
+B: Oh sorry 470.42 471.1 ES2010b.A.spurt.155
+C: Much longer than just A few months because 189.77 192.43 ES2010c.D.spurt.87
+D: Okay 604.41 604.96 ES2010d.D.spurt.305
+B: What you mean by um 471.64 472.99 ES2010b.A.spurt.156
+C: I can 192.42 192.99 ES2010c.B.spurt.89
+D: Right i think she is i think work or decide about is do we need to put two here 604.56 608.39 ES2010d.A.spurt.306
+B: I i think it's like the engineering courses user 478.23 481.06 ES2010b.D.spurt.159
+C: Yeah 193.13 193.73 ES2010c.D.spurt.90
+D: i think he's i would you like because there's like a one or three three here and then because it's not to be on the same 604.96 611.82 ES2010d.D.spurt.307
+B: Okay 480.92 481.32 ES2010b.A.spurt.160
+C: i mean i could just be a spring thing right now 193.73 196.23 ES2010c.D.spurt.91
+D: Claim when you press the button there's a 612.33 614.22 ES2010d.D.spurt.308
+B: Where is like the engineering She showed that the injury ones are more complex 481.47 485.87 ES2010b.D.spurt.161
+C: I can and uh some of that issue i think uh with uh my presentation 196.32 200.41 ES2010c.B.spurt.92
+D: Yeah 615.16 615.62 ES2010d.B.spurt.309
+B: Oh right 485.8 486.43 ES2010b.A.spurt.162
+C: Okay 200.96 201.31 ES2010c.D.spurt.93
+D: Let's just 622.03 622.72 ES2010d.A.spurt.311
+B: And 486.29 486.79 ES2010b.D.spurt.163
+C: Awesome 201.98 202.4 ES2010c.D.spurt.94
+D: Interface as as i know 622.35 623.53 ES2010d.C.spurt.312
+B: Yeah 493.24 493.63 ES2010b.A.spurt.166
+C: Um 203.75 204.28 ES2010c.D.spurt.95
+D: T. or would it be three 623.91 625.29 ES2010d.A.spurt.313
+B: Okay 494.54 495.0 ES2010b.A.spurt.167
+C: Right 207.23 207.56 ES2010c.C.spurt.98
+D: "'kay" and we're gonna Button supplements the buttons are 631.04 633.96 ES2010d.A.spurt.314
+B: Good point 497.12 497.69 ES2010b.D.spurt.169
+C: Um 219.74 220.25 ES2010c.D.spurt.100
+D: That's not that's the buttons and uh 632.56 634.21 ES2010d.D.spurt.315
+B: It works 498.22 498.85 ES2010b.A.spurt.170
+C: Uh 223.99 224.43 ES2010c.D.spurt.102
+D: They're special colour 634.52 635.48 ES2010d.D.spurt.316
+B: Uh-huh 498.32 498.6 ES2010b.C.spurt.171
+C: Actually very here 234.13 235.83 ES2010c.D.spurt.104
+D: Okay 635.52 635.99 ES2010d.A.spurt.317
+B: To necessary you for a 499.06 500.25 ES2010b.D.spurt.172
+C: Yes clear air travel 257.28 258.38 ES2010c.D.spurt.108
+D: Um 636.61 637.03 ES2010d.D.spurt.318
+B: Yeah 500.14 500.63 ES2010b.B.spurt.173
+C: So i mean that's just an idea 259.09 260.43 ES2010c.D.spurt.109
+D: there are there special form "'cause" they're intended 637.03 639.4 ES2010d.D.spurt.319
+B: Or if the next slide 500.8 501.63 ES2010b.A.spurt.174
+C: Yeah it's like a 260.81 261.68 ES2010c.D.spurt.110
+D: Okay 638.59 638.98 ES2010d.A.spurt.320
+B: Uh-huh 501.48 501.78 ES2010b.D.spurt.175
+C: Yeah and then i like it 260.84 261.73 ES2010c.A.spurt.111
+D: Um right 640.03 640.64 ES2010d.A.spurt.321
+B: And so 502.9 504.29 ES2010b.D.spurt.176
+C: Okay 262.59 263.11 ES2010c.A.spurt.112
+D: And they're special material 640.89 642.67 ES2010d.D.spurt.322
+B: And 513.16 513.87 ES2010b.D.spurt.178
+C: And 262.87 263.27 ES2010c.D.spurt.113
+D: Loss and 645.85 646.47 ES2010d.A.spurt.323
+B: I mean they do need to be able to identify 528.16 529.85 ES2010b.D.spurt.181
+C: ready for the next slide 263.11 263.95 ES2010c.A.spurt.114
+D: Or whatever Oh 648.28 649.87 ES2010d.D.spurt.324
+B: And R. s. i. and not very sure what to yes 530.36 533.3 ES2010b.D.spurt.182
+C: And that's it i 264.87 266.42 ES2010c.D.spurt.115
+D: Right 648.64 649.06 ES2010d.B.spurt.325
+B: Yes 534.31 534.76 ES2010b.D.spurt.183
+C: Okay 266.55 266.78 ES2010c.A.spurt.116
+D: Mm 651.31 651.58 ES2010d.D.spurt.326
+B: Uh-huh 537.21 537.49 ES2010b.A.spurt.186
+C: Okay 267.39 267.73 ES2010c.B.spurt.117
+D: Yeah well 651.57 651.93 ES2010d.A.spurt.327
+B: Is that like here 537.72 538.56 ES2010b.C.spurt.187
+C: Great great presentation 267.79 269.25 ES2010c.A.spurt.118
+D: So we should i 653.83 656.67 ES2010d.D.spurt.328
+B: Ergonomics of your hand movements or something 539.85 542.09 ES2010b.C.spurt.188
+C: Right 271.92 272.26 ES2010c.A.spurt.119
+D: Right 654.0 654.32 ES2010d.A.spurt.329
+B: Could be yeah 542.36 543.27 ES2010b.A.spurt.189
+C: Okay 274.03 274.33 ES2010c.C.spurt.120
+D: We can go to 655.33 656.27 ES2010d.A.spurt.330
+B: A possibly 542.92 543.93 ES2010b.D.spurt.190
+C: yeah 274.33 274.56 ES2010c.C.spurt.121
+D: Now we're gonna talk about the project 671.96 673.82 ES2010d.A.spurt.331
+B: I yeah that's what my a website and i 548.97 550.88 ES2010b.D.spurt.192
+C: Uh-huh 274.96 275.68 ES2010c.B.spurt.122
+D: Uh 672.75 673.44 ES2010d.D.spurt.332
+B: Oh 548.99 549.78 ES2010b.A.spurt.193
+C: It's if it's there 276.49 277.22 ES2010c.C.spurt.123
+D: huh 673.44 674.07 ES2010d.D.spurt.333
+B: Oh right 551.28 551.82 ES2010b.C.spurt.194
+C: Mm 277.3 278.45 ES2010c.B.spurt.124
+D: it's it's 674.07 674.68 ES2010d.D.spurt.334
+B: I think that's a pretty good guess though 551.96 553.49 ES2010b.A.spurt.195
+C: Which was it 289.63 290.17 ES2010c.A.spurt.125
+D: Uh 675.06 675.83 ES2010d.D.spurt.335
+B: Don't know 551.96 552.43 ES2010b.D.spurt.196
+C: I don't know hang on 292.01 292.79 ES2010c.C.spurt.126
+D: And when our satisfied with you 675.66 677.59 ES2010d.A.spurt.336
+B: Yeah i would assume so 553.6 555.01 ES2010b.D.spurt.197
+C: Oh 295.97 296.16 ES2010c.C.spurt.128
+D: huh 675.83 676.06 ES2010d.D.spurt.337
+B: Exactly holding it 555.58 556.47 ES2010b.C.spurt.199
+C: Yeah 302.32 302.6 ES2010c.C.spurt.131
+D: Whole process and the result 678.43 679.73 ES2010d.A.spurt.338
+B: Okay 574.63 575.06 ES2010b.A.spurt.203
+C: Mine will always read copy of something or 303.1 304.78 ES2010c.B.spurt.132
+D: All plastic 678.47 679.17 ES2010d.D.spurt.339
+B: Excellent 575.98 576.47 ES2010b.A.spurt.204
+C: Sorry 305.47 305.92 ES2010c.A.spurt.133
+D: Um did we have a lot of room for 680.36 681.54 ES2010d.A.spurt.340
+B: Yes 576.24 576.76 ES2010b.D.spurt.205
+C: And i copied mind before it is sent to do 306.41 308.76 ES2010c.B.spurt.134
+D: We have about it 680.72 681.96 ES2010d.D.spurt.341
+B: Saying from me 584.73 585.68 ES2010b.D.spurt.207
+C: Oh okay 308.98 309.55 ES2010c.A.spurt.135
+D: We 682.76 683.2 ES2010d.A.spurt.342
+B: Yeah 593.72 594.02 ES2010b.A.spurt.209
+C: Sorry yeah 309.95 310.95 ES2010c.C.spurt.136
+D: Have a lot of room for individual leadership 683.9 685.75 ES2010d.A.spurt.343
+B: Where the engineering ones the boxes tend to make it look more complicated than it really is 595.0 600.04 ES2010b.D.spurt.210
+C: Would 312.84 313.19 ES2010c.C.spurt.137
+D: I'm not sure 683.95 685.7 ES2010d.D.spurt.344
+B: Um 600.43 600.94 ES2010b.D.spurt.211
+C: There we go 328.7 329.17 ES2010c.A.spurt.138
+D: Um teamwork 686.72 687.68 ES2010d.A.spurt.345
+B: As to like 604.69 605.39 ES2010b.D.spurt.213
+C: Okay 343.92 344.49 ES2010c.C.spurt.139
+D: Uh teamwork 686.74 687.62 ES2010d.D.spurt.346
+B: And 608.66 609.21 ES2010b.D.spurt.215
+C: um 344.49 345.45 ES2010c.C.spurt.140
+D: It's 690.7 691.05 ES2010d.D.spurt.347
+B: Are most people going to be using it for a d. v. d. player at even know what 617.31 621.71 ES2010b.D.spurt.218
+C: Okay 344.52 344.81 ES2010c.A.spurt.141
+D: To produce our little right there 691.52 693.34 ES2010d.A.spurt.348
+B: What exactly are we using it for 622.14 623.81 ES2010b.D.spurt.219
+C: We're we can go with this um if you wanna start the next slide 349.91 353.16 ES2010c.C.spurt.143
+D: Two 691.55 691.74 ES2010d.D.spurt.349
+B: Is it it's like it up and coming thing they've really 636.29 638.86 ES2010b.D.spurt.222
+C: Sure 353.08 353.47 ES2010c.A.spurt.144
+D: And if we find a new ideas 694.09 695.73 ES2010d.A.spurt.350
+B: Consumers are really interested in it 639.47 640.9 ES2010b.D.spurt.223
+C: Um 354.46 355.4 ES2010c.C.spurt.145
+D: Question is 697.02 697.67 ES2010d.A.spurt.351
+B: And so just that 648.52 649.44 ES2010b.A.spurt.225
+C: can i say place to possible ways on the left 355.4 358.47 ES2010c.C.spurt.146
+D: And we just discuss it is that's true 701.92 703.86 ES2010d.D.spurt.352
+B: We could consider it 648.94 649.82 ES2010b.D.spurt.226
+C: And then also this the idea of the base that sort of like an idea yeah 364.99 368.61 ES2010c.C.spurt.148
+D: Discuss sure 703.08 704.0 ES2010d.A.spurt.353
+B: I guess sell yeah 654.36 655.29 ES2010b.D.spurt.228
+C: Mm 376.93 377.67 ES2010c.B.spurt.150
+D: Alright 705.49 705.88 ES2010d.A.spurt.354
+B: Uh-huh 655.58 655.84 ES2010b.C.spurt.229
+C: Um 388.59 389.32 ES2010c.C.spurt.152
+D: What you would like to go first 706.41 708.15 ES2010d.A.spurt.355
+B: Okay 656.83 657.09 ES2010b.A.spurt.230
+C: Uh-huh 391.05 391.7 ES2010c.B.spurt.154
+D: What that is 706.47 708.11 ES2010d.D.spurt.356
+B: Uh just a where i think we as you know 657.66 660.25 ES2010b.C.spurt.231
+C: Using that idea 395.71 396.66 ES2010c.C.spurt.155
+D: Quick that stifled for quite a creativity by the company it's all 708.73 712.21 ES2010d.B.spurt.357
+B: Yeah i guess we can interpret it like 660.36 662.25 ES2010b.D.spurt.232
+C: Look into it 401.13 401.74 ES2010c.C.spurt.157
+D: Yes 708.92 709.26 ES2010d.D.spurt.358
+B: Oh 661.03 661.37 ES2010b.A.spurt.233
+C: And in that 402.26 402.82 ES2010c.C.spurt.158
+D: Mm 710.91 711.2 ES2010d.D.spurt.359
+B: Have be lovely 661.78 662.51 ES2010b.A.spurt.234
+C: Um 404.58 405.15 ES2010c.C.spurt.159
+D: You should use 713.21 714.9 ES2010d.D.spurt.360
+B: That's an hour 665.85 666.33 ES2010b.D.spurt.236
+C: Um by site 408.95 409.93 ES2010c.C.spurt.161
+D: Or stretching or something to use it in 713.43 715.29 ES2010d.B.spurt.361
+B: Today um 666.8 668.35 ES2010b.A.spurt.237
+C: What it really is is a v. on what you think it is this down because of that down arrow 424.01 428.92 ES2010c.C.spurt.164
+D: Mm 715.77 716.23 ES2010d.D.spurt.362
+B: No problem 666.99 667.52 ES2010b.D.spurt.238
+C: Mm 428.92 429.46 ES2010c.A.spurt.165
+D: Uh-huh 717.04 718.33 ES2010d.D.spurt.363
+B: Mm oh yeah 677.25 678.65 ES2010b.A.spurt.241
+C: And so it's like sort of "'cause" the utah it turned out the other way up 429.58 432.86 ES2010c.C.spurt.166
+D: oh that's true 718.33 719.16 ES2010d.D.spurt.364
+B: that's true 678.65 679.11 ES2010b.A.spurt.242
+C: Um 433.36 433.83 ES2010c.C.spurt.167
+D: Mm 718.34 718.65 ES2010d.A.spurt.365
+B: You know like 678.71 679.13 ES2010b.C.spurt.243
+C: but then you have you could i did do it by race type which could be you know if she 433.83 439.12 ES2010c.C.spurt.168
+D: And no and 719.25 719.76 ES2010d.C.spurt.366
+B: You could if we include that if we wanted to 679.53 681.35 ES2010b.A.spurt.244
+C: Um sort of 439.71 440.4 ES2010c.C.spurt.169
+D: Yeah 721.15 721.61 ES2010d.D.spurt.367
+B: Go to the case 679.69 680.81 ES2010b.C.spurt.245
+C: Old-fashioned in a way 441.07 442.23 ES2010c.C.spurt.170
+D: No no yeah 723.67 725.16 ES2010d.D.spurt.368
+B: Yeah 682.01 682.31 ES2010b.C.spurt.246
+C: Mm 442.32 442.63 ES2010c.A.spurt.171
+D: that's a good point 725.16 725.93 ES2010d.D.spurt.369
+B: If it's whether 682.62 683.38 ES2010b.A.spurt.247
+C: Yeah 443.92 444.23 ES2010c.B.spurt.173
+D: So i'd forgotten that 726.58 727.99 ES2010d.D.spurt.370
+B: Okay 684.82 685.22 ES2010b.A.spurt.248
+C: Okay 457.12 457.45 ES2010c.A.spurt.175
+D: That was our decision yeah 728.97 730.9 ES2010d.D.spurt.371
+B: Yeah i'm just random of it 688.16 689.34 ES2010b.B.spurt.250
+C: Okay 458.19 458.48 ES2010c.C.spurt.176
+D: And how did you feel about the whole 730.89 732.36 ES2010d.A.spurt.372
+B: I think it should be there 698.87 700.28 ES2010b.B.spurt.251
+C: Um the sort of example of going for a certain demographic 459.85 463.03 ES2010c.C.spurt.177
+D: in fact that all of that 730.9 732.98 ES2010d.D.spurt.373
+B: Uh-huh 702.88 703.13 ES2010b.C.spurt.254
+C: Um 463.46 464.0 ES2010c.C.spurt.178
+D: Overall i mean i thought we did a good job one 734.07 736.23 ES2010d.D.spurt.374
+B: "'kay" um 706.09 707.3 ES2010b.B.spurt.255
+C: this particularly geared towards children 464.0 466.08 ES2010c.C.spurt.179
+D: We have to choose this will be control over My sitting just going to be you know actions 737.09 741.87 ES2010d.D.spurt.375
+B: i didn't get a chance to complete this one 707.3 709.26 ES2010b.B.spurt.256
+C: That's cute huh 466.22 467.18 ES2010c.D.spurt.180
+D: She 737.51 737.7 ES2010d.A.spurt.376
+B: "'kay" is some of the tools that i was getting frustrated 709.75 713.22 ES2010b.B.spurt.257
+C: Um 466.77 467.28 ES2010c.C.spurt.181
+D: We wanted to do with that 742.29 744.24 ES2010d.D.spurt.377
+B: That's fine 713.87 714.45 ES2010b.D.spurt.258
+C: We know 467.13 467.63 ES2010c.A.spurt.182
+D: Right and we got say over 743.28 745.15 ES2010d.A.spurt.378
+B: Um 714.89 715.29 ES2010b.B.spurt.259
+C: Um 474.1 474.87 ES2010c.C.spurt.184
+D: What 746.11 746.46 ES2010d.A.spurt.379
+B: okay 715.29 715.87 ES2010b.B.spurt.260
+C: Um 478.21 478.74 ES2010c.C.spurt.186
+D: So 748.58 748.75 ES2010d.D.spurt.381
+B: so ah 715.87 716.46 ES2010b.B.spurt.261
+C: And then the other thing that would be able to do is just to probe be a be programme certain 479.6 483.94 ES2010c.C.spurt.187
+D: Which i kind of 750.75 751.6 ES2010d.A.spurt.382
+B: Method 717.61 718.22 ES2010b.B.spurt.262
+C: It's that's like another uh 493.84 495.07 ES2010c.C.spurt.190
+D: Um what about um the teamwork 757.07 758.85 ES2010d.A.spurt.384
+B: Um 729.81 730.47 ES2010b.B.spurt.264
+C: um 495.07 495.49 ES2010c.C.spurt.191
+D: Uh 757.09 757.52 ES2010d.D.spurt.385
+B: Extremist right 736.73 737.73 ES2010b.B.spurt.266
+C: Um 516.98 517.64 ES2010c.C.spurt.196
+D: we have a t. v. 757.52 758.87 ES2010d.D.spurt.386
+B: I wouldn't think so "'cause" we could probably get it from like them all from uh 754.95 759.02 ES2010b.B.spurt.270
+C: So again it's sort of like 519.81 521.22 ES2010c.C.spurt.197
+D: Okay 760.25 761.76 ES2010d.D.spurt.387
+B: huh 759.02 759.21 ES2010b.B.spurt.271
+C: Yeah 521.35 521.47 ES2010c.D.spurt.198
+D: but 761.76 762.21 ES2010d.D.spurt.388
+B: Anywhere company 760.18 761.14 ES2010b.B.spurt.272
+C: Real reaction 527.06 527.91 ES2010c.C.spurt.200
+D: I think it it did you work well together 764.58 765.94 ES2010d.A.spurt.389
+B: Any 765.77 766.03 ES2010b.A.spurt.274
+C: And then finally so like that sort of same examples but also some more just possible is a week go with 530.98 536.63 ES2010c.C.spurt.201
+D: It or okay 764.82 765.88 ES2010d.D.spurt.390
+B: Um yep 765.83 766.67 ES2010b.B.spurt.275
+C: Number one particularly keen on by the way 537.5 539.86 ES2010c.C.spurt.202
+D: Well no there's there's sky 767.21 768.6 ES2010d.B.spurt.391
+B: Nothing here 767.61 768.2 ES2010b.B.spurt.276
+C: Yeah 540.21 540.64 ES2010c.D.spurt.203
+D: Well my so one for a t. v. and uh 767.23 769.86 ES2010d.D.spurt.392
+B: Okay 768.51 769.05 ES2010b.A.spurt.277
+C: No 541.19 541.56 ES2010c.A.spurt.204
+D: Oh my okay 769.37 770.39 ES2010d.A.spurt.393
+B: Um 785.81 786.51 ES2010b.B.spurt.281
+C: Uh-huh 541.3 541.53 ES2010c.C.spurt.205
+D: And we've are gonna pretty congenial team here i think we have many 770.99 774.2 ES2010d.A.spurt.394
+B: Demographically 788.5 789.64 ES2010b.B.spurt.283
+C: Mm 551.4 551.74 ES2010c.A.spurt.208
+D: And now we see yeah i i mean i see i think that what is it the survey and weighing or what is the irritating yeah 771.01 779.02 ES2010d.D.spurt.395
+B: We're moving towards uh 790.09 791.44 ES2010b.B.spurt.284
+C: Or i like you know the black finish this over finish or whatever 552.58 556.17 ES2010c.A.spurt.209
+D: Yeah 774.06 774.54 ES2010d.C.spurt.396
+B: The d. v. d. player or a d. t. v. with a stereo system 802.35 806.41 ES2010b.B.spurt.287
+C: Right 555.69 556.11 ES2010c.C.spurt.210
+D: That's 775.02 775.32 ES2010d.A.spurt.397
+B: Universal application again 811.78 813.76 ES2010b.B.spurt.289
+C: Right 559.37 559.53 ES2010c.A.spurt.212
+D: Irritating 777.43 778.17 ES2010d.B.spurt.398
+B: That's kinda yeah 818.96 820.2 ES2010b.B.spurt.291
+C: Okay 559.95 560.41 ES2010c.A.spurt.213
+D: Definitely 781.07 781.61 ES2010d.D.spurt.399
+B: Um 821.41 822.09 ES2010b.B.spurt.292
+C: Ready 560.87 561.19 ES2010c.A.spurt.214
+D: The means the whiteboard didn't work 783.05 784.91 ES2010d.B.spurt.400
+B: This is my 822.82 823.64 ES2010b.B.spurt.293
+C: That's it 561.6 562.0 ES2010c.C.spurt.215
+D: He 783.26 783.54 ES2010d.D.spurt.401
+B: Um 835.5 835.93 ES2010b.B.spurt.297
+C: Okay 562.77 563.44 ES2010c.A.spurt.216
+D: Yeah 785.76 786.21 ES2010d.D.spurt.402
+B: Flashing yes 839.09 840.05 ES2010b.B.spurt.299
+C: Okay john 564.54 565.33 ES2010c.A.spurt.217
+D: Not that one down Matches 786.98 788.48 ES2010d.A.spurt.403
+B: Um 840.69 841.22 ES2010b.B.spurt.300
+C: Okay 566.17 566.42 ES2010c.B.spurt.218
+D: Yeah no it right okay 787.78 789.42 ES2010d.D.spurt.404
+B: Subcomponent which would be like 842.61 844.84 ES2010b.B.spurt.301
+C: um hm 566.42 566.97 ES2010c.B.spurt.219
+D: Enter for here really you feel strongly that the internet 788.81 792.27 ES2010d.B.spurt.405
+B: Um 849.47 849.94 ES2010b.B.spurt.304
+C: Okay 567.88 568.18 ES2010c.A.spurt.220
+D: for you 789.42 790.36 ES2010d.D.spurt.406
+B: So what exactly we're looking it's like the front of the 855.89 858.4 ES2010b.D.spurt.306
+C: Okay 568.36 568.97 ES2010c.D.spurt.221
+D: It's on it and they didn't want to go to the shop and use 791.02 795.71 ES2010d.D.spurt.407
+B: This is just like a rough schematic So this is the internal workings 858.38 862.6 ES2010b.B.spurt.307
+C: I 569.37 569.64 ES2010c.B.spurt.222
+D: It's not available 793.12 794.43 ES2010d.C.spurt.408
+B: Well 859.06 859.38 ES2010b.D.spurt.308
+C: Was that i do 569.86 570.48 ES2010c.A.spurt.223
+D: Yeah 795.97 796.5 ES2010d.A.spurt.409
+B: So this would be different 860.86 862.09 ES2010b.A.spurt.309
+C: Uh-huh 578.65 578.84 ES2010c.C.spurt.225
+D: Yeah 796.02 796.86 ES2010d.D.spurt.410
+B: Oh okay 862.89 863.44 ES2010b.D.spurt.311
+C: Yeah 579.17 579.55 ES2010c.B.spurt.226
+D: digital pens 796.5 797.28 ES2010d.A.spurt.411
+B: Yep 864.81 865.33 ES2010b.B.spurt.312
+C: uh 579.55 579.92 ES2010c.B.spurt.227
+D: words they're critical it is yeah 796.86 799.22 ES2010d.D.spurt.412
+B: Yeah that's gonna be what's communicating with the t. v. but the other bo i think it's good just indicate i'm doing something sort of like um 865.39 872.1 ES2010b.C.spurt.313
+C: huh looks like it 579.92 580.77 ES2010c.B.spurt.228
+D: L. a. push it it does 797.55 798.58 ES2010d.B.spurt.413
+B: Reassurance 872.84 873.56 ES2010b.C.spurt.316
+C: Okay 583.58 583.89 ES2010c.B.spurt.229
+D: They're fine 797.84 798.48 ES2010d.A.spurt.414
+B: Yeah 875.91 876.22 ES2010b.A.spurt.318
+C: So that being said next slide please 613.9 616.5 ES2010c.B.spurt.234
+D: they're fun you know i'm not sure but i do with that but 799.22 802.48 ES2010d.D.spurt.415
+B: Okay 883.64 884.12 ES2010b.D.spurt.320
+C: Um 639.01 639.44 ES2010c.B.spurt.238
+D: They are also use it as see i guess that's what else to say anything to what we had a share 802.94 811.66 ES2010d.D.spurt.416
+B: And have it lighting up the keys you right 883.96 885.89 ES2010b.A.spurt.321
+C: And l. e. d. which is a light emitting diode 644.05 647.12 ES2010c.B.spurt.240
+D: The use of the laptops for receiving 804.3 806.16 ES2010d.B.spurt.417
+B: We can skip that whole thing yeah 884.37 886.36 ES2010b.B.spurt.322
+C: Um 648.03 648.6 ES2010c.B.spurt.241
+D: Laptops or 807.63 808.32 ES2010d.A.spurt.418
+B: Yeah 886.14 886.64 ES2010b.D.spurt.323
+C: Next slide please Thank you 656.68 658.38 ES2010c.B.spurt.243
+D: Or was to sell 808.6 809.74 ES2010d.B.spurt.419
+B: Yeah 886.54 886.88 ES2010b.C.spurt.324
+C: Next slide please 679.43 680.34 ES2010c.B.spurt.247
+D: Wireless And that we have a shared network or we can put all the 809.44 813.45 ES2010d.A.spurt.420
+B: Yeah and that's good 890.15 890.94 ES2010b.D.spurt.327
+C: Um 680.99 681.58 ES2010c.B.spurt.248
+D: Yeah that's a sexy or something yeah 814.35 817.74 ES2010d.D.spurt.421
+B: We should make it go on that right 891.48 892.54 ES2010b.D.spurt.328
+C: just talking to the um 681.58 683.78 ES2010c.B.spurt.249
+D: And a brother 818.31 819.04 ES2010d.D.spurt.422
+B: Okay 891.52 891.87 ES2010b.A.spurt.329
+C: Manufacturing division 684.7 685.92 ES2010c.B.spurt.250
+D: Yeah 819.78 820.03 ES2010d.D.spurt.423
+B: Yeah definitely n. x. 892.85 894.45 ES2010b.A.spurt.330
+C: It's too a next slide please 698.87 700.94 ES2010c.B.spurt.253
+D: Yeah 821.2 821.57 ES2010d.D.spurt.424
+B: Right 895.24 895.49 ES2010b.A.spurt.331
+C: Interesting 700.87 701.46 ES2010c.A.spurt.254
+D: Yeah 822.18 822.75 ES2010d.D.spurt.425
+B: Yeah that's it 895.44 896.14 ES2010b.B.spurt.332
+C: I don't think anyone's gonna go forward one because splinters 714.76 718.04 ES2010c.B.spurt.258
+D: yeah right right it's it's that's 822.75 825.09 ES2010d.D.spurt.426
+B: Okay 896.56 897.13 ES2010b.A.spurt.333
+C: Yeah 715.14 715.46 ES2010c.A.spurt.259
+D: A what we are really gonna sell this i 826.96 828.84 ES2010d.D.spurt.427
+B: in it 897.13 897.37 ES2010b.A.spurt.334
+C: That would be amazing that out yeah 717.02 718.73 ES2010c.D.spurt.260
+D: I dunno i 829.58 829.96 ES2010d.D.spurt.428
+B: Okay 898.16 898.54 ES2010b.A.spurt.335
+C: Uh-huh 718.19 718.74 ES2010c.A.spurt.261
+D: For something that looks cool and also 844.07 846.57 ES2010d.A.spurt.429
+B: Anything else 905.35 905.96 ES2010b.A.spurt.338
+C: That splinters it 719.37 720.19 ES2010c.D.spurt.262
+D: For something that looks cool And that's it 844.12 846.31 ES2010d.D.spurt.430
+B: Okay 909.95 910.28 ES2010b.A.spurt.339
+C: You hum 719.57 720.16 ES2010c.B.spurt.263
+D: Has it that's right see why artistic 847.09 852.77 ES2010d.D.spurt.431
+B: Almost 931.24 931.82 ES2010b.C.spurt.343
+C: What is that 733.24 733.84 ES2010c.D.spurt.266
+D: Yeah 848.54 848.92 ES2010d.C.spurt.432
+B: Yeah 932.83 933.08 ES2010b.C.spurt.344
+C: Mm 741.41 741.74 ES2010c.A.spurt.267
+D: Uh-huh 854.31 854.67 ES2010d.D.spurt.434
+B: yeah 933.08 933.55 ES2010b.C.spurt.345
+C: Mm 745.16 745.81 ES2010c.D.spurt.269
+D: If we have one um um but 855.29 856.31 ES2010d.A.spurt.435
+B: Okay 933.92 934.31 ES2010b.A.spurt.346
+C: Right 752.97 753.32 ES2010c.C.spurt.272
+D: Yeah 855.8 856.04 ES2010d.D.spurt.436
+B: Okay that's Talk about all of our 935.23 937.15 ES2010b.A.spurt.347
+C: Beneficial to us 756.05 757.24 ES2010c.B.spurt.274
+D: I think i mean that's our technology 857.73 859.4 ES2010d.A.spurt.437
+B: And 954.73 954.98 ES2010b.A.spurt.350
+C: Again one more slide know it and Oh and he manufacturing division also has said that um 761.14 767.42 ES2010c.B.spurt.276
+D: That's right 858.25 858.81 ES2010d.D.spurt.438
+B: Right 957.28 957.84 ES2010b.A.spurt.351
+C: Okay 763.46 763.95 ES2010c.A.spurt.277
+D: Plus five l. a. 858.47 859.23 ES2010d.C.spurt.439
+B: Go through the mm yes Ah right you we are 959.39 961.87 ES2010b.A.spurt.352
+C: Which we could utilise 775.89 777.81 ES2010c.B.spurt.279
+D: It's 860.69 860.9 ES2010d.D.spurt.440
+B: Okay 972.45 973.36 ES2010b.B.spurt.355
+C: Um 778.18 779.16 ES2010c.B.spurt.280
+D: And i'm taking back to elementary school "'cause" they look the same 864.38 867.36 ES2010d.C.spurt.441
+B: um 973.36 974.77 ES2010b.B.spurt.356
+C: We're going to have to have multiples of each type like 795.0 798.54 ES2010c.B.spurt.285
+D: That is 864.96 865.93 ES2010d.D.spurt.442
+B: Okay 977.27 977.68 ES2010b.A.spurt.357
+C: You know 819.8 820.36 ES2010c.B.spurt.291
+D: Mm 866.5 866.55 ES2010d.D.spurt.443
+B: We're trying to get our 987.61 988.62 ES2010b.A.spurt.359
+C: Right 821.3 821.63 ES2010c.D.spurt.292
+D: Mm 867.29 867.68 ES2010d.A.spurt.444
+B: I mean out in the world 989.16 990.93 ES2010b.A.spurt.360
+C: Uh huh 826.03 826.44 ES2010c.D.spurt.295
+D: Mm yeah 867.34 869.21 ES2010d.D.spurt.445
+B: Okay 992.03 992.58 ES2010b.A.spurt.361
+C: And solid um 826.58 828.04 ES2010c.B.spurt.296
+D: oh yeah it's they're pretty and just like yeah it's it's it's it's it's it's it's it yeah 869.21 878.01 ES2010d.D.spurt.446
+B: and 992.58 992.92 ES2010b.A.spurt.362
+C: Okay 826.65 827.1 ES2010c.A.spurt.297
+D: But turn it does tricks go 871.64 872.66 ES2010d.B.spurt.448
+B: You know teletext is 993.86 995.08 ES2010b.A.spurt.363
+C: Well thank you for those inform the presentations 828.28 831.08 ES2010c.A.spurt.298
+D: Precise it's But like really low tech really cheap 875.24 878.61 ES2010d.C.spurt.449
+B: Yeah 995.63 995.97 ES2010b.C.spurt.364
+C: Yeah i have to make some decisions 833.89 835.72 ES2010c.A.spurt.300
+D: which is that a oh yeah 878.01 880.48 ES2010d.D.spurt.450
+B: In the states we don't have it but um 996.43 998.92 ES2010b.A.spurt.365
+C: Mm 836.13 836.63 ES2010c.B.spurt.301
+D: Just a mac found bothers me then 878.8 880.85 ES2010d.A.spurt.451
+B: Yeah 997.93 998.3 ES2010b.C.spurt.367
+C: Are we 836.41 836.79 ES2010c.A.spurt.302
+D: yeah 880.48 880.59 ES2010d.D.spurt.452
+B: What is it 997.93 998.46 ES2010b.D.spurt.366
+C: Well we just have more thing that i couldn't say before and that's just that 837.43 841.36 ES2010c.C.spurt.303
+D: Okay 881.51 881.79 ES2010d.D.spurt.453
+B: Like running along the bottom 1010.35 1011.91 ES2010b.D.spurt.371
+C: Sure 839.32 839.82 ES2010c.A.spurt.304
+D: Parts go figure 882.14 882.98 ES2010d.A.spurt.454
+B: Yeah 1011.91 1012.39 ES2010b.A.spurt.372
+C: Uh-huh 840.2 841.38 ES2010c.B.spurt.305
+D: Yeah no i thought that one of those words for presentation of course now 882.84 886.8 ES2010d.D.spurt.455
+B: And i'll give you this 1012.37 1013.08 ES2010b.C.spurt.374
+C: Uh-huh 845.24 846.48 ES2010c.B.spurt.307
+D: They come in different colours 887.79 889.64 ES2010d.B.spurt.456
+B: Ports 1014.28 1014.9 ES2010b.C.spurt.375
+C: Um 846.06 846.78 ES2010c.C.spurt.308
+D: Colours exactly I mean how many people wanna buy milk you found it back when we're like in high school just like that 888.74 895.08 ES2010d.A.spurt.457
+B: You can takes boards you can take c. news you entertainment you know it's like 1024.38 1028.1 ES2010b.C.spurt.381
+C: Mm 848.21 849.06 ES2010c.B.spurt.310
+D: Is that 889.26 889.95 ES2010d.D.spurt.458
+B: So anyway 1024.49 1025.26 ES2010b.A.spurt.382
+C: Right 848.59 848.86 ES2010c.C.spurt.311
+D: And he he he is just see oh yeah 890.67 897.1 ES2010d.D.spurt.459
+B: Seemingly 1024.97 1025.57 ES2010b.B.spurt.383
+C: Except it's sort of arnold not exactly 849.61 852.19 ES2010c.C.spurt.312
+D: Changeable faceplates 895.6 896.98 ES2010d.A.spurt.460
+B: Right 1028.46 1028.75 ES2010b.A.spurt.385
+C: Uh-huh 850.51 851.83 ES2010c.B.spurt.313
+D: everybody 897.1 897.71 ES2010d.D.spurt.461
+B: Right 1029.55 1029.89 ES2010b.A.spurt.386
+C: Sure why they're explaining in the way they are 852.86 854.91 ES2010c.C.spurt.314
+D: Uh-huh 898.36 899.07 ES2010d.D.spurt.462
+B: Okay 1041.46 1041.85 ES2010b.D.spurt.388
+C: Uh-huh 853.41 854.51 ES2010c.B.spurt.315
+D: it's just a minute yeah 899.07 901.08 ES2010d.D.spurt.463
+B: Right 1041.98 1042.23 ES2010b.A.spurt.390
+C: Um this sample sensor and sample speaker unit 855.39 858.48 ES2010c.C.spurt.316
+D: Anyway so 899.09 899.83 ES2010d.A.spurt.464
+B: Uh-huh 1042.99 1043.45 ES2010b.A.spurt.391
+C: For a so you say like good morning coffee maker and it would respond good morning joe 859.1 864.83 ES2010c.C.spurt.317
+D: No but 900.24 900.67 ES2010d.C.spurt.465
+B: Within that 1044.93 1045.54 ES2010b.B.spurt.392
+C: Mm 860.93 862.61 ES2010c.B.spurt.318
+D: That's only work 900.53 901.26 ES2010d.A.spurt.466
+B: Yes 1045.94 1046.46 ES2010b.A.spurt.393
+C: But 865.4 865.84 ES2010c.C.spurt.319
+D: Fun to university 900.88 901.96 ES2010d.B.spurt.467
+B: Logo 1048.08 1048.64 ES2010b.A.spurt.395
+C: Uh-huh 867.66 868.79 ES2010c.B.spurt.321
+D: it's a it's used 901.08 902.55 ES2010d.D.spurt.468
+B: Okay and 1050.56 1051.1 ES2010b.A.spurt.396
+C: Uh-huh 870.46 872.18 ES2010c.B.spurt.322
+D: A whole it's for t. v. Six is gonna buy 903.74 906.23 ES2010d.C.spurt.469
+B: So 1067.61 1068.08 ES2010b.A.spurt.400
+C: Mm 875.73 876.38 ES2010c.B.spurt.323
+D: What's that 903.75 906.07 ES2010d.D.spurt.470
+B: Alright 1069.57 1070.16 ES2010b.A.spurt.401
+C: And can change it 877.37 878.28 ES2010c.C.spurt.324
+D: It's it's look at it 907.8 910.25 ES2010d.D.spurt.471
+B: Okay 1077.39 1077.81 ES2010b.A.spurt.402
+C: Uh-huh 877.81 878.37 ES2010c.B.spurt.325
+D: That is the casing option work oh wow are you gonna say is yeah 910.89 916.25 ES2010d.D.spurt.472
+B: So our target group 1085.24 1086.46 ES2010b.A.spurt.403
+C: Mm 878.12 878.56 ES2010c.A.spurt.326
+D: I have some well she People 911.48 913.28 ES2010d.A.spurt.473
+B: Is 1087.21 1087.85 ES2010b.A.spurt.404
+C: Uh-huh 880.51 881.32 ES2010c.B.spurt.328
+D: That's okay we can create a commercial where they think that all the needs will be met 921.49 925.68 ES2010d.B.spurt.475
+B: You mentioned um older 1088.49 1089.97 ES2010b.A.spurt.405
+C: Mm 883.28 884.46 ES2010c.B.spurt.329
+D: No one 926.75 927.58 ES2010d.B.spurt.476
+B: People 1090.38 1090.86 ES2010b.A.spurt.406
+C: Right 883.76 884.09 ES2010c.A.spurt.330
+D: We could have like an advocate type of course automatically 928.37 931.4 ES2010d.D.spurt.477
+B: Uh-huh 1090.99 1091.32 ES2010b.C.spurt.407
+C: Right 885.35 885.69 ES2010c.A.spurt.332
+D: That's right yeah 928.46 929.72 ES2010d.B.spurt.478
+B: It's gonna make it nicer 1097.22 1098.56 ES2010b.C.spurt.409
+C: Mm 885.81 886.51 ES2010c.B.spurt.333
+D: Yeah 932.04 932.61 ES2010d.D.spurt.479
+B: Yeah 1099.7 1100.1 ES2010b.C.spurt.411
+C: So it's got a limited memory in to to programme it 890.52 893.22 ES2010c.C.spurt.334
+D: true that was well it's it's it's there 932.61 936.06 ES2010d.D.spurt.480
+B: Not antek good chance people can uh 1102.36 1104.07 ES2010b.A.spurt.412
+C: So so that they see that that's 893.72 896.0 ES2010c.C.spurt.336
+D: And so 934.49 935.08 ES2010d.B.spurt.481
+B: Use it i mean it they want something user friendly so 1104.46 1107.15 ES2010b.A.spurt.413
+C: Mm 895.14 895.5 ES2010c.A.spurt.337
+D: Marketing l. 934.6 935.4 ES2010d.A.spurt.482
+B: Yeah 1116.16 1116.5 ES2010b.A.spurt.415
+C: Uh-huh 901.67 902.98 ES2010c.B.spurt.340
+D: Says Use our remote 935.68 937.63 ES2010d.B.spurt.483
+B: Yeah 1118.27 1118.64 ES2010b.A.spurt.416
+C: I don't know Are we too hard to really i mean we could do it right 902.31 907.11 ES2010c.D.spurt.341
+D: Yeah 937.8 938.36 ES2010d.D.spurt.484
+B: Then 1118.7 1119.12 ES2010b.B.spurt.417
+C: Hmm 902.93 903.18 ES2010c.A.spurt.342
+D: Yeah 939.48 939.8 ES2010d.D.spurt.485
+B: Okay 1123.03 1123.43 ES2010b.A.spurt.419
+C: Programme 905.31 905.98 ES2010c.A.spurt.343
+D: Okay 942.0 942.91 ES2010d.D.spurt.486
+B: so what 1123.43 1123.9 ES2010b.A.spurt.420
+C: Okay 911.69 912.19 ES2010c.D.spurt.345
+D: Okay we're gonna wrap this up now um 942.01 944.23 ES2010d.A.spurt.487
+B: Um 1124.59 1125.06 ES2010b.A.spurt.421
+C: Hmm 914.92 915.25 ES2010c.A.spurt.347
+D: that's that that's right 942.91 945.53 ES2010d.D.spurt.488
+B: for Target group would we say 1125.06 1127.43 ES2010b.A.spurt.422
+C: So 915.54 916.07 ES2010c.B.spurt.348
+D: the costs are within the budget 944.23 945.76 ES2010d.A.spurt.489
+B: not kids obviously right 1131.6 1133.13 ES2010b.A.spurt.424
+C: I mean 917.21 917.73 ES2010c.B.spurt.349
+D: We evaluate the 946.18 947.05 ES2010d.A.spurt.490
+B: "'kay" 1134.18 1134.39 ES2010b.A.spurt.425
+C: But i guess we have to look at uh wide 919.81 922.07 ES2010c.B.spurt.350
+D: Yeah 946.28 947.12 ES2010d.D.spurt.491
+B: No kids need to know the user well 1135.1 1136.89 ES2010b.D.spurt.426
+C: Yeah 926.36 926.88 ES2010c.B.spurt.353
+D: right and r. s. n. mm 947.12 952.54 ES2010d.D.spurt.492
+B: Most of them will into if we pick it up there 1137.61 1139.72 ES2010b.B.spurt.427
+C: Mm 926.43 926.8 ES2010c.A.spurt.354
+D: And now going 948.14 949.24 ES2010d.A.spurt.493
+B: I don't know 1138.65 1139.17 ES2010b.A.spurt.429
+C: Like 928.78 929.05 ES2010c.D.spurt.356
+D: Questionnaire and meeting summary then we're going to Be okay 950.2 953.47 ES2010d.A.spurt.494
+B: Okay 1141.23 1141.68 ES2010b.A.spurt.430
+C: Did i mean just like the more advanced it is 929.99 932.29 ES2010c.D.spurt.357
+D: Like like that so 954.16 955.18 ES2010d.A.spurt.495
+B: Yeah i think we need a call 1143.34 1144.78 ES2010b.D.spurt.432
+C: Yeah 933.0 933.38 ES2010c.B.spurt.358
+D: We we see where you see that is that where you need to 956.12 961.21 ES2010d.D.spurt.496
+B: Um 1146.9 1147.54 ES2010b.A.spurt.433
+C: Better it'll sell 933.32 934.59 ES2010c.D.spurt.359
+D: Great thank you team you did a great job it was lovely working with you 956.44 960.0 ES2010d.A.spurt.497
+B: What about 1148.56 1149.39 ES2010b.A.spurt.434
+C: Uh-huh 945.14 945.71 ES2010c.A.spurt.362
+D: Links to the project leader 962.99 964.25 ES2010d.B.spurt.498
+B: Take it 1151.83 1152.23 ES2010b.A.spurt.435
+C: Yeah 946.98 947.48 ES2010c.B.spurt.364
+D: Yeah 963.52 963.64 ES2010d.D.spurt.499
+B: Um 1159.58 1160.07 ES2010b.D.spurt.438
+C: Um 955.65 956.12 ES2010c.A.spurt.366
+B: oh i would say you we should say dumber than the average per cent 1160.07 1163.17 ES2010b.D.spurt.439
+C: Stay and like the one that we saw go straight at earlier 962.72 966.09 ES2010c.A.spurt.368
+B: We should go for the lowest denominator 1163.28 1165.32 ES2010b.C.spurt.440
+C: Oh the base yeah 968.51 969.46 ES2010c.D.spurt.369
+B: Okay 1163.37 1163.72 ES2010b.A.spurt.441
+C: The base 969.33 970.0 ES2010c.A.spurt.370
+B: Yeah 1165.24 1165.73 ES2010b.D.spurt.442
+C: The charging base 970.62 971.75 ES2010c.A.spurt.371
+B: Right 1165.96 1166.29 ES2010b.A.spurt.443
+C: I think that 971.87 972.34 ES2010c.B.spurt.372
+B: Okay 1166.85 1167.19 ES2010b.A.spurt.444
+C: I was still like first to wanna know what it looks like four 971.93 974.46 ES2010c.C.spurt.373
+B: High school educated 1167.81 1168.82 ES2010b.C.spurt.446
+C: Hmm 974.77 975.35 ES2010c.A.spurt.375
+B: How will wobble to know be case 1171.48 1173.4 ES2010b.B.spurt.447
+C: Right 991.08 991.39 ES2010c.C.spurt.381
+B: There's no way you're gonna be able to make it you know 1173.88 1176.34 ES2010b.B.spurt.448
+C: Well 996.58 996.92 ES2010c.C.spurt.383
+B: Okay 1189.88 1190.45 ES2010b.A.spurt.449
+C: It could be like there's Yes i've well i 1000.0 1002.83 ES2010c.D.spurt.385
+B: Uh-huh 1215.11 1215.49 ES2010b.A.spurt.455
+C: This one is really comparable like i like the sides Whatever because 1008.0 1012.18 ES2010c.D.spurt.387
+B: You 1217.07 1217.33 ES2010b.C.spurt.457
+C: You're gonna lose it easier 1011.53 1012.79 ES2010c.C.spurt.388
+B: Does the most important ones 1219.07 1220.42 ES2010b.D.spurt.459
+C: But if we have that um 1012.98 1014.46 ES2010c.D.spurt.389
+B: Right and we wanna keep um 1220.47 1222.9 ES2010b.A.spurt.460
+C: The locator Do we do have to worry about that 1015.13 1017.47 ES2010c.D.spurt.390
+B: Yeah 1227.32 1227.73 ES2010b.D.spurt.462
+C: That's true 1017.6 1018.12 ES2010c.B.spurt.391
+B: Anyone else 1233.15 1234.11 ES2010b.A.spurt.463
+C: Yeah 1021.52 1021.8 ES2010c.C.spurt.393
+B: Um 1233.44 1233.96 ES2010b.C.spurt.464
+C: So 1027.89 1028.72 ES2010c.B.spurt.395
+B: Um 1242.31 1243.29 ES2010b.A.spurt.465
+C: Mm 1027.99 1028.33 ES2010c.D.spurt.396
+B: Do we want this thing to be able to 1244.81 1246.51 ES2010b.B.spurt.466
+C: Sorry 1028.37 1028.84 ES2010c.C.spurt.397
+B: Be 1247.13 1247.63 ES2010b.B.spurt.467
+C: That's the other thing is like 1029.25 1030.32 ES2010c.C.spurt.398
+B: I think so 1249.74 1250.34 ES2010b.A.spurt.469
+C: You know what 1032.16 1033.04 ES2010c.C.spurt.399
+B: Well you 1251.01 1251.41 ES2010b.A.spurt.470
+C: And so yes 1039.52 1040.24 ES2010c.D.spurt.402
+B: Sure yeah 1252.69 1253.27 ES2010b.D.spurt.471
+C: Right 1046.94 1047.4 ES2010c.D.spurt.404
+B: Say but 1253.46 1253.98 ES2010b.C.spurt.472
+C: Right 1056.62 1056.98 ES2010c.A.spurt.406
+B: And 1254.95 1255.31 ES2010b.B.spurt.474
+C: I agree it is gonna be bigger with the base are smaller with just 1057.45 1060.76 ES2010c.A.spurt.407
+B: Oh right yeah 1256.99 1257.73 ES2010b.C.spurt.477
+C: Yeah 1057.57 1058.08 ES2010c.D.spurt.408
+B: okay 1257.73 1258.19 ES2010b.C.spurt.478
+C: So it's 1058.09 1058.65 ES2010c.C.spurt.409
+B: Tracking 1262.6 1263.29 ES2010b.C.spurt.479
+C: Smaller with that 1059.87 1060.68 ES2010c.D.spurt.410
+B: Because people really or 1266.67 1268.12 ES2010b.D.spurt.480
+C: Yeah 1061.39 1061.85 ES2010c.D.spurt.411
+B: Okay 1266.69 1267.19 ES2010b.A.spurt.481
+C: Yeah 1062.62 1062.92 ES2010c.C.spurt.413
+B: More high-tech 1271.41 1272.2 ES2010b.D.spurt.483
+C: Yeah 1062.78 1063.22 ES2010c.B.spurt.414
+B: What if we gave it a charger 1272.36 1273.74 ES2010b.B.spurt.484
+C: Alright so what direction you wanna go in 1064.34 1065.99 ES2010c.A.spurt.415
+B: Right 1272.38 1272.7 ES2010b.A.spurt.485
+C: You wanna vote 1066.83 1067.51 ES2010c.A.spurt.416
+B: And on the charger just like a phone like you get a portable phone and it's got a charger and if you leave your phone somewhere 1274.36 1280.13 ES2010b.B.spurt.486
+C: Yeah 1073.69 1074.16 ES2010c.B.spurt.419
+B: Gonna base 1278.36 1279.14 ES2010b.C.spurt.487
+C: I'm away from 1074.23 1075.62 ES2010c.C.spurt.420
+B: Of the phone beeps for you 1283.62 1284.99 ES2010b.B.spurt.489
+C: The pace 1076.59 1077.14 ES2010c.C.spurt.421
+B: Do you think you'll really go for that now 1283.73 1285.33 ES2010b.D.spurt.490
+C: Bigger than the base I just seems clunky and 1076.83 1080.08 ES2010c.A.spurt.422
+B: Because 1286.87 1287.21 ES2010b.D.spurt.491
+C: Yeah 1077.65 1078.13 ES2010c.D.spurt.423
+B: Yeah 1290.05 1290.57 ES2010b.D.spurt.493
+C: Okay so 1078.41 1079.05 ES2010c.B.spurt.424
+B: With that and to our costs are well i wonder 1291.02 1292.89 ES2010b.A.spurt.494
+C: Smaller and smaller yeah 1084.17 1085.62 ES2010c.C.spurt.427
+B: I would think that because you have to develop a base 1293.42 1295.6 ES2010b.D.spurt.495
+C: Harder it is yeah 1085.46 1086.4 ES2010c.D.spurt.428
+B: Right 1295.6 1295.91 ES2010b.A.spurt.496
+C: yeah 1085.62 1085.89 ES2010c.C.spurt.429
+B: Yeah 1300.3 1300.61 ES2010b.B.spurt.498
+C: Okay 1086.28 1086.82 ES2010c.A.spurt.430
+B: Mm 1302.78 1303.46 ES2010b.D.spurt.499
+C: The palm of that is you forget to take a river park it goes know or 1086.91 1089.95 ES2010c.B.spurt.431
+B: Yeah 1306.08 1306.42 ES2010b.C.spurt.501
+C: Oh no 1090.21 1090.99 ES2010c.D.spurt.432
+B: Okay 1307.61 1308.04 ES2010b.A.spurt.502
+C: We can think 1091.16 1091.86 ES2010c.C.spurt.433
+B: Is it going to have a charger 1319.3 1320.67 ES2010b.A.spurt.505
+C: Um 1091.32 1092.5 ES2010c.B.spurt.434
+B: Or is it going to be 1321.7 1322.89 ES2010b.A.spurt.506
+C: you know what happens 1092.5 1093.57 ES2010c.B.spurt.435
+B: Two 1331.61 1331.94 ES2010b.D.spurt.509
+C: Yeah 1094.26 1094.69 ES2010c.D.spurt.436
+B: Disabled 1337.73 1338.36 ES2010b.C.spurt.511
+C: I've had three watches go that way too 1094.3 1096.19 ES2010c.B.spurt.437
+B: Um 1339.15 1339.7 ES2010b.C.spurt.512
+C: Oh watches at the at the course of a 1096.21 1098.69 ES2010c.C.spurt.438
+B: Then it demographic 1340.18 1341.3 ES2010b.C.spurt.513
+C: Ouch 1096.31 1096.92 ES2010c.D.spurt.439
+B: Different desires i don't know if you guys 1347.99 1350.45 ES2010b.D.spurt.515
+C: Pieces everywhere 1101.54 1102.49 ES2010c.B.spurt.442
+B: You could um 1350.92 1352.09 ES2010b.A.spurt.516
+C: Yeah 1107.59 1108.06 ES2010c.D.spurt.444
+B: It would a copy on to the 1352.4 1353.8 ES2010b.D.spurt.517
+C: well in 1108.06 1108.49 ES2010c.D.spurt.445
+B: We could have a 1352.53 1353.2 ES2010b.A.spurt.518
+C: Oh what did you uh sorry go ahead 1109.81 1111.49 ES2010c.A.spurt.447
+B: Oh 1353.72 1354.11 ES2010b.A.spurt.519
+C: How are you we away from them 1116.03 1117.78 ES2010c.C.spurt.449
+B: So 1360.41 1360.86 ES2010b.D.spurt.521
+C: Right 1121.59 1121.87 ES2010c.A.spurt.451
+B: Basically older people 1361.54 1362.81 ES2010b.D.spurt.522
+C: However 1122.22 1123.04 ES2010c.B.spurt.452
+B: I don't really care 1363.25 1364.08 ES2010b.D.spurt.523
+C: But would you recommend 1123.06 1123.95 ES2010c.A.spurt.453
+B: It's really in the people twenty five to thirty five I feel those are the people that really what a lot of t. v. the l. The the one to get addicted to 1365.26 1372.07 ES2010b.D.spurt.524
+C: Well we only wanna sell it for twenty five euro right 1124.05 1126.58 ES2010c.B.spurt.454
+B: Uh-huh 1370.43 1370.84 ES2010b.A.spurt.525
+C: Yeah 1124.07 1124.42 ES2010c.D.spurt.455
+B: Soap operas and 1372.57 1373.69 ES2010b.D.spurt.526
+C: Yeah 1126.95 1127.48 ES2010c.C.spurt.456
+B: Um 1373.13 1373.76 ES2010b.B.spurt.527
+C: Yeah it's uh 1129.34 1129.92 ES2010c.C.spurt.458
+B: Just seconds and stuff 1375.11 1376.32 ES2010b.D.spurt.529
+C: Mm 1131.61 1131.88 ES2010c.A.spurt.459
+B: Right 1379.6 1379.93 ES2010b.D.spurt.531
+C: Make them are we ready so to speak 1132.25 1134.18 ES2010c.B.spurt.460
+B: Right 1391.74 1392.07 ES2010b.A.spurt.533
+C: Selling point yeah 1133.18 1134.32 ES2010c.C.spurt.461
+B: Yeah 1397.36 1397.85 ES2010b.A.spurt.535
+C: We could say that they has or research shows that People are definitely willing to spend more 1133.65 1138.41 ES2010c.D.spurt.462
+B: Right 1403.13 1403.51 ES2010b.D.spurt.537
+C: Are we are structured by this 1139.01 1140.69 ES2010c.C.spurt.463
+B: A certain phrase 1407.08 1408.07 ES2010b.A.spurt.538
+C: Yeah 1139.17 1139.51 ES2010c.B.spurt.464
+B: Then it could beep 1408.96 1409.96 ES2010b.A.spurt.539
+C: Well be original 1142.48 1143.54 ES2010c.B.spurt.465
+B: Just go on 1411.69 1412.39 ES2010b.A.spurt.540
+C: Twenty five years 1143.09 1144.18 ES2010c.C.spurt.467
+B: Yeah 1412.74 1413.06 ES2010b.D.spurt.541
+C: Okay 1147.56 1147.87 ES2010c.B.spurt.468
+B: Mm 1419.29 1419.42 ES2010b.A.spurt.542
+C: Yeah 1160.49 1160.91 ES2010c.B.spurt.472
+B: Um 1428.05 1428.64 ES2010b.C.spurt.544
+C: Good point 1160.55 1160.97 ES2010c.D.spurt.473
+B: Okay anything else wanna discuss 1428.12 1430.14 ES2010b.A.spurt.545
+C: Good point 1161.31 1161.78 ES2010c.B.spurt.474
+B: What do we wanna include the numbers like a zero to nine 1430.97 1433.64 ES2010b.C.spurt.546
+C: Okay so 1162.38 1163.13 ES2010c.A.spurt.475
+B: Can we can see the leave them out 1435.39 1436.89 ES2010b.C.spurt.547
+C: Honestly i i'd recommend like um 1167.11 1169.24 ES2010c.B.spurt.477
+B: Um 1438.71 1439.35 ES2010b.A.spurt.548
+C: I would recommend maybe a uh a soft wait wait x. 1172.29 1175.96 ES2010c.B.spurt.479
+B: Yeah i like you have one two three four five six seven eight nine zero 1440.3 1443.52 ES2010b.C.spurt.550
+C: Oh 1182.8 1183.75 ES2010c.D.spurt.482
+B: Well we definitely need those 1443.55 1444.86 ES2010b.D.spurt.551
+C: Uh-huh 1182.84 1183.24 ES2010c.A.spurt.483
+B: How you how to leave those out 1444.54 1445.83 ES2010b.A.spurt.552
+C: Uh-huh 1184.14 1184.57 ES2010c.A.spurt.484
+B: Yeah 1444.96 1445.55 ES2010b.B.spurt.553
+C: That um n. s. y. 1189.09 1190.01 ES2010c.B.spurt.485
+B: Well i don't know i mean if you can serious like well 1446.25 1448.88 ES2010b.C.spurt.554
+C: Yeah 1189.23 1189.99 ES2010c.D.spurt.486
+B: I don't know if there's just a way of leaving them out 1449.5 1451.52 ES2010b.C.spurt.555
+C: no no it's 1189.99 1190.82 ES2010c.D.spurt.487
+B: Yeah 1453.72 1454.17 ES2010b.D.spurt.558
+C: Um 1190.41 1190.79 ES2010c.B.spurt.488
+B: Yeah that's true and Also remember that in this teenage we need you know like a hundred 1454.09 1459.0 ES2010b.A.spurt.559
+C: You know 1197.88 1198.29 ES2010c.B.spurt.490
+B: You don't knowing 1454.72 1455.78 ES2010b.D.spurt.560
+C: Okay 1198.78 1199.25 ES2010c.A.spurt.491
+B: But do 1459.4 1460.18 ES2010b.A.spurt.561
+C: Or we could like take off this 1206.25 1207.88 ES2010c.D.spurt.493
+B: You can go up past like Fifty 1462.52 1464.65 ES2010b.A.spurt.563
+C: They can buy 1206.79 1207.36 ES2010c.A.spurt.494
+B: So i can 1465.19 1465.8 ES2010b.A.spurt.564
+C: Make a comeback 1207.04 1208.06 ES2010c.B.spurt.495
+B: Whenever i get cable ideally t. v. 1466.26 1468.02 ES2010b.A.spurt.565
+C: Cases maybe 1207.99 1209.3 ES2010c.A.spurt.496
+B: So he gets to handle 1470.16 1471.25 ES2010b.B.spurt.566
+C: And by the extra case 1208.95 1210.48 ES2010c.B.spurt.497
+B: "'kay" um 1476.06 1477.54 ES2010b.A.spurt.568
+C: Okay 1210.26 1210.65 ES2010c.C.spurt.498
+B: Making sure that we can fit of the stuff that we want you want our budget 1484.72 1488.09 ES2010b.A.spurt.570
+C: Yeah 1217.11 1217.63 ES2010c.D.spurt.502
+B: Um 1489.31 1490.48 ES2010b.A.spurt.571
+C: But at this right 1220.42 1221.95 ES2010c.C.spurt.504
+B: Yeah "'cause" i don't have any material pricing information available to me at the moment so 1493.61 1497.55 ES2010b.B.spurt.572
+C: Yeah 1221.38 1221.8 ES2010c.D.spurt.505
+B: Of our company and the logo 1502.27 1503.96 ES2010b.A.spurt.574
+C: Okay 1222.02 1222.4 ES2010c.A.spurt.506
+B: Right 1504.36 1504.68 ES2010b.D.spurt.576
+C: To start 1222.49 1223.05 ES2010c.B.spurt.507
+B: I'm guessing 1506.77 1507.46 ES2010b.A.spurt.577
+C: Okay 1223.21 1223.59 ES2010c.A.spurt.508
+B: How do we 1508.41 1508.9 ES2010b.C.spurt.579
+C: Right 1230.93 1231.32 ES2010c.A.spurt.511
+B: And that are are 1508.61 1509.54 ES2010b.A.spurt.580
+C: Yeah 1231.47 1231.96 ES2010c.D.spurt.512
+B: Are the double r. 1509.28 1510.62 ES2010b.B.spurt.581
+C: Right 1231.77 1232.07 ES2010c.A.spurt.513
+B: Kinda make it entirely 1511.96 1513.38 ES2010b.C.spurt.583
+C: Yeah 1238.73 1239.33 ES2010c.C.spurt.517
+B: Or as they are 1514.36 1515.14 ES2010b.B.spurt.584
+C: The recognition for one is lost 1242.86 1245.44 ES2010c.A.spurt.519
+B: Or blue like stripes oh yeah 1515.59 1517.03 ES2010b.D.spurt.585
+C: You know 1245.85 1246.28 ES2010c.A.spurt.520
+B: yeah well 1517.03 1517.57 ES2010b.D.spurt.586
+C: Could we 1246.85 1247.33 ES2010c.A.spurt.521
+B: Yeah 1518.15 1519.0 ES2010b.B.spurt.587
+C: Tracker yeah 1247.04 1247.89 ES2010c.C.spurt.522
+B: Wait 1518.15 1518.65 ES2010b.D.spurt.588
+C: Yeah 1247.84 1248.31 ES2010c.A.spurt.523
+B: Yeah 1522.6 1522.99 ES2010b.D.spurt.590
+C: Mm 1254.24 1254.63 ES2010c.A.spurt.525
+B: But yeah like a thing and 1522.93 1524.75 ES2010b.C.spurt.591
+C: Right 1260.48 1260.76 ES2010c.A.spurt.527
+B: Right 1532.16 1532.49 ES2010b.A.spurt.593
+C: So 1260.92 1261.46 ES2010c.D.spurt.528
+B: So we simplified we don't need all those um 1537.21 1539.64 ES2010b.A.spurt.594
+C: Mm 1266.56 1267.15 ES2010c.D.spurt.530
+B: Play fast forward rewind 1540.02 1541.52 ES2010b.A.spurt.595
+C: I see i'm not i'm just really trying to because i know that's 1268.0 1271.12 ES2010c.D.spurt.531
+B: Right yeah 1541.63 1542.29 ES2010b.C.spurt.596
+C: I dunno which is so high tech 1274.96 1276.39 ES2010c.D.spurt.533
+B: Yeah 1542.47 1542.97 ES2010b.D.spurt.597
+C: Well 1275.28 1275.61 ES2010c.C.spurt.534
+B: Yeah 1556.61 1557.12 ES2010b.D.spurt.600
+C: My little sister got for christmas two that one is key finders that's a hearing 1276.18 1280.84 ES2010c.C.spurt.535
+B: Um do we go back to i'm a look really quickly back at those 1562.7 1566.57 ES2010b.A.spurt.601
+C: We have to whistle 1281.24 1282.31 ES2010c.C.spurt.536
+B: Two examples 1567.22 1568.07 ES2010b.C.spurt.602
+C: In a certain frequency for it work 1282.9 1284.9 ES2010c.C.spurt.537
+B: Yeah 1568.65 1568.98 ES2010b.C.spurt.604
+C: Yeah see that would just your t. v. um 1284.95 1286.91 ES2010c.B.spurt.538
+B: No that's uh yeah 1571.47 1572.5 ES2010b.C.spurt.605
+C: And then should laugh and it's are going off in a person you can turn it off 1285.38 1289.17 ES2010c.C.spurt.539
+B: T. v. i think that that's fine just to the t. v. me half of the average user need to 1585.28 1589.9 ES2010b.A.spurt.608
+C: Oh there 1289.13 1289.78 ES2010c.A.spurt.540
+B: Yeah kinda stuff 1590.68 1591.48 ES2010b.A.spurt.609
+C: So it became highly irritating 1289.84 1291.49 ES2010c.C.spurt.542
+B: Well yeah the arts is sort of like down at the bottom like farther away 1592.07 1596.52 ES2010b.C.spurt.610
+C: Okay 1291.43 1291.92 ES2010c.A.spurt.543
+B: And so it's like 1603.76 1604.45 ES2010b.C.spurt.613
+C: So i think having a key phrases much better 1292.29 1294.67 ES2010c.B.spurt.545
+B: English subtitles a family helpful 1618.89 1621.03 ES2010b.D.spurt.614
+C: Okay 1294.8 1295.25 ES2010c.A.spurt.546
+B: And uh well i don't know 1623.0 1623.92 ES2010b.C.spurt.616
+C: Yeah i dunno we just wanted to be a finder 1300.29 1302.31 ES2010c.D.spurt.548
+B: Video whatever language 1627.62 1629.26 ES2010b.A.spurt.617
+C: But that that 1300.92 1301.33 ES2010c.C.spurt.549
+B: You know 1629.76 1630.14 ES2010b.A.spurt.618
+C: Just uh 1301.07 1301.91 ES2010c.A.spurt.550
+B: Right 1630.39 1630.74 ES2010b.C.spurt.619
+C: No 1301.11 1301.63 ES2010c.B.spurt.551
+B: For the menus 1633.35 1634.46 ES2010b.A.spurt.622
+C: okay 1301.91 1302.42 ES2010c.A.spurt.552
+B: Uh-huh 1637.44 1637.86 ES2010b.B.spurt.623
+C: alright 1302.42 1302.73 ES2010c.A.spurt.553
+B: That's true 1638.61 1639.14 ES2010b.A.spurt.624
+C: Hmm 1302.84 1303.04 ES2010c.C.spurt.554
+B: Yeah 1639.21 1639.72 ES2010b.D.spurt.625
+C: Mm 1303.38 1303.85 ES2010c.B.spurt.555
+B: okay 1639.72 1640.12 ES2010b.D.spurt.627
+C: That would be like i made class um 1306.88 1309.34 ES2010c.B.spurt.557
+B: Okay 1641.83 1642.11 ES2010b.D.spurt.628
+C: Oh brilliant then 1309.81 1310.76 ES2010c.D.spurt.558
+B: yeah 1642.11 1642.47 ES2010b.D.spurt.629
+C: Yeah 1309.86 1310.35 ES2010c.B.spurt.559
+B: And then that uh 1642.65 1643.6 ES2010b.C.spurt.630
+C: So we don't actually have to go for 1310.74 1312.78 ES2010c.B.spurt.560
+B: Something that 1644.52 1645.17 ES2010b.A.spurt.631
+C: Well if they're just about the sample sensor sample speaker 1314.67 1317.75 ES2010c.B.spurt.561
+B: Such as the other one 1645.77 1647.35 ES2010b.D.spurt.632
+C: Yeah 1323.07 1323.55 ES2010c.D.spurt.563
+B: Looks maybe you know 1646.89 1648.37 ES2010b.A.spurt.633
+C: Okay 1323.4 1323.84 ES2010c.A.spurt.564
+B: The one over there on the well the engineering centred one 1647.97 1650.4 ES2010b.D.spurt.634
+C: good point 1323.55 1323.98 ES2010c.D.spurt.565
+B: Right right right right that one 1649.91 1651.8 ES2010b.A.spurt.635
+C: Uh 1325.07 1325.53 ES2010c.A.spurt.566
+B: Yeah 1650.47 1651.1 ES2010b.C.spurt.636
+C: I think triple a. it'll be later 1329.55 1331.32 ES2010c.D.spurt.569
+B: Right in the middle 1657.06 1658.4 ES2010b.A.spurt.638
+C: Two 1331.43 1331.8 ES2010c.A.spurt.570
+B: Include in the menu 1663.21 1664.23 ES2010b.C.spurt.640
+C: Could you run off of two 1332.9 1333.98 ES2010c.A.spurt.571
+B: Good 1670.02 1670.36 ES2010b.A.spurt.642
+C: Well it depends on what the energy is needed 1334.06 1335.87 ES2010c.C.spurt.573
+B: Anybody have anything else i'd like to 1682.25 1683.87 ES2010b.A.spurt.643
+C: I think well we could do would do too 1336.51 1339.39 ES2010c.B.spurt.574
+B: Had something but if 1686.49 1687.38 ES2010b.B.spurt.645
+C: Electronic products right 1346.82 1348.16 ES2010c.B.spurt.577
+B: Okay 1689.06 1689.66 ES2010b.A.spurt.646
+C: So there were more widely available now 1348.73 1350.65 ES2010c.B.spurt.578
+B: Here 1691.07 1691.51 ES2010b.A.spurt.647
+C: The more expensive than two 1354.48 1355.72 ES2010c.A.spurt.580
+B: Let's go back to the be included and see what we need to do next 1693.44 1697.31 ES2010b.A.spurt.648
+C: But if you have to replace it every five years 1356.34 1358.39 ES2010c.B.spurt.581
+B: And summary 1708.24 1709.36 ES2010b.A.spurt.650
+C: That's right 1360.96 1361.81 ES2010c.D.spurt.582
+B: Um 1717.13 1717.56 ES2010b.A.spurt.652
+C: That's in there 1361.41 1362.49 ES2010c.A.spurt.583
+B: Um 1725.11 1726.11 ES2010b.A.spurt.654
+C: As long as we saw with that 1362.15 1363.29 ES2010c.C.spurt.584
+B: "'cause" what work it's going to do 1726.67 1728.4 ES2010b.A.spurt.655
+C: Well how about uh an initial 1364.4 1366.16 ES2010c.B.spurt.585
+B: I eighty is going to work on the components concept 1728.88 1732.44 ES2010b.A.spurt.656
+C: Right that's what i meant 1368.67 1369.76 ES2010c.C.spurt.587
+B: Um 1732.93 1733.38 ES2010b.A.spurt.657
+C: Okay 1370.78 1371.17 ES2010c.A.spurt.590
+B: u. i. d. the user interface concept and you're going to do some trendwatching 1733.38 1737.57 ES2010b.A.spurt.658
+C: Yeah 1371.74 1372.19 ES2010c.A.spurt.591
+B: And if anybody has anything they'd like that 1742.5 1745.36 ES2010b.A.spurt.660
+C: Yeah 1371.79 1372.3 ES2010c.B.spurt.592
+B: No 1746.5 1746.74 ES2010b.A.spurt.661
+C: Right 1372.75 1373.07 ES2010c.A.spurt.593
+B: Okay well that's been especially over 1747.59 1749.22 ES2010b.A.spurt.662
+C: Okay 1380.22 1380.83 ES2010c.A.spurt.594
+C: Meaning it 1386.65 1387.5 ES2010c.A.spurt.597
+C: So yeah what's gonna look like 1388.41 1389.89 ES2010c.C.spurt.599
+C: Okay 1390.07 1390.46 ES2010c.A.spurt.600
+C: Um 1391.16 1391.57 ES2010c.C.spurt.601
+C: Yeah it could be whatever As long as or something 1404.37 1406.93 ES2010c.D.spurt.605
+C: Yeah 1405.89 1406.25 ES2010c.A.spurt.606
+C: Yeah 1408.99 1409.43 ES2010c.A.spurt.608
+C: Uh-huh 1411.47 1411.86 ES2010c.A.spurt.609
+C: Well 1411.58 1411.97 ES2010c.C.spurt.610
+C: Make sure that is if it got to pick though 1412.61 1415.15 ES2010c.C.spurt.611
+C: Mm 1418.62 1418.95 ES2010c.A.spurt.613
+C: Oh that's true 1418.89 1419.78 ES2010c.D.spurt.614
+C: Well and then 1421.29 1421.98 ES2010c.C.spurt.615
+C: Two point 1425.6 1426.1 ES2010c.D.spurt.617
+C: Yeah 1431.25 1431.66 ES2010c.A.spurt.619
+C: Yeah 1431.5 1431.92 ES2010c.C.spurt.620
+C: Oh i see which mean 1439.05 1439.9 ES2010c.A.spurt.624
+C: That could be particularly useful 1439.5 1441.12 ES2010c.B.spurt.625
+C: I think so 1441.3 1441.9 ES2010c.A.spurt.626
+C: Yeah i like that 1443.38 1444.28 ES2010c.A.spurt.628
+C: Yeah 1461.93 1462.49 ES2010c.D.spurt.630
+C: Like on the side of it 1462.89 1464.25 ES2010c.D.spurt.631
+C: Well if it's just up and down um 1462.97 1465.2 ES2010c.B.spurt.632
+C: mm 1465.2 1465.41 ES2010c.B.spurt.633
+C: If it's just up and down 1465.2 1466.14 ES2010c.D.spurt.634
+C: But is that for 1465.96 1467.59 ES2010c.C.spurt.635
+C: What it's 1469.36 1469.93 ES2010c.C.spurt.637
+C: I don't know 1470.1 1470.68 ES2010c.B.spurt.638
+C: Well you could do some on both sides 1470.56 1472.39 ES2010c.D.spurt.639
+C: Do we have both sides 1471.1 1472.29 ES2010c.C.spurt.640
+C: Can we 1473.3 1473.73 ES2010c.A.spurt.641
+C: And yeah 1473.45 1474.26 ES2010c.B.spurt.642
+C: Yeah 1478.76 1479.13 ES2010c.D.spurt.644
+C: So that you just not holding it it it changes that yeah 1479.18 1481.37 ES2010c.A.spurt.645
+C: "'cause" that it otherwise you know i just holding it in going like this you know 1479.46 1483.03 ES2010c.B.spurt.646
+C: Mm 1486.35 1486.72 ES2010c.A.spurt.650
+C: Okay 1487.69 1488.01 ES2010c.B.spurt.651
+C: Yeah 1487.82 1488.28 ES2010c.A.spurt.652
+C: Yeah 1487.85 1488.63 ES2010c.D.spurt.653
+C: you did uh 1488.63 1489.17 ES2010c.D.spurt.654
+C: Mm 1495.18 1496.01 ES2010c.B.spurt.655
+C: Mm 1498.04 1499.2 ES2010c.B.spurt.656
+C: He any other ideas 1500.39 1501.55 ES2010c.A.spurt.657
+C: Um 1503.24 1503.66 ES2010c.C.spurt.658
+C: Mm 1504.27 1504.92 ES2010c.B.spurt.659
+C: Oh yeah 1506.39 1507.12 ES2010c.A.spurt.661
+C: So that yeah 1517.43 1518.38 ES2010c.B.spurt.665
+C: With the r. r. like that 1522.62 1524.49 ES2010c.C.spurt.668
+C: You know 1525.65 1526.1 ES2010c.D.spurt.669
+C: I think maybe we should do it on um 1527.14 1528.54 ES2010c.A.spurt.671
+C: Yeah i don't think we should do that because that would just be you key um 1546.02 1549.98 ES2010c.B.spurt.678
+C: Yeah 1549.39 1549.77 ES2010c.A.spurt.679
+C: If we want to be visible and 1553.01 1554.84 ES2010c.A.spurt.681
+C: Um 1556.95 1557.51 ES2010c.A.spurt.682
+C: are all those those ones that you showed it 1557.51 1560.05 ES2010c.A.spurt.683
+C: Or they were um it's that sold or metallic looking 1560.52 1563.41 ES2010c.A.spurt.684
+C: Yeah 1563.81 1564.13 ES2010c.C.spurt.685
+C: Yeah 1565.58 1565.86 ES2010c.C.spurt.687
+C: But worth it was really yeah 1569.15 1571.22 ES2010c.A.spurt.688
+C: For a base one 1569.64 1570.57 ES2010c.B.spurt.689
+C: For the base or 1571.76 1572.74 ES2010c.A.spurt.690
+C: If we're going for the right or a look i think like a really shiny black would be cool 1573.16 1577.41 ES2010c.A.spurt.691
+C: Yeah 1577.81 1578.41 ES2010c.D.spurt.692
+C: or like a gun battle great "'cause" they combine it's the silver and black 1578.41 1582.46 ES2010c.D.spurt.693
+C: Yeah that's 1578.47 1579.23 ES2010c.A.spurt.694
+C: There you go and that would great 1582.15 1583.81 ES2010c.A.spurt.696
+C: Why 1597.87 1598.2 ES2010c.A.spurt.698
+C: We're off 1598.79 1599.39 ES2010c.B.spurt.699
+C: Mm 1600.53 1600.84 ES2010c.A.spurt.702
+C: Uh-huh 1600.66 1600.84 ES2010c.B.spurt.703
+C: Yes 1606.0 1606.53 ES2010c.C.spurt.704
+C: Right 1613.37 1613.7 ES2010c.A.spurt.706
+C: Hmm 1615.78 1616.32 ES2010c.D.spurt.707
+C: Of the actual 1621.49 1622.28 ES2010c.B.spurt.710
+C: Well we want it to be seen We need to be seen 1621.49 1623.91 ES2010c.D.spurt.709
+C: But you don't 1621.56 1622.09 ES2010c.C.spurt.712
+C: But it yeah you don't see uh 1622.81 1624.19 ES2010c.C.spurt.713
+C: Well 1627.62 1627.93 ES2010c.C.spurt.715
+C: Yeah 1628.46 1628.81 ES2010c.C.spurt.716
+C: Don't know if you can see it was like if 1632.61 1634.12 ES2010c.C.spurt.718
+C: Yeah 1636.71 1637.03 ES2010c.C.spurt.720
+C: It's like the second last slide 1637.58 1639.02 ES2010c.C.spurt.721
+C: Okay 1639.35 1639.76 ES2010c.A.spurt.722
+C: Interface yeah 1641.76 1642.62 ES2010c.C.spurt.725
+C: This one 1644.67 1645.21 ES2010c.A.spurt.726
+C: Um 1646.44 1647.04 ES2010c.C.spurt.727
+C: For some reason i can give it to just go to that slide directly 1646.88 1649.69 ES2010c.A.spurt.728
+C: Okay it's the very right one 1651.2 1652.89 ES2010c.C.spurt.729
+C: Mm 1665.99 1666.33 ES2010c.A.spurt.732
+C: Let's see have that one piece to stays in the rest some clips and 1666.4 1669.51 ES2010c.C.spurt.733
+C: Okay 1669.9 1670.3 ES2010c.A.spurt.734
+C: Yes 1670.72 1671.16 ES2010c.A.spurt.735
+C: Yes 1671.8 1672.35 ES2010c.A.spurt.737
+C: And then you have this slip like like clubs and and that's a bit changes 1674.42 1678.15 ES2010c.C.spurt.738
+C: Okay 1678.63 1679.0 ES2010c.A.spurt.739
+C: Yeah 1691.27 1691.82 ES2010c.C.spurt.742
+C: yeah 1691.82 1692.04 ES2010c.C.spurt.743
+C: yeah 1692.04 1692.32 ES2010c.C.spurt.744
+C: Yeah 1693.65 1693.97 ES2010c.B.spurt.746
+C: Right 1693.91 1694.27 ES2010c.C.spurt.747
+C: Okay 1695.13 1695.61 ES2010c.A.spurt.749
+C: Right 1698.71 1699.07 ES2010c.D.spurt.750
+C: It's all was just left open 1698.97 1700.3 ES2010c.C.spurt.751
+C: Yeah 1705.68 1706.01 ES2010c.D.spurt.753
+C: Some of the 1713.65 1714.25 ES2010c.D.spurt.754
+C: Anybody see anything that they liked in these ones 1713.7 1716.27 ES2010c.A.spurt.755
+C: Um 1721.58 1722.09 ES2010c.D.spurt.758
+C: You know 1725.25 1725.65 ES2010c.C.spurt.760
+C: Like if we like the one all the way on the left you can you can see it on your computer better 1728.04 1732.82 ES2010c.D.spurt.762
+C: Um 1733.21 1733.64 ES2010c.D.spurt.763
+C: Mm 1741.5 1741.8 ES2010c.A.spurt.766
+C: Oh that one 1743.85 1744.86 ES2010c.C.spurt.767
+C: Yeah 1745.65 1746.03 ES2010c.D.spurt.769
+C: Good 1748.5 1748.82 ES2010c.A.spurt.770
+C: Okay 1753.42 1753.85 ES2010c.A.spurt.771
+C: Any other ideas 1756.37 1757.88 ES2010c.A.spurt.772
+C: Or 1758.47 1758.98 ES2010c.A.spurt.773
+C: Parts 1759.61 1760.1 ES2010c.A.spurt.774
+C: Nice to be fairly in agreement about what we wanna do with this project so 1764.4 1767.85 ES2010c.A.spurt.775
+C: Uh-huh 1764.48 1765.05 ES2010c.C.spurt.776
+C: Right here 1766.26 1766.85 ES2010c.C.spurt.777
+C: Yeah 1767.82 1768.2 ES2010c.D.spurt.778
+C: Oh we catch up 1767.84 1768.46 ES2010c.C.spurt.779
+C: I think 1781.84 1782.34 ES2010c.A.spurt.781
+C: Um 1784.08 1784.99 ES2010c.B.spurt.783
+C: I'm guessing 1784.56 1785.07 ES2010c.A.spurt.784
+C: Okay well we're gonna write a thought 1788.7 1790.1 ES2010c.A.spurt.785
+C: Well i'll talk about it but i think that's pretty much we are gonna do right 1806.7 1809.84 ES2010c.A.spurt.789
+C: Mm 1807.05 1807.22 ES2010c.B.spurt.790
+C: Yeah 1810.46 1811.12 ES2010c.C.spurt.791
+C: And you're gonna do some product evaluation 1812.97 1815.1 ES2010c.A.spurt.792
+C: A an right now the i. d. in u. i. d. you two are going to work together on a prototype using modelling clay 1816.11 1821.78 ES2010c.A.spurt.793
+C: Great play doh 1823.0 1824.61 ES2010c.B.spurt.794
+C: Fine 1824.12 1824.53 ES2010c.C.spurt.795
+C: Okay and you shall be getting it you know be seen 1826.04 1828.37 ES2010c.A.spurt.796
+C: Mm 1828.84 1829.32 ES2010c.B.spurt.797
+C: Wonderful 1829.87 1830.61 ES2010c.B.spurt.799
+C: Who um 1831.96 1833.17 ES2010c.B.spurt.800
+C: Uh-huh 1834.13 1835.33 ES2010c.B.spurt.801
+C: Um 1835.89 1836.85 ES2010c.B.spurt.802
+C: Uh-huh 1836.49 1836.66 ES2010c.A.spurt.803
+C: Uh-huh 1836.66 1836.98 ES2010c.C.spurt.804
+C: mm 1836.85 1837.22 ES2010c.B.spurt.805
