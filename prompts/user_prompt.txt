@@ -6,35 +6,71 @@ CONTEXT (top-k snippets with citations):
 
 ---
 
-TASK: Create a MeetingBrief JSON with the following schema:
+TASK: Create a comprehensive, executive-ready MeetingBrief JSON.
 
+DETAILED REQUIREMENTS:
+
+1. LAST_MEETING_RECAP: 
+   - Summarize key decisions and outcomes (3-5 sentences)
+   - Highlight what changed since then
+   - Flag any unresolved issues that need follow-up
+
+2. OPEN_ACTION_ITEMS:
+   - List all incomplete actions with owners and deadlines
+   - For overdue items, add context on why they matter
+   - Suggest priority order based on urgency and dependencies
+
+3. KEY_TOPICS_TODAY:
+   - List 3-7 critical topics for this meeting
+   - For each topic, consider: What decision needs to be made? What's at stake?
+   - Identify any topics that need prep or pre-reads
+
+4. PROPOSED_AGENDA:
+   - Create realistic time-boxed agenda (usually 30-60 min)
+   - Start with quick wins, then tackle complex topics
+   - Include time for decisions, not just updates
+   - For each topic, suggest: What outcome should we achieve?
+   - Add strategic recommendations (e.g., "Consider X framework for Y topic")
+
+5. EVIDENCE:
+   - Cite sources for key facts and decisions
+   - Include actionable quotes or data points
+   - Highlight any concerning trends or red flags
+
+STRATEGIC ENHANCEMENT:
+- If you notice risks in the context, call them out with mitigation suggestions
+- If topics relate to common business challenges (hiring, budget, roadmap), 
+  offer relevant best practices or frameworks
+- Suggest questions the executive should ask during the meeting
+- Identify dependencies or bottlenecks that need attention
+
+SCHEMA:
 {
   "meeting_title": string,
   "time_window": string or null (format: "YYYY-MM-DD..YYYY-MM-DD" if inferable),
-  "last_meeting_recap": string (brief summary of previous meeting, or "No prior meeting context available"),
+  "last_meeting_recap": string (detailed summary with key outcomes and changes),
   "open_action_items": [
     {
       "owner": string (name or "TBD"),
-      "item": string (action description),
+      "item": string (specific action with context on why it matters),
       "due": string or null (YYYY-MM-DD format),
       "status": "open" | "blocked" | "done"
     }
   ],
-  "key_topics_today": [string],
+  "key_topics_today": [string (topic + why it's important)],
   "proposed_agenda": [
     {
-      "topic": string,
+      "topic": string (what + desired outcome),
       "minutes": int (estimated duration),
-      "owner": string or null
+      "owner": string or null (who leads this topic)
     }
   ],
   "evidence": [
     {
       "source": string (format: "material_id#c{chunk_idx}"),
-      "snippet": string (relevant excerpt)
+      "snippet": string (relevant excerpt with context)
     }
   ]
 }
 
 Output ONLY valid JSON, no markdown, no extra text.
-

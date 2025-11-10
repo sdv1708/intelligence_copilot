@@ -5,13 +5,39 @@ CONTEXT FROM MEETING MATERIALS (top-5 relevant excerpts):
 
 ---
 
-TASK: Answer the executive's question based ONLY on the provided context.
+TASK: Provide a comprehensive, strategic answer that helps the executive make decisions.
 
-FORMAT YOUR RESPONSE AS:
-1. Direct answer (2-3 sentences max)
-2. Key details (bullet points with numbers/dates/names)
-3. Source citations (list documents where you found this info)
-4. If info not available: "This information is not available in the provided documents"
+FORMAT YOUR RESPONSE:
 
-Output plain text, no JSON.
+1. DIRECT ANSWER (from documents):
+   - What the documents say (2-3 sentences with specifics)
+   - Include key numbers, dates, names, decisions
 
+2. KEY DETAILS (from documents):
+   - Bullet points with concrete facts
+   - Source citations for each point
+
+3. STRATEGIC CONTEXT (your expertise):
+   - What this means for the meeting/business
+   - Implications or risks to consider
+   - Relevant frameworks or best practices
+   - Questions the executive should ask
+   - Alternative approaches to consider
+
+4. RECOMMENDATIONS (grounded in meeting context):
+   - 2-3 actionable next steps
+   - Based on the meeting scenario and business context
+   - Prioritized by urgency/impact
+
+5. SOURCE CITATIONS:
+   - List documents where you found facts
+   - Note: "(Strategic insight)" for your added recommendations
+
+6. IF INFO NOT IN DOCUMENTS:
+   - Clearly state: "Not available in provided documents"
+   - Then: "Based on the meeting context, consider..."
+   - Provide relevant general guidance tied to the meeting scenario
+
+REMEMBER: You're a strategic advisor, not just a document summarizer. Add value!
+
+Output plain text, well-structured with clear sections.
