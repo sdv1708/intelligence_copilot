@@ -246,13 +246,32 @@ class CopilotOrchestrator:
             response_text = response.content
             
             # Parse JSON - handle markdown code fences robustly
+            original_response = response_text
             response_text = response_text.strip()
             
+            # Additional check: Verify we have content
+            if not response_text:
+                log_message("ERROR", "[Step 2] Empty response from LLM")
+                return {"success": False, "error": "LLM returned empty response. Please try again."}
+            
+            # Extract from markdown code blocks
             if "```json" in response_text:
                 start = response_text.find("```json") + 7
                 end = response_text.find("```", start)
                 if end != -1:
-                    response_text = response_text[start:end].strip()
+                    extracted = response_text[start:end].strip()
+                    # Additional check: Verify extraction worked
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] Markdown extraction may have failed, trying fallback")
+                else:
+                    # Closing ``` not found, extract from start to end of string
+                    extracted = response_text[start:].strip()
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] No closing markdown fence found, trying fallback")
             elif "```" in response_text:
                 start = response_text.find("```") + 3
                 newline_pos = response_text.find("\n", start)
@@ -260,14 +279,41 @@ class CopilotOrchestrator:
                     start = newline_pos + 1
                 end = response_text.find("```", start)
                 if end != -1:
-                    response_text = response_text[start:end].strip()
+                    extracted = response_text[start:end].strip()
+                    # Additional check: Verify extraction worked
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] Markdown extraction may have failed, trying fallback")
+                else:
+                    # Closing ``` not found, extract from start to end of string
+                    extracted = response_text[start:].strip()
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] No closing markdown fence found, trying fallback")
             
             # If still no JSON object, try to extract it
             if not response_text.startswith("{"):
                 start = response_text.find("{")
                 end = response_text.rfind("}") + 1
                 if start != -1 and end > start:
-                    response_text = response_text[start:end]
+                    extracted = response_text[start:end]
+                    # Additional check: Verify we got something valid
+                    if extracted and extracted.startswith("{") and extracted.endswith("}"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] JSON extraction found invalid boundaries")
+            
+            # Final check: Ensure we have valid JSON structure
+            if not response_text or not response_text.strip():
+                log_message("ERROR", "[Step 2] No JSON content found after extraction")
+                return {"success": False, "error": "Could not extract JSON from LLM response. Please try again."}
+            
+            if not response_text.startswith("{"):
+                log_message("ERROR", "[Step 2] Extracted content does not start with '{'")
+                log_message("ERROR", "[Step 2] First 200 chars: {}".format(response_text[:200]))
+                return {"success": False, "error": "LLM response does not contain valid JSON. Please try again."}
             
             # Clean common JSON syntax errors
             # Remove trailing commas before closing brackets/braces
