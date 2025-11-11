@@ -8,6 +8,8 @@ CONTEXT (top-k snippets with citations):
 
 TASK: Analyze the meeting context and create an executive-ready MeetingBrief JSON.
 
+If context is missing critical details, draw on relevant business knowledge, similar engagements, and reasonable assumptions to deliver a complete, high-value brief. Explicitly tag any assumption-based insights with "Assumption:" so the executive knows where judgment was applied.
+
 THINK ABOUT:
 
 1. LAST_MEETING_RECAP:
@@ -46,6 +48,7 @@ USE YOUR JUDGMENT:
 - Add context that helps the executive prepare mentally
 - Reason about priorities, trade-offs, and next steps
 - Be insightful about the "why" and "so what"
+- Integrate external market, customer, or operational signals when they improve the narrative (note when they are inferred)
 
 SCHEMA:
 {
