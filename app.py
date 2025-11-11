@@ -428,6 +428,8 @@ def main():
         st.session_state.materials_added = []
     if "generated_brief" not in st.session_state:
         st.session_state.generated_brief = None
+    if "brief_meeting_id" not in st.session_state:
+        st.session_state.brief_meeting_id = None
     if "show_download_options" not in st.session_state:
         st.session_state.show_download_options = False
     if "qa_history" not in st.session_state:
@@ -488,6 +490,7 @@ def main():
                     
                     st.session_state.current_meeting_id = meeting_id
                     st.session_state.generated_brief = None
+                    st.session_state.brief_meeting_id = None
                     st.session_state.qa_history = []
                     
                     st.success("✅ Meeting created successfully!")
@@ -512,8 +515,13 @@ def main():
                 
                 if selected_index is not None:
                     selected_meeting_id = meeting_ids[selected_index]
-                    st.session_state.current_meeting_id = selected_meeting_id
-                    st.session_state.generated_brief = None
+                    
+                    # Only clear brief if meeting has changed
+                    if st.session_state.current_meeting_id != selected_meeting_id:
+                        st.session_state.current_meeting_id = selected_meeting_id
+                        st.session_state.generated_brief = None
+                        st.session_state.brief_meeting_id = None
+                        st.session_state.qa_history = []
                     
                     selected_meeting = meetings[selected_index]
                     st.markdown(
@@ -627,6 +635,14 @@ def main():
         # Actions Section
         st.markdown("### ⚡ Actions")
         
+        # Reset button for clearing current view
+        if st.button("🔄 Clear Current View", use_container_width=True, help="Clear displayed brief and Q&A history"):
+            st.session_state.generated_brief = None
+            st.session_state.brief_meeting_id = None
+            st.session_state.qa_history = []
+            st.success("✅ View cleared")
+            st.rerun()
+        
         # Primary action button
         if st.button("🎯 Generate Brief", use_container_width=True, type="primary"):
             if not st.session_state.current_meeting_id:
@@ -649,6 +665,7 @@ def main():
                             
                             if result.get("success"):
                                 st.session_state.generated_brief = result["brief"]
+                                st.session_state.brief_meeting_id = st.session_state.current_meeting_id
                                 provider = result.get("provider", "unknown")
                                 st.success("✅ Brief ready • {}".format(provider.upper()))
                                 st.rerun()
@@ -671,6 +688,7 @@ def main():
                         )
                         if previous_brief:
                             st.session_state.generated_brief = previous_brief
+                            st.session_state.brief_meeting_id = st.session_state.current_meeting_id
                             st.success("✅ Brief loaded")
                             st.rerun()
                         else:
@@ -749,6 +767,7 @@ def main():
                         
                         if brief_data:
                             st.session_state.generated_brief = MeetingBrief(**brief_data["brief"])
+                            st.session_state.brief_meeting_id = st.session_state.current_meeting_id
                             st.success("✅ Loaded")
                             st.rerun()
                     except Exception as e:
@@ -787,8 +806,9 @@ def main():
             unsafe_allow_html=True
         )
     
-    # Display generated brief
-    if st.session_state.generated_brief:
+    # Display generated brief (with safety check to ensure brief matches current meeting)
+    if (st.session_state.generated_brief and 
+        st.session_state.brief_meeting_id == st.session_state.current_meeting_id):
         st.markdown('<h2 style="margin-top: 2rem;">📊 Meeting Brief</h2>', unsafe_allow_html=True)
         st.markdown('<div class="status-badge badge-success">✓ Generated</div>', unsafe_allow_html=True)
         st.markdown("---")
