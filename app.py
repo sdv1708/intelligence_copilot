@@ -1,4 +1,7 @@
-"""Streamlit UI for Executive Intelligence Copilot - Day 3 Implementation (LLM Integration)."""
+"""
+Executive Intelligence Copilot - Production UI
+Modern, premium interface for AI-powered meeting preparation
+"""
 
 import streamlit as st
 import os
@@ -6,19 +9,15 @@ from dotenv import load_dotenv
 from datetime import datetime
 import json
 
-# Import our core modules
 from core.db import Database
 from core.parsing import parse_file, parse_pasted_text
 from core.recall import recall_context, format_context_blocks
 from core.synth import generate_brief, load_prompt_template
 from core.schema import MeetingBrief
-
 from agents.copilot_orchestrator import CopilotOrchestrator
 
-# Load environment variables
 load_dotenv()
 
-# Set page config
 st.set_page_config(
     page_title="Executive Intelligence Copilot",
     page_icon="🧠",
@@ -26,15 +25,149 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
+# Enhanced custom CSS for premium look
 st.markdown("""
     <style>
+    /* Global Styles */
     .main {
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    /* Typography */
+    h1 {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    h2, h3 {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    /* Card Components */
+    .premium-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e8e8e8;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .premium-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    /* Status Badges */
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+    
+    .badge-success {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .badge-warning {
+        background: #fff3cd;
+        color: #856404;
+    }
+    
+    .badge-info {
+        background: #d1ecf1;
+        color: #0c5460;
+    }
+    
+    .badge-primary {
+        background: #cfe2ff;
+        color: #084298;
+    }
+    
+    /* Expander Styling */
+    .streamlit-expanderHeader {
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #e8e8e8;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+    }
+    
+    .streamlit-expanderHeader:hover {
+        background: #f8f9fa;
+        border-color: #d0d0d0;
+    }
+    
+    /* Button Enhancements */
+    .stButton > button {
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        border: none;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    }
+    
+    [data-testid="stSidebar"] .block-container {
         padding-top: 2rem;
     }
-    .stExpander {
-        border: 1px solid #e0e0e0;
-        border-radius: 5px;
+    
+    /* Input Fields */
+    .stTextInput > div > div > input,
+    .stTextArea > div > div > textarea {
+        border-radius: 8px;
+        border: 1px solid #d0d0d0;
+    }
+    
+    .stTextInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 1px #4a90e2;
+    }
+    
+    /* Data Tables */
+    .dataframe {
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e8e8e8;
+    }
+    
+    /* Info/Warning/Success Messages */
+    .stAlert {
+        border-radius: 8px;
+        border-left: 4px solid;
+    }
+    
+    /* Progress Bar */
+    .stProgress > div > div {
+        border-radius: 8px;
+    }
+    
+    /* Dividers */
+    hr {
+        margin: 2rem 0;
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e8e8e8, transparent);
     }
     </style>
 """, unsafe_allow_html=True)
@@ -112,43 +245,45 @@ def convert_brief_to_markdown(brief: MeetingBrief) -> str:
 
 
 def render_qa_section():
-    """Render the Q&A interface below the brief."""
+    """Render the Q&A interface with enhanced styling."""
     
     db = init_database()
     
     st.divider()
-    st.subheader("💬 Ask Questions About Your Documents")
     
-    # Check if meeting is selected
+    st.markdown('<h2 style="margin-bottom: 0.5rem;">💬 Interactive Q&A</h2>', unsafe_allow_html=True)
+    st.caption("Ask questions about your meeting materials and get AI-powered answers")
+    
     if not st.session_state.current_meeting_id:
-        st.info("👈 Select a meeting first to ask questions")
+        st.info("👈 Select a meeting first to start asking questions")
         return
     
-    # Check if materials exist
     materials = db.get_materials(st.session_state.current_meeting_id)
     if not materials:
-        st.info("📎 Upload materials first to enable Q&A")
+        st.info("📎 Upload materials first to enable intelligent Q&A")
         return
     
-    # Question input
-    col1, col2 = st.columns([4, 1])
+    # Question input with better layout
+    st.markdown("---")
+    col1, col2 = st.columns([5, 1])
+    
     with col1:
         question = st.text_input(
-            "Ask a question about your documents:",
-            placeholder="e.g., What are the top risks? Who owns the hiring plan? What budget was approved?",
-            key="qa_question_input"
+            "Your Question",
+            placeholder="What are the key risks mentioned? Who owns the Q4 deliverables? What's the budget allocation?",
+            key="qa_question_input",
+            label_visibility="collapsed"
         )
     
     with col2:
-        ask_button = st.button("💬 Ask", use_container_width=True)
+        ask_button = st.button("🔍 Ask", use_container_width=True, type="primary")
     
-    # Handle question submission
     if ask_button:
         if not question.strip():
             st.warning("Please enter a question")
         else:
             try:
-                with st.spinner("Searching documents and generating answer..."):
+                with st.spinner("🤔 Analyzing documents and generating answer..."):
                     orchestrator = init_orchestrator()
                     
                     result = orchestrator.answer_question(
@@ -160,7 +295,8 @@ def render_qa_section():
                         st.session_state.qa_history.append({
                             "question": question,
                             "answer": result["answer"],
-                            "sources": result["sources"]
+                            "sources": result["sources"],
+                            "timestamp": datetime.now().strftime("%H:%M:%S")
                         })
                         st.rerun()
                     else:
@@ -169,75 +305,120 @@ def render_qa_section():
             except Exception as e:
                 st.error("Error answering question: {}".format(str(e)))
     
-    # Display Q&A history
+    # Display conversation history with improved styling
     if st.session_state.qa_history:
-        st.subheader("📚 Conversation History")
+        st.markdown("---")
+        st.markdown('<h3 style="margin-top: 1.5rem;">📚 Conversation History</h3>', unsafe_allow_html=True)
         
         for i, qa in enumerate(reversed(st.session_state.qa_history)):
-            with st.expander("**Q:** {}".format(qa["question"]), expanded=(i == 0)):
-                st.write("**Answer:**")
-                st.info(qa["answer"])
+            with st.expander("**{}** • {}".format(qa["question"], qa.get("timestamp", "")), expanded=(i == 0)):
+                st.markdown("**Answer:**")
+                st.markdown('<div class="premium-card">{}</div>'.format(qa["answer"]), unsafe_allow_html=True)
                 
-                if qa["sources"]:
-                    st.write("**Sources:**")
+                if qa.get("sources"):
+                    st.markdown("**Referenced Sources:**")
                     for source in qa["sources"]:
-                        st.caption("📄 {}".format(source))
+                        st.markdown('<span class="status-badge badge-info">📄 {}</span>'.format(source), unsafe_allow_html=True)
 
 
 def render_brief(brief: MeetingBrief):
-    """Render a MeetingBrief object in the UI."""
+    """Render a MeetingBrief object with premium styling."""
     
-    # Recap tab
+    # Last Meeting Recap
     with st.expander("📋 Last Meeting Recap", expanded=True):
-        st.write(brief.last_meeting_recap)
+        st.markdown('<div class="premium-card">{}</div>'.format(brief.last_meeting_recap), unsafe_allow_html=True)
     
-    # Open action items tab
+    # Open Action Items with status badges
     with st.expander("✅ Open Action Items", expanded=True):
         if brief.open_action_items:
             for item in brief.open_action_items:
-                status_icon = "✅" if item.status == "done" else "🔴" if item.status == "blocked" else "🔵"
-                st.write(f"{status_icon} **{item.item}**")
-                st.caption(f"Owner: {item.owner} | Due: {item.due or 'Not set'} | Status: {item.status}")
+                # Status-based styling
+                if item.status == "done":
+                    badge_class = "badge-success"
+                    status_icon = "✅"
+                elif item.status == "blocked":
+                    badge_class = "badge-warning"
+                    status_icon = "🔴"
+                else:
+                    badge_class = "badge-info"
+                    status_icon = "🔵"
+                
+                st.markdown(
+                    '<div class="premium-card">'
+                    '{} <strong>{}</strong>'
+                    '<br><small>👤 {} • 📅 {} • <span class="status-badge {}">{}</span></small>'
+                    '</div>'.format(
+                        status_icon, 
+                        item.item,
+                        item.owner,
+                        item.due or "No deadline",
+                        badge_class,
+                        item.status.upper()
+                    ),
+                    unsafe_allow_html=True
+                )
         else:
             st.info("No action items found")
     
-    # Key topics tab
-    with st.expander("🎯 Key Topics Today", expanded=True):
+    # Key Topics
+    with st.expander("🎯 Key Topics for Discussion", expanded=True):
         if brief.key_topics_today:
-            for i, topic in enumerate(brief.key_topics_today, 1):
-                st.write(f"{i}. {topic}")
+            topics_html = '<div class="premium-card"><ol style="margin: 0; padding-left: 1.5rem;">'
+            for topic in brief.key_topics_today:
+                topics_html += '<li style="margin-bottom: 0.5rem;"><strong>{}</strong></li>'.format(topic)
+            topics_html += '</ol></div>'
+            st.markdown(topics_html, unsafe_allow_html=True)
         else:
             st.info("No topics identified")
     
-    # Agenda tab
+    # Proposed Agenda
     with st.expander("📅 Proposed Agenda", expanded=True):
         if brief.proposed_agenda:
             total_minutes = sum([item.minutes for item in brief.proposed_agenda])
+            
             for i, agenda_item in enumerate(brief.proposed_agenda, 1):
-                st.write(f"**{i}. {agenda_item.topic}** ({agenda_item.minutes} min)")
-                if agenda_item.owner:
-                    st.caption(f"Owner: {agenda_item.owner}")
-            st.caption(f"Total duration: {total_minutes} minutes")
+                owner_text = " • Owner: {}".format(agenda_item.owner) if agenda_item.owner else ""
+                st.markdown(
+                    '<div class="premium-card">'
+                    '<strong>{}. {}</strong> '
+                    '<span class="status-badge badge-primary">⏱ {} min</span>'
+                    '<br><small>{}</small>'
+                    '</div>'.format(
+                        i,
+                        agenda_item.topic,
+                        agenda_item.minutes,
+                        owner_text if owner_text else "No owner assigned"
+                    ),
+                    unsafe_allow_html=True
+                )
+            
+            st.markdown(
+                '<div style="text-align: right; margin-top: 1rem;">'
+                '<span class="status-badge badge-info">📊 Total Duration: {} minutes</span>'
+                '</div>'.format(total_minutes),
+                unsafe_allow_html=True
+            )
         else:
             st.info("No agenda items found")
     
-    # Evidence tab
+    # Evidence & Sources
     with st.expander("📌 Evidence & Sources", expanded=False):
         if brief.evidence:
             for i, evidence in enumerate(brief.evidence, 1):
-                st.write(f"**Source [{i}]:** {evidence.source}")
-                st.text(evidence.snippet)
-                st.divider()
+                st.markdown(
+                    '<div class="premium-card">'
+                    '<strong>Source [{}]:</strong> {}'
+                    '<pre style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-top: 0.5rem; white-space: pre-wrap;">{}</pre>'
+                    '</div>'.format(i, evidence.source, evidence.snippet),
+                    unsafe_allow_html=True
+                )
         else:
             st.info("No evidence found")
 
 def main():
-    """Main Streamlit app."""
+    """Main Streamlit application with premium UI."""
     
-    # Initialize database
     db = init_database()
-    
-    # Preload embedding model (cached, only runs once)
     model_info = preload_embedding_model()
     
     # Initialize session state
@@ -247,49 +428,59 @@ def main():
         st.session_state.materials_added = []
     if "generated_brief" not in st.session_state:
         st.session_state.generated_brief = None
+    if "brief_meeting_id" not in st.session_state:
+        st.session_state.brief_meeting_id = None
     if "show_download_options" not in st.session_state:
         st.session_state.show_download_options = False
     if "qa_history" not in st.session_state:
         st.session_state.qa_history = []
     
-    # Title
-    st.title("🧠 Executive Intelligence Copilot")
-    st.markdown("_Prepare for meetings in minutes, not hours._")
+    # Header section with gradient and better layout
+    col_title, col_status = st.columns([4, 1])
     
-    # Device info badge
-    device_emoji = "🚀" if model_info["device"] == "cuda" else "💻"
-    device_text = "GPU Accelerated" if model_info["device"] == "cuda" else "CPU Mode"
-    st.caption(f"{device_emoji} {device_text}")
+    with col_title:
+        st.title("🧠 Executive Intelligence Copilot")
+        st.markdown('<p style="font-size: 1.1rem; color: #6c757d; margin-top: -1rem;">AI-powered meeting preparation in minutes</p>', unsafe_allow_html=True)
     
-    # Streamlit Cloud storage warning
-    import os
+    with col_status:
+        device_badge_class = "badge-success" if model_info["device"] == "cuda" else "badge-info"
+        device_text = "⚡ GPU" if model_info["device"] == "cuda" else "💻 CPU"
+        st.markdown(
+            '<div style="text-align: right; margin-top: 1.5rem;">'
+            '<span class="status-badge {}">{}</span>'
+            '</div>'.format(device_badge_class, device_text),
+            unsafe_allow_html=True
+        )
+    
+    # Demo mode notification
     if os.path.exists("/tmp"):
-        st.info("ℹ️ **Demo Mode**: Running on Streamlit Cloud with temporary storage. Data will be reset when the app restarts. For production use with persistent storage, please contact us.")
+        st.info("ℹ️ **Demo Mode**: Running with temporary storage. Data persists during session only.")
     
-    # Sidebar
+    # Enhanced Sidebar
     with st.sidebar:
-        st.header("Meeting Preparation")
+        st.markdown('<h2 style="margin-bottom: 0.5rem;">⚙️ Control Panel</h2>', unsafe_allow_html=True)
+        st.caption("Manage your meetings and materials")
+        st.markdown("---")
         
-        # Tab 1: Create/Select Meeting
-        st.subheader("📅 Meeting Selection")
+        # Meeting Selection Section
+        st.markdown("### 📅 Meeting")
         meeting_action = st.radio(
-            "What would you like to do?",
-            ["Create New Meeting", "Select Existing Meeting"]
+            "Choose action",
+            ["Create New Meeting", "Select Existing Meeting"],
+            label_visibility="collapsed"
         )
         
         if meeting_action == "Create New Meeting":
-            st.write("**Create a New Meeting**")
-            meeting_title = st.text_input("Meeting Title", placeholder="e.g., AI Roadmap Sync")
+            st.markdown('<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">', unsafe_allow_html=True)
+            meeting_title = st.text_input("Meeting Title", placeholder="e.g., Q4 Strategy Review")
             meeting_date = st.date_input("Meeting Date")
-            attendees = st.text_input("Attendees (CSV)", placeholder="John, Jane, Bob")
-            tags = st.text_input("Tags (CSV)", placeholder="strategy, planning")
+            attendees = st.text_input("Attendees", placeholder="John, Jane, Bob")
+            tags = st.text_input("Tags", placeholder="strategy, planning")
             
-            if st.button("✅ Create Meeting"):
+            if st.button("✅ Create Meeting", use_container_width=True, type="primary"):
                 if meeting_title:
-                    # Convert date to string
                     date_str = meeting_date.strftime("%Y-%m-%d") if meeting_date else None
                     
-                    # Create meeting in database
                     meeting_id = db.create_meeting(
                         title=meeting_title,
                         date=date_str,
@@ -297,25 +488,23 @@ def main():
                         tags=tags if tags else None
                     )
                     
-                    # Store in session state
                     st.session_state.current_meeting_id = meeting_id
                     st.session_state.generated_brief = None
+                    st.session_state.brief_meeting_id = None
+                    st.session_state.qa_history = []
                     
-                    st.success(f"✅ Meeting '{meeting_title}' created successfully!")
-                    st.info(f"Meeting ID: {meeting_id}")
-                    st.rerun()  # Refresh to show in dropdown
+                    st.success("✅ Meeting created successfully!")
+                    st.rerun()
                 else:
                     st.error("Please enter a meeting title")
         
-        else:  # Select Existing
-            st.write("**Select Existing Meeting**")
+            st.markdown('</div>', unsafe_allow_html=True)
             
-            # Fetch all meetings from database
+        else:
             meetings = db.list_meetings()
             
             if meetings:
-                # Create a list of meeting display names
-                meeting_options = [f"{m['title']} ({m['date'] or 'No date'})" for m in meetings]
+                meeting_options = ["{} ({})".format(m['title'], m['date'] or 'No date') for m in meetings]
                 meeting_ids = [m['id'] for m in meetings]
                 
                 selected_index = st.selectbox(
@@ -326,65 +515,71 @@ def main():
                 
                 if selected_index is not None:
                     selected_meeting_id = meeting_ids[selected_index]
-                    st.session_state.current_meeting_id = selected_meeting_id
-                    st.session_state.generated_brief = None
                     
-                    # Display meeting details
+                    # Only clear brief if meeting has changed
+                    if st.session_state.current_meeting_id != selected_meeting_id:
+                        st.session_state.current_meeting_id = selected_meeting_id
+                        st.session_state.generated_brief = None
+                        st.session_state.brief_meeting_id = None
+                        st.session_state.qa_history = []
+                    
                     selected_meeting = meetings[selected_index]
-                    st.info(f"""
-                    **Selected:** {selected_meeting['title']}  
-                    **Date:** {selected_meeting['date'] or 'Not set'}  
-                    **Created:** {selected_meeting['created_at'][:10]}
-                    """)
+                    st.markdown(
+                        '<div style="background: #e8f4f8; padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">'
+                        '<small><strong>Selected:</strong> {}<br>'
+                        '<strong>Date:</strong> {}<br>'
+                        '<strong>Created:</strong> {}</small>'
+                        '</div>'.format(
+                            selected_meeting['title'],
+                            selected_meeting['date'] or 'Not set',
+                            selected_meeting['created_at'][:10]
+                        ),
+                        unsafe_allow_html=True
+                    )
             else:
-                st.info("No meetings found. Create a new meeting first!")
+                st.info("No meetings found. Create one above!")
                 st.session_state.current_meeting_id = None
         
-        st.divider()
+        st.markdown("---")
         
-        # Tab 2: Upload/Paste Materials
-        st.subheader("📎 Add Materials")
+        # Materials Section
+        st.markdown("### 📎 Materials")
         
-        # Check if a meeting is selected
         if st.session_state.current_meeting_id is None:
-            st.warning("⚠️ Please create or select a meeting first!")
+            st.warning("Select a meeting first")
         else:
             material_source = st.radio(
-                "How would you like to add materials?",
-                ["Upload Files", "Paste Text"]
+                "Add materials via",
+                ["Upload Files", "Paste Text"],
+                label_visibility="collapsed"
             )
             
             if material_source == "Upload Files":
                 uploaded_files = st.file_uploader(
-                    "Upload PDF, DOCX, PPTX, or TXT files",
+                    "Upload documents",
                     type=["pdf", "docx", "pptx", "txt"],
-                    accept_multiple_files=True
+                    accept_multiple_files=True,
+                    help="Supported: PDF, DOCX, PPTX, TXT"
                 )
                 
-                if uploaded_files and st.button("📤 Upload Files"):
+                if uploaded_files and st.button("📤 Upload Files", use_container_width=True, type="primary"):
                     meeting_id = st.session_state.current_meeting_id
                     success_count = 0
                     error_count = 0
                     
-                    # Create progress bar
                     progress_bar = st.progress(0)
                     status_text = st.empty()
                     
                     for idx, uploaded_file in enumerate(uploaded_files):
                         try:
-                            # Update progress
                             progress = (idx + 1) / len(uploaded_files)
                             progress_bar.progress(progress)
-                            status_text.text(f"Processing {uploaded_file.name}...")
+                            status_text.text("Processing {}...".format(uploaded_file.name))
                             
-                            # Read file content
                             file_bytes = uploaded_file.read()
-                            
-                            # Parse file
                             text, media_type = parse_file(file_bytes, uploaded_file.name)
                             
                             if text:
-                                # Save to database
                                 material_id = db.add_material(
                                     meeting_id=meeting_id,
                                     filename=uploaded_file.name,
@@ -392,91 +587,99 @@ def main():
                                     text=text
                                 )
                                 success_count += 1
-                                st.success(f"✅ Uploaded: {uploaded_file.name} ({len(text)} chars)")
                             else:
                                 error_count += 1
-                                st.warning(f"⚠️ Could not parse: {uploaded_file.name}")
                         except Exception as e:
                             error_count += 1
-                            st.error(f"❌ Error uploading {uploaded_file.name}: {str(e)}")
+                            st.error("Error: {}".format(str(e)))
                     
-                    # Clear progress indicators
                     progress_bar.empty()
                     status_text.empty()
                     
                     if success_count > 0:
                         st.session_state.generated_brief = None
-                        st.balloons()  # Celebrate!
-                        st.rerun()  # Refresh materials table
+                        st.session_state.qa_history = []
+                        st.success("✅ Uploaded {} file(s)".format(success_count))
+                        st.balloons()
+                        st.rerun()
             
-            else:  # Paste Text
+            else:
                 pasted_text = st.text_area(
-                    "Paste meeting notes, emails, or other text",
+                    "Paste text content",
                     height=150,
-                    placeholder="Paste your content here..."
+                    placeholder="Paste meeting notes, emails, or documents here...",
+                    help="Paste any text content you want to analyze"
                 )
                 
-                if pasted_text and st.button("📝 Save Pasted Text"):
+                if pasted_text and st.button("📝 Save Text", use_container_width=True, type="primary"):
                     meeting_id = st.session_state.current_meeting_id
-                    
-                    # Parse pasted text
                     text, media_type = parse_pasted_text(pasted_text)
                     
                     if text:
-                        # Save to database
                         material_id = db.add_material(
                             meeting_id=meeting_id,
                             filename="pasted_text.txt",
                             media_type=media_type,
                             text=text
                         )
-                        st.success(f"✅ Saved pasted text ({len(text)} characters)")
+                        st.success("✅ Saved ({:,} chars)".format(len(text)))
                         st.session_state.generated_brief = None
+                        st.session_state.qa_history = []
                         st.balloons()
-                        st.rerun()  # Refresh materials table
+                        st.rerun()
                     else:
-                        st.warning("⚠️ No text to save")
+                        st.warning("No text to save")
         
-        st.divider()
+        st.markdown("---")
         
-        # Tab 3: Actions
-        st.subheader("⚡ Actions")
+        # Actions Section
+        st.markdown("### ⚡ Actions")
         
-        col1, col2, col3 = st.columns(3)
+        # Reset button for clearing current view
+        if st.button("🔄 Clear Current View", use_container_width=True, help="Clear displayed brief and Q&A history"):
+            st.session_state.generated_brief = None
+            st.session_state.brief_meeting_id = None
+            st.session_state.qa_history = []
+            st.success("✅ View cleared")
+            st.rerun()
+        
+        # Primary action button
+        if st.button("🎯 Generate Brief", use_container_width=True, type="primary"):
+            if not st.session_state.current_meeting_id:
+                st.warning("Select a meeting first")
+            else:
+                materials = db.get_materials(st.session_state.current_meeting_id)
+                if not materials:
+                    st.warning("Upload materials first")
+                else:
+                    try:
+                        with st.spinner("🧠 Generating intelligent brief..."):
+                            orchestrator = init_orchestrator()
+                            current_meeting = db.get_meeting(st.session_state.current_meeting_id)
+                            
+                            result = orchestrator.generate_brief(
+                                meeting_id=st.session_state.current_meeting_id,
+                                title=current_meeting['title'],
+                                date=current_meeting['date'] or "Today"
+                            )
+                            
+                            if result.get("success"):
+                                st.session_state.generated_brief = result["brief"]
+                                st.session_state.brief_meeting_id = st.session_state.current_meeting_id
+                                provider = result.get("provider", "unknown")
+                                st.success("✅ Brief ready • {}".format(provider.upper()))
+                                st.rerun()
+                            else:
+                                st.error("Error: {}".format(result.get("error", "Unknown error")))
+                    
+                    except Exception as e:
+                        st.error("Error: {}".format(str(e)))
+        
+        # Secondary actions
+        col1, col2 = st.columns(2)
         
         with col1:
-            if st.button("🎯 Generate Brief", use_container_width=True):
-                if not st.session_state.current_meeting_id:
-                    st.warning("Please select a meeting first")
-                else:
-                    materials = db.get_materials(st.session_state.current_meeting_id)
-                    if not materials:
-                        st.warning("No materials found. Upload or paste materials first!")
-                    else:
-                        try:
-                            with st.spinner("Generating brief..."):
-                                orchestrator = init_orchestrator()
-                                current_meeting = db.get_meeting(st.session_state.current_meeting_id)
-                                
-                                result = orchestrator.generate_brief(
-                                    meeting_id=st.session_state.current_meeting_id,
-                                    title=current_meeting['title'],
-                                    date=current_meeting['date'] or "Today"
-                                )
-                                
-                                if result.get("success"):
-                                    st.session_state.generated_brief = result["brief"]
-                                    provider = result.get("provider", "unknown")
-                                    st.success("Brief generated successfully (provider: {})".format(provider))
-                                    st.rerun()
-                                else:
-                                    st.error("Error: {}".format(result.get("error", "Unknown error")))
-                        
-                        except Exception as e:
-                            st.error("Error generating brief: {}".format(str(e)))
-        
-        with col2:
-            if st.button("🔍 What happened last time?", use_container_width=True):
+            if st.button("🔍 Recall Previous", use_container_width=True):
                 if st.session_state.current_meeting_id:
                     try:
                         orchestrator = init_orchestrator()
@@ -485,164 +688,227 @@ def main():
                         )
                         if previous_brief:
                             st.session_state.generated_brief = previous_brief
-                            st.success("Previous brief retrieved successfully")
+                            st.session_state.brief_meeting_id = st.session_state.current_meeting_id
+                            st.success("✅ Brief loaded")
                             st.rerun()
                         else:
-                            st.warning("No previous brief found for this meeting")
+                            st.info("No previous brief found")
                     except Exception as e:
-                        st.error("Error recalling previous brief: {}".format(str(e)))
+                        st.error("Error: {}".format(str(e)))
                 else:
-                    st.warning("Please select a meeting first")
+                    st.warning("Select a meeting first")
         
-        with col3:
-            if st.button("💾 Download Brief", use_container_width=True):
+        with col2:
+            if st.button("💾 Download", use_container_width=True):
                 if st.session_state.generated_brief:
                     st.session_state.show_download_options = True
                 else:
-                    st.warning("Generate a brief first")
+                    st.warning("Generate brief first")
         
-        # Download options (shown when button clicked)
+        # Download options
         if st.session_state.get("show_download_options", False) and st.session_state.generated_brief:
-            st.divider()
-            st.subheader("💾 Download Options")
+            st.markdown("---")
+            st.markdown("**📥 Export Options**")
             
-            download_col1, download_col2, download_col3 = st.columns([1, 1, 2])
+            brief_dict = st.session_state.generated_brief.model_dump()
+            json_str = json.dumps(brief_dict, indent=2)
+            markdown_content = convert_brief_to_markdown(st.session_state.generated_brief)
             
-            with download_col1:
-                brief_dict = st.session_state.generated_brief.model_dump()
-                json_str = json.dumps(brief_dict, indent=2)
+            col1, col2 = st.columns(2)
+            
+            with col1:
                 st.download_button(
-                    label="📄 Download JSON",
+                    label="📄 JSON",
                     data=json_str,
-                    file_name="meeting_brief_{}.json".format(
-                        datetime.now().strftime("%Y%m%d_%H%M%S")
-                    ),
+                    file_name="brief_{}.json".format(datetime.now().strftime("%Y%m%d_%H%M%S")),
                     mime="application/json",
                     use_container_width=True
                 )
             
-            with download_col2:
-                markdown_content = convert_brief_to_markdown(st.session_state.generated_brief)
+            with col2:
                 st.download_button(
-                    label="📝 Download Markdown",
+                    label="📝 Markdown",
                     data=markdown_content,
-                    file_name="meeting_brief_{}.md".format(
-                        datetime.now().strftime("%Y%m%d_%H%M%S")
-                    ),
+                    file_name="brief_{}.md".format(datetime.now().strftime("%Y%m%d_%H%M%S")),
                     mime="text/markdown",
                     use_container_width=True
                 )
             
-            with download_col3:
-                if st.button("❌ Close", use_container_width=True):
+            if st.button("✕ Close", use_container_width=True):
                     st.session_state.show_download_options = False
                     st.rerun()
         
-        # Brief History Dropdown
+        # Brief History
         if st.session_state.current_meeting_id:
-            st.divider()
             brief_history = db.get_brief_history(st.session_state.current_meeting_id)
             
             if brief_history and len(brief_history) > 1:
-                st.subheader("📚 Brief History")
+                st.markdown("---")
+                st.markdown("### 📚 History")
                 
                 history_options = [
-                    "Generated on {} using {}".format(
-                        b['created_at'][:19], 
+                    "{} • {}".format(
+                        b['created_at'][:16], 
                         b['model'].upper()
                     ) 
                     for b in brief_history
                 ]
                 
                 selected_brief_idx = st.selectbox(
-                    "View previous versions",
+                    "Previous versions",
                     range(len(history_options)),
                     format_func=lambda x: history_options[x]
                 )
                 
-                if st.button("📖 Load Selected Brief", use_container_width=True):
+                if st.button("📖 Load", use_container_width=True):
                     try:
                         selected_brief_id = brief_history[selected_brief_idx]['id']
                         brief_data = db.get_brief_by_id(selected_brief_id)
                         
                         if brief_data:
                             st.session_state.generated_brief = MeetingBrief(**brief_data["brief"])
-                            st.success("Historical brief loaded")
+                            st.session_state.brief_meeting_id = st.session_state.current_meeting_id
+                            st.success("✅ Loaded")
                             st.rerun()
                     except Exception as e:
-                        st.error("Error loading brief: {}".format(str(e)))
+                        st.error("Error: {}".format(str(e)))
     
     # Main content area
-    st.header("📊 Meeting Brief")
+    st.markdown("---")
     
-    # Q&A Section (render after actions)
-    render_qa_section()
-    
-    # Show current meeting info
+    # Current meeting status card
     if st.session_state.current_meeting_id:
         current_meeting = db.get_meeting(st.session_state.current_meeting_id)
         if current_meeting:
-            st.info(f"**Current Meeting:** {current_meeting['title']} | **Date:** {current_meeting['date'] or 'Not set'}")
+            materials = db.get_materials(st.session_state.current_meeting_id)
+            materials_count = len(materials) if materials else 0
+            
+            st.markdown(
+                '<div class="premium-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">'
+                '<h3 style="margin: 0; color: white;">📅 {}</h3>'
+                '<p style="margin: 0.5rem 0 0 0; opacity: 0.9;">'
+                '📆 {} • 📎 {} material(s) • {} brief'
+                '</p>'
+                '</div>'.format(
+                    current_meeting['title'],
+                    current_meeting['date'] or 'No date set',
+                    materials_count,
+                    "✅ Generated" if st.session_state.generated_brief else "⏳ Pending"
+                ),
+                unsafe_allow_html=True
+            )
     else:
-        st.info("👈 Please create or select a meeting in the sidebar to get started")
+        st.markdown(
+            '<div class="premium-card" style="background: #f8f9fa; text-align: center; padding: 3rem;">'
+            '<h3 style="color: #6c757d;">👈 Get Started</h3>'
+            '<p style="color: #6c757d;">Create or select a meeting in the sidebar to begin</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
     
-    # Display generated brief
-    if st.session_state.generated_brief:
-        st.success("✅ Brief generated! See details below:")
+    # Display generated brief (with safety check to ensure brief matches current meeting)
+    if (st.session_state.generated_brief and 
+        st.session_state.brief_meeting_id == st.session_state.current_meeting_id):
+        st.markdown('<h2 style="margin-top: 2rem;">📊 Meeting Brief</h2>', unsafe_allow_html=True)
+        st.markdown('<div class="status-badge badge-success">✓ Generated</div>', unsafe_allow_html=True)
+        st.markdown("---")
         render_brief(st.session_state.generated_brief)
-    else:
-        # Show placeholder tabs
-        tab1, tab2, tab3, tab4 = st.tabs(["Recap", "Open Items", "Key Topics", "Agenda"])
-        
-        with tab1:
-            st.subheader("Last Meeting Recap")
-            st.info("*Click 'Generate Brief' to populate*")
-        
-        with tab2:
-            st.subheader("Open Action Items")
-            st.info("*Click 'Generate Brief' to populate*")
-        
-        with tab3:
-            st.subheader("Key Topics Today")
-            st.info("*Click 'Generate Brief' to populate*")
-        
-        with tab4:
-            st.subheader("Proposed Agenda")
-            st.info("*Click 'Generate Brief' to populate*")
+    elif st.session_state.current_meeting_id:
+        st.markdown('<h2 style="margin-top: 2rem;">📊 Meeting Brief</h2>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="premium-card" style="text-align: center; padding: 3rem; background: #f8f9fa;">'
+            '<h3 style="color: #6c757d;">No Brief Generated Yet</h3>'
+            '<p style="color: #6c757d;">Add materials and click "Generate Brief" in the sidebar</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
     
-    st.divider()
-    
-    # Materials table
-    st.subheader("📁 Materials Added")
-    
+    # Q&A Section
     if st.session_state.current_meeting_id:
-        # Fetch materials from database
+        render_qa_section()
+    
+    # Materials section with delete functionality
+    if st.session_state.current_meeting_id:
+        st.markdown("---")
+        col_title, col_actions = st.columns([4, 1])
+        with col_title:
+            st.markdown('<h2 style="margin-top: 2rem;">📁 Materials Library</h2>', unsafe_allow_html=True)
+        
         materials = db.get_materials(st.session_state.current_meeting_id)
         
         if materials:
-            # Create a DataFrame for better display
-            import pandas as pd
-            
-            # Prepare data for display
-            display_data = []
-            for mat in materials:
-                display_data.append({
-                    "Filename": mat['filename'],
-                    "Type": mat['media_type'].upper(),
-                    "Characters": f"{mat['char_count']:,}",
-                    "Added": mat['created_at'][:19]  # Show date and time
-                })
-            
-            df = pd.DataFrame(display_data)
-            st.dataframe(df, use_container_width=True, hide_index=True)
+            # Display each material with delete button
+            for idx, mat in enumerate(materials):
+                col1, col2, col3, col4, col5 = st.columns([3, 1, 1, 2, 1])
+                
+                with col1:
+                    st.markdown(
+                        '<div class="premium-card" style="padding: 0.75rem; margin-bottom: 0.5rem;">'
+                        '<strong>📄 {}</strong>'
+                        '</div>'.format(mat['filename']),
+                        unsafe_allow_html=True
+                    )
+                
+                with col2:
+                    st.markdown(
+                        '<div style="padding: 0.75rem; text-align: center;">'
+                        '<span class="status-badge badge-info">{}</span>'
+                        '</div>'.format(mat['media_type'].upper()),
+                        unsafe_allow_html=True
+                    )
+                
+                with col3:
+                    st.markdown(
+                        '<div style="padding: 0.75rem; text-align: center;">'
+                        '<small>{:,} chars</small>'
+                        '</div>'.format(mat['char_count']),
+                        unsafe_allow_html=True
+                    )
+                
+                with col4:
+                    st.markdown(
+                        '<div style="padding: 0.75rem; text-align: center;">'
+                        '<small>{}</small>'
+                        '</div>'.format(mat['created_at'][:16]),
+                        unsafe_allow_html=True
+                    )
+                
+                with col5:
+                    if st.button("🗑️ Delete", key=f"delete_{mat['id']}", help="Delete this file"):
+                        if db.delete_material(mat['id']):
+                            st.success("✅ File deleted")
+                            # Clear brief if materials change
+                            st.session_state.generated_brief = None
+                            st.session_state.brief_meeting_id = None
+                            st.rerun()
+                        else:
+                            st.error("Failed to delete file")
             
             # Summary
             total_chars = sum([m['char_count'] for m in materials])
-            st.caption(f"📊 Total: {len(materials)} material(s) | {total_chars:,} total characters")
+            st.markdown(
+                '<div style="text-align: right; margin-top: 1rem;">'
+                '<span class="status-badge badge-info">📊 {} material(s) • {:,} total characters</span>'
+                '</div>'.format(len(materials), total_chars),
+                unsafe_allow_html=True
+            )
         else:
-            st.info("No materials added yet. Upload files or paste text in the sidebar.")
-    else:
-        st.info("👈 Please create or select a meeting to see materials")
+            st.markdown(
+                '<div class="premium-card" style="text-align: center; padding: 2rem; background: #f8f9fa;">'
+                '<p style="color: #6c757d;">No materials yet • Add files or text in the sidebar</p>'
+                '</div>',
+                unsafe_allow_html=True
+            )
+    
+    # Footer
+    st.markdown("---")
+    st.markdown(
+        '<div style="text-align: center; padding: 2rem 0; color: #6c757d;">'
+        '<p style="margin: 0; font-size: 0.9rem;">Executive Intelligence Copilot</p>'
+        '<p style="margin: 0.5rem 0 0 0; font-size: 0.8rem;">Powered by AI • Built for Executives</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 
 if __name__ == "__main__":

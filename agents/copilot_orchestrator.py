@@ -113,6 +113,84 @@ class CopilotOrchestrator:
             log_message("ERROR", "[RecallTool] Error: {}".format(str(e)))
             return json.dumps({"success": False, "error": str(e)})
     
+    def _get_previous_meeting_context(self, current_meeting_id: str, title: str) -> str:
+        """
+        Get context from previous meetings with the same title.
+        Enables cross-meeting memory for recurring meetings.
+        
+        Args:
+            current_meeting_id: Current meeting ID (to exclude)
+            title: Meeting title to match
+        
+        Returns:
+            Formatted context string from previous meeting, or empty string
+        """
+        try:
+            # Get all meetings with same title
+            all_meetings = self.db.list_meetings()
+            same_title_meetings = [
+                m for m in all_meetings 
+                if m['title'].lower().strip() == title.lower().strip() 
+                and m['id'] != current_meeting_id
+            ]
+            
+            if not same_title_meetings:
+                log_message("INFO", "[Step 0] No previous meetings found with title: {}".format(title))
+                return ""
+            
+            # Get most recent meeting (by created_at)
+            most_recent = max(same_title_meetings, key=lambda x: x['created_at'])
+            log_message("INFO", "[Step 0] Found previous meeting: {} from {}".format(
+                most_recent['title'], most_recent['date'] or most_recent['created_at'][:10]
+            ))
+            
+            # Get brief from that meeting
+            prev_brief = self.db.get_latest_brief(most_recent['id'])
+            
+            if not prev_brief:
+                log_message("INFO", "[Step 0] Previous meeting has no brief yet")
+                return ""
+            
+            # Format previous meeting context
+            brief_data = prev_brief['brief']
+            context = "=" * 60 + "\n"
+            context += "PREVIOUS MEETING CONTEXT\n"
+            context += "=" * 60 + "\n\n"
+            context += "Previous Meeting: {}\n".format(most_recent['title'])
+            context += "Date: {}\n\n".format(most_recent['date'] or 'Not specified')
+            
+            context += "LAST MEETING SUMMARY:\n"
+            context += "{}\n\n".format(brief_data.get('last_meeting_recap', 'No recap available'))
+            
+            # Add action items if present
+            action_items = brief_data.get('open_action_items', [])
+            if action_items:
+                context += "ACTION ITEMS FROM LAST TIME:\n"
+                for item in action_items[:5]:  # Top 5 items
+                    context += "- {}: {} (Status: {})\n".format(
+                        item.get('owner', 'TBD'),
+                        item.get('item', ''),
+                        item.get('status', 'open')
+                    )
+                context += "\n"
+            
+            # Add key topics if present
+            key_topics = brief_data.get('key_topics_today', [])
+            if key_topics:
+                context += "KEY TOPICS DISCUSSED:\n"
+                for topic in key_topics[:3]:  # Top 3 topics
+                    context += "- {}\n".format(topic)
+                context += "\n"
+            
+            context += "=" * 60 + "\n\n"
+            
+            log_message("OK", "[Step 0] Added context from previous meeting")
+            return context
+            
+        except Exception as e:
+            log_message("ERROR", "[Step 0] Error getting previous meeting context: {}".format(str(e)))
+            return ""
+    
     def generate_brief(self, meeting_id: str, title: str, date: str) -> dict:
         """
         Main workflow: Generate brief using LangChain agents.
@@ -128,6 +206,10 @@ class CopilotOrchestrator:
         log_message("INFO", "=== Starting Brief Generation ===")
         
         try:
+            # Step 0: Check for previous meetings with same title (cross-meeting memory)
+            log_message("INFO", "[Step 0] Checking for previous meetings")
+            previous_meeting_context = self._get_previous_meeting_context(meeting_id, title)
+            
             # Step 1: Recall
             log_message("INFO", "[Step 1] Recalling context")
             recall_result = json.loads(self.recall_context_tool(meeting_id))
@@ -148,6 +230,10 @@ class CopilotOrchestrator:
             user_prompt = user_prompt.replace("{{date}}", date)
             user_prompt = user_prompt.replace("{{context_blocks}}", context_blocks)
             
+            # Add previous meeting context if available
+            if previous_meeting_context:
+                user_prompt = previous_meeting_context + "\n\n" + user_prompt
+            
             # Call LLM
             from langchain_core.messages import HumanMessage, SystemMessage
             
@@ -160,13 +246,32 @@ class CopilotOrchestrator:
             response_text = response.content
             
             # Parse JSON - handle markdown code fences robustly
+            original_response = response_text
             response_text = response_text.strip()
             
+            # Additional check: Verify we have content
+            if not response_text:
+                log_message("ERROR", "[Step 2] Empty response from LLM")
+                return {"success": False, "error": "LLM returned empty response. Please try again."}
+            
+            # Extract from markdown code blocks
             if "```json" in response_text:
                 start = response_text.find("```json") + 7
                 end = response_text.find("```", start)
                 if end != -1:
-                    response_text = response_text[start:end].strip()
+                    extracted = response_text[start:end].strip()
+                    # Additional check: Verify extraction worked
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] Markdown extraction may have failed, trying fallback")
+                else:
+                    # Closing ``` not found, extract from start to end of string
+                    extracted = response_text[start:].strip()
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] No closing markdown fence found, trying fallback")
             elif "```" in response_text:
                 start = response_text.find("```") + 3
                 newline_pos = response_text.find("\n", start)
@@ -174,14 +279,41 @@ class CopilotOrchestrator:
                     start = newline_pos + 1
                 end = response_text.find("```", start)
                 if end != -1:
-                    response_text = response_text[start:end].strip()
+                    extracted = response_text[start:end].strip()
+                    # Additional check: Verify extraction worked
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] Markdown extraction may have failed, trying fallback")
+                else:
+                    # Closing ``` not found, extract from start to end of string
+                    extracted = response_text[start:].strip()
+                    if extracted and extracted.startswith("{"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] No closing markdown fence found, trying fallback")
             
             # If still no JSON object, try to extract it
             if not response_text.startswith("{"):
                 start = response_text.find("{")
                 end = response_text.rfind("}") + 1
                 if start != -1 and end > start:
-                    response_text = response_text[start:end]
+                    extracted = response_text[start:end]
+                    # Additional check: Verify we got something valid
+                    if extracted and extracted.startswith("{") and extracted.endswith("}"):
+                        response_text = extracted
+                    else:
+                        log_message("WARNING", "[Step 2] JSON extraction found invalid boundaries")
+            
+            # Final check: Ensure we have valid JSON structure
+            if not response_text or not response_text.strip():
+                log_message("ERROR", "[Step 2] No JSON content found after extraction")
+                return {"success": False, "error": "Could not extract JSON from LLM response. Please try again."}
+            
+            if not response_text.startswith("{"):
+                log_message("ERROR", "[Step 2] Extracted content does not start with '{'")
+                log_message("ERROR", "[Step 2] First 200 chars: {}".format(response_text[:200]))
+                return {"success": False, "error": "LLM response does not contain valid JSON. Please try again."}
             
             # Clean common JSON syntax errors
             # Remove trailing commas before closing brackets/braces
@@ -190,6 +322,9 @@ class CopilotOrchestrator:
             response_text = re.sub(r'//[^\n]*', '', response_text)
             # Remove any comments (/* */ style)
             response_text = re.sub(r'/\*.*?\*/', '', response_text, flags=re.DOTALL)
+            
+            # Additional check: Detect incomplete/truncated JSON
+            response_text = self._repair_incomplete_json(response_text)
             
             # Parse JSON with better error handling
             try:
@@ -209,7 +344,34 @@ class CopilotOrchestrator:
                 
                 return {"success": False, "error": "Failed to parse LLM response: {}. Please try again.".format(str(e))}
             
-            brief = MeetingBrief(**brief_dict)
+            # Additional check: Validate required fields before creating MeetingBrief
+            required_fields = ['open_action_items', 'key_topics_today', 'proposed_agenda', 'evidence']
+            missing_fields = []
+            
+            # Check each required field
+            for field in required_fields:
+                if field not in brief_dict:
+                    missing_fields.append(field)
+                    brief_dict[field] = []
+                elif brief_dict[field] is None:
+                    missing_fields.append(field)
+                    brief_dict[field] = []
+                elif not isinstance(brief_dict[field], list):
+                    # Field exists but wrong type, convert or default
+                    log_message("WARNING", "[Step 2] Field '{}' is not a list, converting".format(field))
+                    brief_dict[field] = []
+            
+            if missing_fields:
+                log_message("WARNING", "[Step 2] Missing required fields: {}".format(missing_fields))
+                log_message("INFO", "[Step 2] Added default empty lists for missing fields")
+            
+            # Validate and create MeetingBrief
+            try:
+                brief = MeetingBrief(**brief_dict)
+            except Exception as validation_error:
+                log_message("ERROR", "[Step 2] Validation error: {}".format(str(validation_error)))
+                log_message("ERROR", "[Step 2] Brief dict keys: {}".format(list(brief_dict.keys())))
+                return {"success": False, "error": "LLM response missing required fields: {}. Please try again.".format(str(validation_error))}
             
             log_message("OK", "[Step 2] Brief synthesized")
             
@@ -316,6 +478,70 @@ class CopilotOrchestrator:
         except Exception as e:
             log_message("ERROR", "[QA] Error answering question: {}".format(str(e)))
             return {"success": False, "error": str(e)}
+    
+    def _repair_incomplete_json(self, json_str: str) -> str:
+        """
+        Attempt to repair incomplete/truncated JSON by closing open structures.
+        
+        Args:
+            json_str: Potentially incomplete JSON string
+            
+        Returns:
+            Repaired JSON string
+        """
+        if not json_str or not json_str.strip():
+            return json_str
+        
+        try:
+            # Check if JSON appears incomplete by looking for common truncation patterns
+            json_str = json_str.rstrip()
+            
+            # Pattern 1: Ends with incomplete key-value pair like "due": or "item":
+            # Check if ends with colon (incomplete value)
+            if json_str.rstrip().endswith(':'):
+                log_message("WARNING", "[JSON Repair] Detected incomplete key-value pair ending with ':', attempting repair")
+                # Find the last incomplete key-value pair and remove it
+                # Work backwards to find the start of the incomplete pair
+                lines = json_str.rstrip().split('\n')
+                # Remove lines that end with incomplete key-value pairs
+                while lines and (lines[-1].strip().endswith(':') or lines[-1].strip() == ''):
+                    removed = lines.pop()
+                    if removed.strip().endswith(':'):
+                        log_message("WARNING", "[JSON Repair] Removed incomplete line: {}".format(removed.strip()[:50]))
+                json_str = '\n'.join(lines).rstrip().rstrip(',')
+            
+            # Pattern 2: Ends with incomplete string value like "item": "text
+            if re.search(r':\s*"[^"]*$', json_str):
+                log_message("WARNING", "[JSON Repair] Detected incomplete string value, attempting repair")
+                # Close the string
+                json_str = json_str.rstrip() + '"'
+            
+            # Count open vs closed braces/brackets to determine what needs closing
+            open_braces = json_str.count('{')
+            close_braces = json_str.count('}')
+            open_brackets = json_str.count('[')
+            close_brackets = json_str.count(']')
+            
+            # Remove trailing comma if present
+            json_str = json_str.rstrip().rstrip(',')
+            
+            # Close incomplete arrays
+            while open_brackets > close_brackets:
+                json_str += ']'
+                close_brackets += 1
+                log_message("WARNING", "[JSON Repair] Closed incomplete array")
+            
+            # Close incomplete objects
+            while open_braces > close_braces:
+                json_str += '}'
+                close_braces += 1
+                log_message("WARNING", "[JSON Repair] Closed incomplete object")
+            
+            return json_str
+            
+        except Exception as e:
+            log_message("WARNING", "[JSON Repair] Could not repair incomplete JSON: {}".format(str(e)))
+            return json_str
     
     def _extract_sources_from_context(self, context_blocks: str) -> list:
         """

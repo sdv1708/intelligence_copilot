@@ -14,7 +14,7 @@ class Database:
         import os
         
         if db_path:
-            self.db_path = db_path
+            self.db_path = os.path.abspath(db_path)
         else:
             # Streamlit Cloud compatibility
             if os.path.exists("/tmp"):
@@ -23,16 +23,32 @@ class Database:
                 log_message("INFO", "Using Streamlit Cloud temp storage: /tmp/briefs.db")
             else:
                 # Running locally - use ./data
-                self.db_path = get_env("DB_PATH", "./data/briefs.db")
-                # Ensure local data directory exists
-                os.makedirs("./data", exist_ok=True)
-                log_message("INFO", "Using local storage: ./data/briefs.db")
+                default_path = "./data/briefs.db"
+                self.db_path = os.path.abspath(get_env("DB_PATH", default_path))
+                
+                # Ensure directory exists before connecting
+                db_dir = os.path.dirname(self.db_path)
+                if db_dir:  # Only create if there's a directory component
+                    os.makedirs(db_dir, exist_ok=True)
+                
+                log_message("INFO", "Using local storage: {}".format(self.db_path))
         
         self.init_db()
 
     def get_connection(self):
         """Get a database connection."""
-        return sqlite3.connect(self.db_path)
+        import os
+        try:
+            # Ensure directory exists
+            db_dir = os.path.dirname(self.db_path)
+            if db_dir and not os.path.exists(db_dir):
+                os.makedirs(db_dir, exist_ok=True)
+            return sqlite3.connect(self.db_path)
+        except sqlite3.OperationalError as e:
+            log_message("ERROR", "Failed to connect to database at: {}".format(self.db_path))
+            log_message("ERROR", "Error: {}".format(str(e)))
+            log_message("ERROR", "Directory exists: {}".format(os.path.exists(os.path.dirname(self.db_path))))
+            raise
 
     def init_db(self):
         """Initialize database schema."""
@@ -151,6 +167,26 @@ class Database:
         conn.close()
         log_message("INFO", f"Added material: {material_id} to meeting {meeting_id}")
         return material_id
+    
+    def delete_material(self, material_id: str) -> bool:
+        """Delete a material by ID. Returns True if successful."""
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM materials WHERE id = ?", (material_id,))
+            conn.commit()
+            deleted = cursor.rowcount > 0
+            conn.close()
+            
+            if deleted:
+                log_message("INFO", f"Deleted material: {material_id}")
+            else:
+                log_message("WARNING", f"Material not found: {material_id}")
+            
+            return deleted
+        except Exception as e:
+            log_message("ERROR", f"Failed to delete material {material_id}: {str(e)}")
+            return False
 
     def get_materials(self, meeting_id: str) -> List[Dict[str, Any]]:
         """Get all materials for a meeting."""

@@ -23,10 +23,10 @@ def get_llm_provider(provider_name: str = None):
             log_message("INFO", "Initializing Google Gemini")
             api_key = get_env("GEMINI_API_KEY")
             return ChatGoogleGenerativeAI(
-                model="gemini-2.5-flash-lite",
+                model="gemini-2.5-flash",
                 google_api_key=api_key,
-                temperature=0.3,
-                max_output_tokens=2000
+                temperature=0.7,
+                max_output_tokens=65535
             )
         
         elif provider_name == "openai":
@@ -35,18 +35,18 @@ def get_llm_provider(provider_name: str = None):
             return ChatOpenAI(
                 model="gpt-4",
                 openai_api_key=api_key,
-                temperature=0.3,
-                max_tokens=2000
+                temperature=0.7,
+                max_tokens=30000
             )
         
         elif provider_name == "anthropic":
             log_message("INFO", "Initializing Anthropic Claude")
             api_key = get_env("ANTHROPIC_API_KEY")
             return ChatAnthropic(
-                model="claude-3-opus-20240229",
+                model="claude-3-5-sonnet-20241022",
                 anthropic_api_key=api_key,
-                temperature=0.3,
-                max_tokens=2000
+                temperature=0.7,
+                max_tokens=30000
             )
         
         else:
