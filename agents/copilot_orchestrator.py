@@ -316,19 +316,28 @@ class CopilotOrchestrator:
                     # Remove any comments (/* */ style)
                     response_text = re.sub(r'/\*.*?\*/', '', response_text, flags=re.DOTALL)
                     
+                    # Try to repair common JSON issues
+                    response_text = self._repair_json(response_text)
+                    
                     # Parse JSON
                     brief_dict = json.loads(response_text)
                     log_message("OK", "[Step 2] Successfully parsed JSON (attempt {})".format(attempt + 1))
                     break  # Success, exit retry loop
                     
                 except json.JSONDecodeError as e:
-                    log_message("WARNING", "[Step 2] JSON parse error (attempt {}): {}".format(attempt + 1, str(e)))
+                    error_msg = str(e)
+                    log_message("WARNING", "[Step 2] JSON parse error (attempt {}): {}".format(attempt + 1, error_msg))
                     log_message("WARNING", "[Step 2] Problematic JSON (first 500 chars): {}".format(response_text[:500] if response_text else "EMPTY"))
                     
                     if attempt < max_retries - 1:
-                        log_message("INFO", "[Step 2] Retrying...")
-                        # Add more explicit instruction
-                        messages[-1].content = user_prompt + "\n\nCRITICAL: Return ONLY valid JSON matching the schema. No markdown, no explanations, no extra text. Just the JSON object."
+                        log_message("INFO", "[Step 2] Retrying with specific instructions...")
+                        # Add specific instruction based on error type
+                        if "unterminated string" in error_msg.lower() or "Unterminated string" in error_msg:
+                            retry_instruction = "\n\nCRITICAL: You have an unterminated string error. Make sure to:\n1. Escape all quotes inside string values with backslash: \\\"\n2. Close all string values properly\n3. Return ONLY valid JSON - no markdown, no explanations"
+                        else:
+                            retry_instruction = "\n\nCRITICAL: Return ONLY valid JSON matching the schema. No markdown, no explanations, no extra text. Just the JSON object. Escape all quotes inside strings with \\\"."
+                        
+                        messages[-1].content = user_prompt + retry_instruction
                         time.sleep(2)
                         continue
                     else:
@@ -461,6 +470,99 @@ class CopilotOrchestrator:
         except Exception as e:
             log_message("ERROR", "[QA] Error answering question: {}".format(str(e)))
             return {"success": False, "error": str(e)}
+    
+    def _repair_json(self, json_str: str) -> str:
+        """
+        Attempt to repair common JSON issues like unescaped quotes and unterminated strings.
+        
+        Args:
+            json_str: Potentially malformed JSON string
+            
+        Returns:
+            Repaired JSON string
+        """
+        if not json_str or not json_str.strip():
+            return json_str
+        
+        try:
+            # Try to fix unescaped quotes in string values
+            # Use a state machine to properly track string boundaries
+            result = []
+            i = 0
+            in_string = False
+            escape_next = False
+            
+            while i < len(json_str):
+                char = json_str[i]
+                
+                if escape_next:
+                    result.append(char)
+                    escape_next = False
+                    i += 1
+                    continue
+                
+                if char == '\\':
+                    result.append(char)
+                    escape_next = True
+                    i += 1
+                    continue
+                
+                if char == '"':
+                    if in_string:
+                        # We're inside a string, check if this quote should end the string
+                        # Look ahead to see what comes next
+                        next_chars = json_str[i+1:].lstrip()
+                        
+                        # If next char is : , } ] or end of string, this closes the string
+                        if (not next_chars or 
+                            next_chars[0] in [':', ',', '}', ']', '\n', '\r']):
+                            in_string = False
+                            result.append(char)
+                        else:
+                            # This is likely an unescaped quote inside the string, escape it
+                            result.append('\\"')
+                    else:
+                        # Starting a new string
+                        in_string = True
+                        result.append(char)
+                else:
+                    result.append(char)
+                
+                i += 1
+            
+            # If we ended while still in a string, try to close it
+            # But only if we're near the end (within last 100 chars)
+            if in_string and len(result) > 100:
+                # Try to find a reasonable place to close the string
+                # Look for common patterns that indicate end of value
+                repaired = ''.join(result)
+                # Try to close at the last reasonable position
+                if not repaired.rstrip().endswith('"'):
+                    # Find last comma, colon, or brace before end
+                    last_comma = repaired.rfind(',')
+                    last_colon = repaired.rfind(':')
+                    last_brace = max(repaired.rfind('}'), repaired.rfind(']'))
+                    
+                    # Close string before the structure ends
+                    if last_brace > len(repaired) - 50:
+                        repaired = repaired[:last_brace].rstrip()
+                        if not repaired.endswith('"'):
+                            repaired += '"'
+                        repaired += json_str[last_brace:]
+                    else:
+                        repaired += '"'
+                    
+                    return repaired
+                return repaired
+            elif in_string:
+                # Very short string that's unterminated, just close it
+                result.append('"')
+            
+            return ''.join(result)
+            
+        except Exception as e:
+            log_message("WARNING", "[JSON Repair] Could not repair JSON: {}".format(str(e)))
+            return json_str
     
     def _extract_sources_from_context(self, context_blocks: str) -> list:
         """
