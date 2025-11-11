@@ -497,9 +497,9 @@ def main():
                     st.rerun()
                 else:
                     st.error("Please enter a meeting title")
-            
-            st.markdown('</div>', unsafe_allow_html=True)
         
+            st.markdown('</div>', unsafe_allow_html=True)
+            
         else:
             meetings = db.list_meetings()
             
@@ -735,8 +735,8 @@ def main():
                 )
             
             if st.button("✕ Close", use_container_width=True):
-                st.session_state.show_download_options = False
-                st.rerun()
+                    st.session_state.show_download_options = False
+                    st.rerun()
         
         # Brief History
         if st.session_state.current_meeting_id:
