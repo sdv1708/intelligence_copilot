@@ -99,4 +99,3 @@ CRITICAL JSON RULES:
 - No trailing commas (e.g., NOT: ["item1", "item2",])
 - Escape quotes inside strings with \"
 - Close all brackets properly
-- Be detailed and comprehensive in all string fields

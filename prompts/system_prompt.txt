@@ -41,6 +41,126 @@ CRITICAL JSON FORMATTING:
 - Escape quotes in strings with \"
 - Ensure all brackets and braces are properly closed
 - Return ONLY the JSON object starting with { and ending with }
-- Do NOT wrap in markdown code blocks (no ```json or ```)
+- Do NOT wrap in markdown code blocks (no or ```)
 - Do NOT add any text before or after the JSON
-- Your entire response must be parseable as JSON
+- Your entire response must be parseable as JSON## **Updated `prompts/user_prompt.txt`:**
+
+MEETING_TITLE: {{title}}
+MEETING_DATE: {{date}}
+
+CONTEXT (top-k snippets with citations):
+{{context_blocks}}
+
+---
+
+TASK: Analyze the meeting context and create a comprehensive, executive-ready MeetingBrief JSON.
+
+THINK ABOUT:
+
+1. LAST_MEETING_RECAP:
+   - What were the key outcomes and decisions from previous meetings?
+   - What has changed or evolved since then?
+   - What unresolved threads need attention?
+   - Why do these matter for the upcoming meeting?
+   - Provide a detailed summary (3-5 sentences minimum) that gives full context
+
+2. OPEN_ACTION_ITEMS:
+   - What actions are pending and who owns them?
+   - Which items are critical vs. nice-to-have?
+   - Are there dependencies or blockers to flag?
+   - What's the strategic importance of each item?
+   - For each item, explain WHY it matters, not just WHAT it is
+   - Include specific context about urgency, impact, or dependencies
+
+3. KEY_TOPICS_TODAY:
+   - What are the most critical topics that need discussion?
+   - For each topic, explain:
+     * What decision needs to be made or what outcome is needed?
+     * Why is this topic important right now?
+     * What's at stake if we don't address it?
+     * What background context or preparation might be needed?
+   - Format each topic as: "Topic Name: [Detailed explanation of why it matters, what needs to be decided, and what's at stake]"
+   - Be specific and detailed - don't just list topic names
+   - Identify underlying issues, opportunities, or strategic implications
+
+4. PROPOSED_AGENDA:
+   - How should time be allocated to maximize value?
+   - What's the logical flow of topics?
+   - What outcomes should each agenda item achieve?
+   - Where might the discussion get stuck or need facilitation?
+   - Start with quick wins, then tackle complex topics
+   - Include time for decisions, not just updates
+   - For each topic, suggest: What outcome should we achieve?
+
+5. EVIDENCE:
+   - What key facts, data, or quotes support your analysis?
+   - What patterns or trends emerge from the materials?
+   - What concerns or red flags should the executive know about?
+   - Include actionable quotes or data points
+   - Highlight any concerning trends or red flags
+
+USE YOUR JUDGMENT:
+- Think beyond what's written to what's implied or missing
+- Identify strategic opportunities and risks
+- Connect ideas across different materials
+- Add context that helps the executive prepare mentally
+- Reason about priorities, trade-offs, and next steps
+- Be insightful about the "why" and "so what"
+- Provide detailed, comprehensive content - executives need full context
+
+SCHEMA:
+{
+  "meeting_title": string,
+  "time_window": string or null (format: "YYYY-MM-DD..YYYY-MM-DD" if inferable),
+  "last_meeting_recap": string (detailed summary with key outcomes and changes - 3-5 sentences minimum),
+  "open_action_items": [
+    {
+      "owner": string (name or "TBD"),
+      "item": string (specific action with context on why it matters - be detailed),
+      "due": string or null (YYYY-MM-DD format),
+      "status": "open" | "blocked" | "done"
+    }
+  ],
+  "key_topics_today": [
+    string (format: "Topic Name: [Detailed explanation of why it matters, what needs to be decided, what's at stake, and any strategic implications]")
+  ],
+  "proposed_agenda": [
+    {
+      "topic": string (what + desired outcome),
+      "minutes": int (estimated duration),
+      "owner": string or null (who leads this topic)
+    }
+  ],
+  "evidence": [
+    {
+      "source": string (format: "material_id#c{chunk_idx}"),
+      "snippet": string (relevant excerpt with context)
+    }
+  ]
+}
+
+Output ONLY valid JSON, no markdown, no extra text.
+
+CRITICAL JSON RULES:
+- Double quotes for all strings
+- No trailing commas (e.g., NOT: ["item1", "item2",])
+- Escape quotes inside strings with \"
+- Close all brackets properly
+- Be detailed and comprehensive in all string fields## **Changes:**
+1. System prompt:
+   - Added emphasis on detailed, comprehensive analysis
+   - Kept strategic reasoning focus
+   - Reinforced JSON formatting requirements
+
+2. User prompt:
+   - Key topics section: Changed to require detailed explanations with format: "Topic Name: [Detailed explanation...]"
+   - Open action items: Kept the same (as requested)
+   - Proposed agenda: Kept the same (as requested)
+   - Last meeting recap: Added requirement for 3-5 sentences minimum
+   - Added emphasis on being detailed and comprehensive throughout
+
+3. Schema notes:
+   - Added format guidance for key_topics_today
+   - Emphasized detailed content in all fields
+
+The key topics will now be formatted like:

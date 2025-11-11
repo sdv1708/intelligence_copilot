@@ -311,14 +311,31 @@ def render_qa_section():
         st.markdown('<h3 style="margin-top: 1.5rem;">📚 Conversation History</h3>', unsafe_allow_html=True)
         
         for i, qa in enumerate(reversed(st.session_state.qa_history)):
-            with st.expander("**{}** • {}".format(qa["question"], qa.get("timestamp", "")), expanded=(i == 0)):
-                st.markdown("**Answer:**")
-                st.markdown('<div class="premium-card">{}</div>'.format(qa["answer"]), unsafe_allow_html=True)
+            # Create a nicely formatted question card
+            question_html = f'''
+            <div class="premium-card" style="margin-bottom: 1rem; border-left: 4px solid #4f46e5;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                    <div style="flex: 1;">
+                        <h4 style="margin: 0; color: #1e293b; font-size: 1.1rem;">{qa["question"]}</h4>
+                    </div>
+                    <span style="color: #64748b; font-size: 0.85rem; white-space: nowrap; margin-left: 1rem;">🕐 {qa.get("timestamp", "")}</span>
+                </div>
+            </div>
+            '''
+            
+            st.markdown(question_html, unsafe_allow_html=True)
+            
+            # Answer in an expandable section
+            with st.expander("💡 View Answer", expanded=(i == 0)):
+                st.markdown('<div class="premium-card" style="background: #f8fafc; border: 1px solid #e2e8f0;">{}</div>'.format(qa["answer"]), unsafe_allow_html=True)
                 
                 if qa.get("sources"):
-                    st.markdown("**Referenced Sources:**")
+                    st.markdown("---")
+                    st.markdown("**📄 Referenced Sources:**")
                     for source in qa["sources"]:
-                        st.markdown('<span class="status-badge badge-info">📄 {}</span>'.format(source), unsafe_allow_html=True)
+                        st.markdown('<span class="status-badge badge-info" style="margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block;">{}</span>'.format(source), unsafe_allow_html=True)
+            
+            st.markdown("<br>", unsafe_allow_html=True)
 
 
 def render_brief(brief: MeetingBrief):
