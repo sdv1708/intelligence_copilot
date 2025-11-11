@@ -113,6 +113,84 @@ class CopilotOrchestrator:
             log_message("ERROR", "[RecallTool] Error: {}".format(str(e)))
             return json.dumps({"success": False, "error": str(e)})
     
+    def _get_previous_meeting_context(self, current_meeting_id: str, title: str) -> str:
+        """
+        Get context from previous meetings with the same title.
+        Enables cross-meeting memory for recurring meetings.
+        
+        Args:
+            current_meeting_id: Current meeting ID (to exclude)
+            title: Meeting title to match
+        
+        Returns:
+            Formatted context string from previous meeting, or empty string
+        """
+        try:
+            # Get all meetings with same title
+            all_meetings = self.db.list_meetings()
+            same_title_meetings = [
+                m for m in all_meetings 
+                if m['title'].lower().strip() == title.lower().strip() 
+                and m['id'] != current_meeting_id
+            ]
+            
+            if not same_title_meetings:
+                log_message("INFO", "[Step 0] No previous meetings found with title: {}".format(title))
+                return ""
+            
+            # Get most recent meeting (by created_at)
+            most_recent = max(same_title_meetings, key=lambda x: x['created_at'])
+            log_message("INFO", "[Step 0] Found previous meeting: {} from {}".format(
+                most_recent['title'], most_recent['date'] or most_recent['created_at'][:10]
+            ))
+            
+            # Get brief from that meeting
+            prev_brief = self.db.get_latest_brief(most_recent['id'])
+            
+            if not prev_brief:
+                log_message("INFO", "[Step 0] Previous meeting has no brief yet")
+                return ""
+            
+            # Format previous meeting context
+            brief_data = prev_brief['brief']
+            context = "=" * 60 + "\n"
+            context += "PREVIOUS MEETING CONTEXT\n"
+            context += "=" * 60 + "\n\n"
+            context += "Previous Meeting: {}\n".format(most_recent['title'])
+            context += "Date: {}\n\n".format(most_recent['date'] or 'Not specified')
+            
+            context += "LAST MEETING SUMMARY:\n"
+            context += "{}\n\n".format(brief_data.get('last_meeting_recap', 'No recap available'))
+            
+            # Add action items if present
+            action_items = brief_data.get('open_action_items', [])
+            if action_items:
+                context += "ACTION ITEMS FROM LAST TIME:\n"
+                for item in action_items[:5]:  # Top 5 items
+                    context += "- {}: {} (Status: {})\n".format(
+                        item.get('owner', 'TBD'),
+                        item.get('item', ''),
+                        item.get('status', 'open')
+                    )
+                context += "\n"
+            
+            # Add key topics if present
+            key_topics = brief_data.get('key_topics_today', [])
+            if key_topics:
+                context += "KEY TOPICS DISCUSSED:\n"
+                for topic in key_topics[:3]:  # Top 3 topics
+                    context += "- {}\n".format(topic)
+                context += "\n"
+            
+            context += "=" * 60 + "\n\n"
+            
+            log_message("OK", "[Step 0] Added context from previous meeting")
+            return context
+            
+        except Exception as e:
+            log_message("ERROR", "[Step 0] Error getting previous meeting context: {}".format(str(e)))
+            return ""
+    
     def generate_brief(self, meeting_id: str, title: str, date: str) -> dict:
         """
         Main workflow: Generate brief using LangChain agents.
@@ -128,6 +206,10 @@ class CopilotOrchestrator:
         log_message("INFO", "=== Starting Brief Generation ===")
         
         try:
+            # Step 0: Check for previous meetings with same title (cross-meeting memory)
+            log_message("INFO", "[Step 0] Checking for previous meetings")
+            previous_meeting_context = self._get_previous_meeting_context(meeting_id, title)
+            
             # Step 1: Recall
             log_message("INFO", "[Step 1] Recalling context")
             recall_result = json.loads(self.recall_context_tool(meeting_id))
@@ -147,6 +229,10 @@ class CopilotOrchestrator:
             user_prompt = user_template.replace("{{title}}", title)
             user_prompt = user_prompt.replace("{{date}}", date)
             user_prompt = user_prompt.replace("{{context_blocks}}", context_blocks)
+            
+            # Add previous meeting context if available
+            if previous_meeting_context:
+                user_prompt = previous_meeting_context + "\n\n" + user_prompt
             
             # Call LLM
             from langchain_core.messages import HumanMessage, SystemMessage
