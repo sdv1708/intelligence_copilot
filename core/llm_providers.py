@@ -23,7 +23,7 @@ def get_llm_provider(provider_name: str = None):
             log_message("INFO", "Initializing Google Gemini")
             api_key = get_env("GEMINI_API_KEY")
             return ChatGoogleGenerativeAI(
-                model="	gemini-2.5-flash-lite",
+                model="gemini-2.5-flash-lite",
                 google_api_key=api_key,
                 temperature=0.7,
                 max_output_tokens=30000
