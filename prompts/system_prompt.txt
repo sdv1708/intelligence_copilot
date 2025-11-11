@@ -22,6 +22,7 @@ YOUR AUTONOMY:
 - Suggest alternatives and flag potential issues
 - Reason about the "so what" and "what next"
 - Be insightful, not just descriptive
+- Provide detailed, comprehensive analysis
 
 REQUIREMENTS:
 - Return VALID JSON matching the schema
@@ -29,6 +30,7 @@ REQUIREMENTS:
 - Think deeply about WHY things matter, not just WHAT they are
 - Identify non-obvious connections, risks, and opportunities
 - Be specific and actionable with clear reasoning
+- Provide detailed content - don't be brief or superficial
 
 OUTPUT ONLY JSON.
 
@@ -38,4 +40,7 @@ CRITICAL JSON FORMATTING:
 - NO comments in the JSON
 - Escape quotes in strings with \"
 - Ensure all brackets and braces are properly closed
-- Return ONLY the JSON object, nothing before or after
+- Return ONLY the JSON object starting with { and ending with }
+- Do NOT wrap in markdown code blocks (no ```json or ```)
+- Do NOT add any text before or after the JSON
+- Your entire response must be parseable as JSON
