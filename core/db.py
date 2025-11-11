@@ -14,7 +14,7 @@ class Database:
         import os
         
         if db_path:
-            self.db_path = db_path
+            self.db_path = os.path.abspath(db_path)
         else:
             # Streamlit Cloud compatibility
             if os.path.exists("/tmp"):
@@ -23,16 +23,32 @@ class Database:
                 log_message("INFO", "Using Streamlit Cloud temp storage: /tmp/briefs.db")
             else:
                 # Running locally - use ./data
-                self.db_path = get_env("DB_PATH", "./data/briefs.db")
-                # Ensure local data directory exists
-                os.makedirs("./data", exist_ok=True)
-                log_message("INFO", "Using local storage: ./data/briefs.db")
+                default_path = "./data/briefs.db"
+                self.db_path = os.path.abspath(get_env("DB_PATH", default_path))
+                
+                # Ensure directory exists before connecting
+                db_dir = os.path.dirname(self.db_path)
+                if db_dir:  # Only create if there's a directory component
+                    os.makedirs(db_dir, exist_ok=True)
+                
+                log_message("INFO", "Using local storage: {}".format(self.db_path))
         
         self.init_db()
 
     def get_connection(self):
         """Get a database connection."""
-        return sqlite3.connect(self.db_path)
+        import os
+        try:
+            # Ensure directory exists
+            db_dir = os.path.dirname(self.db_path)
+            if db_dir and not os.path.exists(db_dir):
+                os.makedirs(db_dir, exist_ok=True)
+            return sqlite3.connect(self.db_path)
+        except sqlite3.OperationalError as e:
+            log_message("ERROR", "Failed to connect to database at: {}".format(self.db_path))
+            log_message("ERROR", "Error: {}".format(str(e)))
+            log_message("ERROR", "Directory exists: {}".format(os.path.exists(os.path.dirname(self.db_path))))
+            raise
 
     def init_db(self):
         """Initialize database schema."""
