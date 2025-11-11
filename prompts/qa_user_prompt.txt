@@ -1,43 +1,47 @@
-EXECUTIVE QUESTION: {{question}}
+QUESTION: {{question}}
 
-CONTEXT FROM MEETING MATERIALS (top-5 relevant excerpts):
+RELEVANT EXCERPTS FROM MATERIALS:
 {{context_blocks}}
 
 ---
 
-TASK: Provide a comprehensive, strategic answer that helps the executive make decisions.
+INSTRUCTIONS:
 
-FORMAT YOUR RESPONSE:
+Write a clear, executive-ready response that helps your executive understand the 
+situation and make decisions.
 
-1. DIRECT ANSWER (from documents):
-   - What the documents say (2-3 sentences with specifics)
-   - Include key numbers, dates, names, decisions
+STRUCTURE YOUR RESPONSE NATURALLY:
 
-2. KEY DETAILS (from documents):
-   - Bullet points with concrete facts
-   - Source citations for each point
+**Opening Paragraph:**
+Start with the most important answer. What does the executive need to know right now? 
+Be direct and specific.
 
-3. STRATEGIC CONTEXT (your expertise):
-   - What this means for the meeting/business
-   - Implications or risks to consider
-   - Relevant frameworks or best practices
-   - Questions the executive should ask
-   - Alternative approaches to consider
+**Context & Details:**
+Elaborate with key facts from the documents. What's the full picture? Include relevant 
+numbers, dates, names, or decisions. Keep it focused on what matters.
 
-4. RECOMMENDATIONS (grounded in meeting context):
-   - 2-3 actionable next steps
-   - Based on the meeting scenario and business context
-   - Prioritized by urgency/impact
+**Strategic Insight:**
+Step back and explain what this means. What are the implications? What patterns or 
+risks should they be aware of? Use your business expertise here.
 
-5. SOURCE CITATIONS:
-   - List documents where you found facts
-   - Note: "(Strategic insight)" for your added recommendations
+**Recommended Actions:**
+End with clear next steps. What should the executive do? Consider? Ask? Prioritize 
+by urgency and impact.
 
-6. IF INFO NOT IN DOCUMENTS:
-   - Clearly state: "Not available in provided documents"
-   - Then: "Based on the meeting context, consider..."
-   - Provide relevant general guidance tied to the meeting scenario
+---
 
-REMEMBER: You're a strategic advisor, not just a document summarizer. Add value!
+IMPORTANT GUIDELINES:
 
-Output plain text, well-structured with clear sections.
+- Write in natural paragraphs, not rigid numbered sections
+- Bold important facts/actions for easy scanning
+- If documents lack details, use your expertise to provide context anyway
+- Don't mechanically list sources - weave them into your narrative naturally
+- Think: "What would a trusted Chief of Staff say in this situation?"
+- Even with limited data, provide strategic value by considering the business context
+
+EXAMPLE TONE:
+Bad: "1. DIRECT ANSWER: The documents state X. 2. KEY DETAILS: Source A says..."
+Good: "Based on the meeting materials, **the project is delayed by 2 months** due to 
+resource constraints. This puts your Q1 launch at risk. Here's what I'm seeing..."
+
+Output your response as natural, flowing text that an executive would want to read.
