@@ -151,6 +151,26 @@ class Database:
         conn.close()
         log_message("INFO", f"Added material: {material_id} to meeting {meeting_id}")
         return material_id
+    
+    def delete_material(self, material_id: str) -> bool:
+        """Delete a material by ID. Returns True if successful."""
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM materials WHERE id = ?", (material_id,))
+            conn.commit()
+            deleted = cursor.rowcount > 0
+            conn.close()
+            
+            if deleted:
+                log_message("INFO", f"Deleted material: {material_id}")
+            else:
+                log_message("WARNING", f"Material not found: {material_id}")
+            
+            return deleted
+        except Exception as e:
+            log_message("ERROR", f"Failed to delete material {material_id}: {str(e)}")
+            return False
 
     def get_materials(self, meeting_id: str) -> List[Dict[str, Any]]:
         """Get all materials for a meeting."""

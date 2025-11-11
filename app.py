@@ -827,31 +827,67 @@ def main():
     if st.session_state.current_meeting_id:
         render_qa_section()
     
-    # Materials section
+    # Materials section with delete functionality
     if st.session_state.current_meeting_id:
         st.markdown("---")
-        st.markdown('<h2 style="margin-top: 2rem;">📁 Materials Library</h2>', unsafe_allow_html=True)
+        col_title, col_actions = st.columns([4, 1])
+        with col_title:
+            st.markdown('<h2 style="margin-top: 2rem;">📁 Materials Library</h2>', unsafe_allow_html=True)
         
         materials = db.get_materials(st.session_state.current_meeting_id)
         
         if materials:
-            import pandas as pd
+            # Display each material with delete button
+            for idx, mat in enumerate(materials):
+                col1, col2, col3, col4, col5 = st.columns([3, 1, 1, 2, 1])
+                
+                with col1:
+                    st.markdown(
+                        '<div class="premium-card" style="padding: 0.75rem; margin-bottom: 0.5rem;">'
+                        '<strong>📄 {}</strong>'
+                        '</div>'.format(mat['filename']),
+                        unsafe_allow_html=True
+                    )
+                
+                with col2:
+                    st.markdown(
+                        '<div style="padding: 0.75rem; text-align: center;">'
+                        '<span class="status-badge badge-info">{}</span>'
+                        '</div>'.format(mat['media_type'].upper()),
+                        unsafe_allow_html=True
+                    )
+                
+                with col3:
+                    st.markdown(
+                        '<div style="padding: 0.75rem; text-align: center;">'
+                        '<small>{:,} chars</small>'
+                        '</div>'.format(mat['char_count']),
+                        unsafe_allow_html=True
+                    )
+                
+                with col4:
+                    st.markdown(
+                        '<div style="padding: 0.75rem; text-align: center;">'
+                        '<small>{}</small>'
+                        '</div>'.format(mat['created_at'][:16]),
+                        unsafe_allow_html=True
+                    )
+                
+                with col5:
+                    if st.button("🗑️ Delete", key=f"delete_{mat['id']}", help="Delete this file"):
+                        if db.delete_material(mat['id']):
+                            st.success("✅ File deleted")
+                            # Clear brief if materials change
+                            st.session_state.generated_brief = None
+                            st.session_state.brief_meeting_id = None
+                            st.rerun()
+                        else:
+                            st.error("Failed to delete file")
             
-            display_data = []
-            for mat in materials:
-                display_data.append({
-                    "📄 File": mat['filename'],
-                    "Type": mat['media_type'].upper(),
-                    "Size": "{:,} chars".format(mat['char_count']),
-                    "Added": mat['created_at'][:16]
-                })
-            
-            df = pd.DataFrame(display_data)
-            st.dataframe(df, use_container_width=True, hide_index=True)
-            
+            # Summary
             total_chars = sum([m['char_count'] for m in materials])
             st.markdown(
-                '<div style="text-align: right; margin-top: 0.5rem;">'
+                '<div style="text-align: right; margin-top: 1rem;">'
                 '<span class="status-badge badge-info">📊 {} material(s) • {:,} total characters</span>'
                 '</div>'.format(len(materials), total_chars),
                 unsafe_allow_html=True
