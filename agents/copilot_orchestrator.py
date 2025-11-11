@@ -344,7 +344,34 @@ class CopilotOrchestrator:
                 
                 return {"success": False, "error": "Failed to parse LLM response: {}. Please try again.".format(str(e))}
             
-            brief = MeetingBrief(**brief_dict)
+            # Additional check: Validate required fields before creating MeetingBrief
+            required_fields = ['open_action_items', 'key_topics_today', 'proposed_agenda', 'evidence']
+            missing_fields = []
+            
+            # Check each required field
+            for field in required_fields:
+                if field not in brief_dict:
+                    missing_fields.append(field)
+                    brief_dict[field] = []
+                elif brief_dict[field] is None:
+                    missing_fields.append(field)
+                    brief_dict[field] = []
+                elif not isinstance(brief_dict[field], list):
+                    # Field exists but wrong type, convert or default
+                    log_message("WARNING", "[Step 2] Field '{}' is not a list, converting".format(field))
+                    brief_dict[field] = []
+            
+            if missing_fields:
+                log_message("WARNING", "[Step 2] Missing required fields: {}".format(missing_fields))
+                log_message("INFO", "[Step 2] Added default empty lists for missing fields")
+            
+            # Validate and create MeetingBrief
+            try:
+                brief = MeetingBrief(**brief_dict)
+            except Exception as validation_error:
+                log_message("ERROR", "[Step 2] Validation error: {}".format(str(validation_error)))
+                log_message("ERROR", "[Step 2] Brief dict keys: {}".format(list(brief_dict.keys())))
+                return {"success": False, "error": "LLM response missing required fields: {}. Please try again.".format(str(validation_error))}
             
             log_message("OK", "[Step 2] Brief synthesized")
             
