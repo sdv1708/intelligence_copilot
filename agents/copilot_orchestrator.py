@@ -323,6 +323,9 @@ class CopilotOrchestrator:
             # Remove any comments (/* */ style)
             response_text = re.sub(r'/\*.*?\*/', '', response_text, flags=re.DOTALL)
             
+            # Additional check: Detect incomplete/truncated JSON
+            response_text = self._repair_incomplete_json(response_text)
+            
             # Parse JSON with better error handling
             try:
                 brief_dict = json.loads(response_text)
@@ -448,6 +451,70 @@ class CopilotOrchestrator:
         except Exception as e:
             log_message("ERROR", "[QA] Error answering question: {}".format(str(e)))
             return {"success": False, "error": str(e)}
+    
+    def _repair_incomplete_json(self, json_str: str) -> str:
+        """
+        Attempt to repair incomplete/truncated JSON by closing open structures.
+        
+        Args:
+            json_str: Potentially incomplete JSON string
+            
+        Returns:
+            Repaired JSON string
+        """
+        if not json_str or not json_str.strip():
+            return json_str
+        
+        try:
+            # Check if JSON appears incomplete by looking for common truncation patterns
+            json_str = json_str.rstrip()
+            
+            # Pattern 1: Ends with incomplete key-value pair like "due": or "item":
+            # Check if ends with colon (incomplete value)
+            if json_str.rstrip().endswith(':'):
+                log_message("WARNING", "[JSON Repair] Detected incomplete key-value pair ending with ':', attempting repair")
+                # Find the last incomplete key-value pair and remove it
+                # Work backwards to find the start of the incomplete pair
+                lines = json_str.rstrip().split('\n')
+                # Remove lines that end with incomplete key-value pairs
+                while lines and (lines[-1].strip().endswith(':') or lines[-1].strip() == ''):
+                    removed = lines.pop()
+                    if removed.strip().endswith(':'):
+                        log_message("WARNING", "[JSON Repair] Removed incomplete line: {}".format(removed.strip()[:50]))
+                json_str = '\n'.join(lines).rstrip().rstrip(',')
+            
+            # Pattern 2: Ends with incomplete string value like "item": "text
+            if re.search(r':\s*"[^"]*$', json_str):
+                log_message("WARNING", "[JSON Repair] Detected incomplete string value, attempting repair")
+                # Close the string
+                json_str = json_str.rstrip() + '"'
+            
+            # Count open vs closed braces/brackets to determine what needs closing
+            open_braces = json_str.count('{')
+            close_braces = json_str.count('}')
+            open_brackets = json_str.count('[')
+            close_brackets = json_str.count(']')
+            
+            # Remove trailing comma if present
+            json_str = json_str.rstrip().rstrip(',')
+            
+            # Close incomplete arrays
+            while open_brackets > close_brackets:
+                json_str += ']'
+                close_brackets += 1
+                log_message("WARNING", "[JSON Repair] Closed incomplete array")
+            
+            # Close incomplete objects
+            while open_braces > close_braces:
+                json_str += '}'
+                close_braces += 1
+                log_message("WARNING", "[JSON Repair] Closed incomplete object")
+            
+            return json_str
+            
+        except Exception as e:
+            log_message("WARNING", "[JSON Repair] Could not repair incomplete JSON: {}".format(str(e)))
+            return json_str
     
     def _extract_sources_from_context(self, context_blocks: str) -> list:
         """
