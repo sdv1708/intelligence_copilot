@@ -26,7 +26,7 @@ def get_llm_provider(provider_name: str = None):
                 model="gemini-2.5-flash",
                 google_api_key=api_key,
                 temperature=0.7,
-                max_output_tokens=3000
+                max_output_tokens=30000
             )
         
         elif provider_name == "openai":
@@ -36,7 +36,7 @@ def get_llm_provider(provider_name: str = None):
                 model="gpt-4",
                 openai_api_key=api_key,
                 temperature=0.7,
-                max_tokens=3000
+                max_tokens=30000
             )
         
         elif provider_name == "anthropic":
@@ -46,7 +46,7 @@ def get_llm_provider(provider_name: str = None):
                 model="claude-3-5-sonnet-20241022",
                 anthropic_api_key=api_key,
                 temperature=0.7,
-                max_tokens=3000
+                max_tokens=30000
             )
         
         else:
