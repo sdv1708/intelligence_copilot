@@ -14,6 +14,7 @@ from core.parsing import parse_file, parse_pasted_text
 from core.recall import recall_context, format_context_blocks
 from core.synth import generate_brief, load_prompt_template
 from core.schema import MeetingBrief
+from core.utils import log_message
 from agents.copilot_orchestrator import CopilotOrchestrator
 
 load_dotenv()
@@ -597,12 +598,29 @@ def main():
                             text, media_type = parse_file(file_bytes, uploaded_file.name)
                             
                             if text:
+                                # Save to database first
                                 material_id = db.add_material(
                                     meeting_id=meeting_id,
                                     filename=uploaded_file.name,
                                     media_type=media_type,
                                     text=text
                                 )
+                                
+                                # CRITICAL FIX: Index in FAISS via ingestion agent
+                                # This ensures materials are properly chunked, embedded, and indexed
+                                try:
+                                    orchestrator = init_orchestrator()
+                                    # Note: ingest_material will try to save to DB again, but that's okay
+                                    # The important part is FAISS indexing
+                                    ingest_result = orchestrator.ingest_material(
+                                        file_bytes=file_bytes,
+                                        filename=uploaded_file.name,
+                                        meeting_id=meeting_id
+                                    )
+                                except Exception as ingest_error:
+                                    # Log but don't fail - material is saved to DB
+                                    log_message("WARNING", "FAISS indexing failed: {}".format(str(ingest_error)))
+                                
                                 success_count += 1
                             else:
                                 error_count += 1
@@ -639,6 +657,20 @@ def main():
                             media_type=media_type,
                             text=text
                         )
+                        
+                        # CRITICAL FIX: Index in FAISS via ingestion agent
+                        try:
+                            orchestrator = init_orchestrator()
+                            # Convert text to bytes for ingest_material
+                            text_bytes = text.encode('utf-8')
+                            ingest_result = orchestrator.ingest_material(
+                                file_bytes=text_bytes,
+                                filename="pasted_text.txt",
+                                meeting_id=meeting_id
+                            )
+                        except Exception as ingest_error:
+                            log_message("WARNING", "FAISS indexing failed: {}".format(str(ingest_error)))
+                        
                         st.success("✅ Saved ({:,} chars)".format(len(text)))
                         st.session_state.generated_brief = None
                         st.session_state.qa_history = []

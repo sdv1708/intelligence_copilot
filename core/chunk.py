@@ -25,8 +25,12 @@ def chunk_text(txt: str, max_len: int = 1200, overlap: int = 120) -> List[str]:
         # Calculate the end position
         end = min(n, i + max_len)
         
-        # Try to find a sentence boundary (period followed by space)
-        cut = txt.rfind(". ", i, end)
+        # Try to find a paragraph boundary (double newline) first
+        cut = txt.rfind("\n\n", i, end)
+        
+        # If no paragraph boundary, try sentence boundary (period followed by space)
+        if cut == -1:
+            cut = txt.rfind(". ", i, end)
         
         # If no sentence boundary found or too short, use the max_len endpoint
         if cut == -1 or cut < i + int(max_len * 0.6):
@@ -43,4 +47,20 @@ def chunk_text(txt: str, max_len: int = 1200, overlap: int = 120) -> List[str]:
     
     log_message("INFO", f"Created {len(chunks)} chunks from {n} characters (max_len={max_len}, overlap={overlap})")
     return chunks
+
+
+def chunk_text_large(txt: str, max_len: int = 4000, overlap: int = 800) -> List[str]:
+    """
+    Chunk text with larger chunks and more overlap to preserve relationships.
+    Use this for documents where context preservation is critical.
+    
+    Args:
+        txt: Input text to chunk
+        max_len: Maximum characters per chunk (larger for better context)
+        overlap: Overlap between chunks (larger for better continuity)
+    
+    Returns:
+        List of text chunks
+    """
+    return chunk_text(txt, max_len=max_len, overlap=overlap)
 

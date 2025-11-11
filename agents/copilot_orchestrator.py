@@ -45,16 +45,33 @@ class CopilotOrchestrator:
                 log_message("WARNING", "[IngestionTool] Failed to parse")
                 return json.dumps({"success": False})
             
-            # Save to DB
-            material_id = self.db.add_material(
-                meeting_id=meeting_id,
-                filename=filename,
-                media_type=media_type,
-                text=text
-            )
+            # Check if material already exists in DB (to avoid duplicates)
+            # If it exists, get the material_id, otherwise create new
+            materials = self.db.get_materials(meeting_id)
+            material_id = None
+            for mat in materials:
+                if mat['filename'] == filename:
+                    material_id = mat['id']
+                    log_message("INFO", "[IngestionTool] Material already exists: {}".format(material_id))
+                    break
+            
+            # Save to DB only if it doesn't exist
+            if not material_id:
+                material_id = self.db.add_material(
+                    meeting_id=meeting_id,
+                    filename=filename,
+                    media_type=media_type,
+                    text=text
+                )
             
             # Chunk and embed
-            chunks = chunk_text(text)
+            # Use improved chunking with larger chunks for better relationship preservation
+            from core.chunk import chunk_text_large
+            chunks = chunk_text_large(text, max_len=4000, overlap=800)
+            if not chunks:
+                log_message("WARNING", "[IngestionTool] No chunks created")
+                return json.dumps({"success": False, "error": "No chunks created"})
+            
             embeddings = encode(chunks)
             
             # Index in FAISS
@@ -66,7 +83,13 @@ class CopilotOrchestrator:
             index = build_or_load_index(faiss_path)
             add_to_index(index, embeddings)
             
-            log_message("OK", "[IngestionTool] Ingested: {}".format(filename))
+            # Save index to persist changes
+            from core.embed import save_index
+            save_index(index, faiss_path)
+            
+            log_message("OK", "[IngestionTool] Ingested: {} ({} chunks, {} embeddings)".format(
+                filename, len(chunks), len(embeddings)
+            ))
             
             return json.dumps({
                 "success": True,
@@ -426,7 +449,9 @@ class CopilotOrchestrator:
             
             db_conn = self.db.get_connection()
             from core.recall import recall_context, format_context_blocks
-            context = recall_context(db_conn, meeting_id, query=question, k=5)
+            # Increase k for Q&A to get more relevant context
+            # Also use a more specific query that includes key terms
+            context = recall_context(db_conn, meeting_id, query=question, k=15)
             db_conn.close()
             
             if not context:
