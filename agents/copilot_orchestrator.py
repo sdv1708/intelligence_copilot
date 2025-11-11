@@ -12,6 +12,7 @@ from core.utils import log_message, generate_id
 import json
 import os
 import re
+import time
 
 
 class CopilotOrchestrator:
@@ -242,58 +243,116 @@ class CopilotOrchestrator:
                 HumanMessage(content=user_prompt)
             ]
             
-            response = self.llm.invoke(messages)
-            response_text = response.content
+            # Try up to 2 times to get valid JSON
+            max_retries = 2
+            brief_dict = None
             
-            # Parse JSON - handle markdown code fences robustly
-            response_text = response_text.strip()
-            
-            if "```json" in response_text:
-                start = response_text.find("```json") + 7
-                end = response_text.find("```", start)
-                if end != -1:
-                    response_text = response_text[start:end].strip()
-            elif "```" in response_text:
-                start = response_text.find("```") + 3
-                newline_pos = response_text.find("\n", start)
-                if newline_pos != -1:
-                    start = newline_pos + 1
-                end = response_text.find("```", start)
-                if end != -1:
-                    response_text = response_text[start:end].strip()
-            
-            # If still no JSON object, try to extract it
-            if not response_text.startswith("{"):
-                start = response_text.find("{")
-                end = response_text.rfind("}") + 1
-                if start != -1 and end > start:
-                    response_text = response_text[start:end]
-            
-            # Clean common JSON syntax errors
-            # Remove trailing commas before closing brackets/braces
-            response_text = re.sub(r',(\s*[}\]])', r'\1', response_text)
-            # Remove any comments (// style)
-            response_text = re.sub(r'//[^\n]*', '', response_text)
-            # Remove any comments (/* */ style)
-            response_text = re.sub(r'/\*.*?\*/', '', response_text, flags=re.DOTALL)
-            
-            # Parse JSON with better error handling
-            try:
-                brief_dict = json.loads(response_text)
-            except json.JSONDecodeError as e:
-                log_message("ERROR", "[Step 2] JSON parse error: {}".format(str(e)))
-                log_message("ERROR", "[Step 2] Problematic JSON (first 500 chars): {}".format(response_text[:500]))
-                
-                # Save full response for debugging
+            for attempt in range(max_retries):
                 try:
-                    debug_file = "debug_json_error_{}.txt".format(generate_id())
-                    with open(debug_file, 'w', encoding='utf-8') as f:
-                        f.write(response_text)
-                    log_message("ERROR", "[Step 2] Full response saved to: {}".format(debug_file))
-                except Exception as save_error:
-                    log_message("ERROR", "[Step 2] Could not save debug file: {}".format(str(save_error)))
+                    response = self.llm.invoke(messages)
+                    response_text = response.content if hasattr(response, 'content') else str(response)
+                    
+                    # Check if response is empty
+                    if not response_text or not response_text.strip():
+                        log_message("WARNING", "[Step 2] Empty response from LLM (attempt {})".format(attempt + 1))
+                        if attempt < max_retries - 1:
+                            log_message("INFO", "[Step 2] Retrying...")
+                            time.sleep(2)
+                            continue
+                        else:
+                            return {"success": False, "error": "LLM returned empty response. Please try again."}
+                    
+                    # Parse JSON - handle markdown code fences robustly
+                    response_text = response_text.strip()
+                    
+                    # Extract JSON from markdown code blocks
+                    if "```json" in response_text:
+                        start = response_text.find("```json") + 7
+                        end = response_text.find("```", start)
+                        if end != -1:
+                            response_text = response_text[start:end].strip()
+                    elif "```" in response_text:
+                        start = response_text.find("```") + 3
+                        newline_pos = response_text.find("\n", start)
+                        if newline_pos != -1:
+                            start = newline_pos + 1
+                        end = response_text.find("```", start)
+                        if end != -1:
+                            response_text = response_text[start:end].strip()
+                    
+                    # If still no JSON object, try to extract it
+                    if not response_text.startswith("{"):
+                        start = response_text.find("{")
+                        end = response_text.rfind("}") + 1
+                        if start != -1 and end > start:
+                            response_text = response_text[start:end]
+                        else:
+                            # No JSON found in response
+                            log_message("WARNING", "[Step 2] No JSON found in response (attempt {})".format(attempt + 1))
+                            log_message("WARNING", "[Step 2] Response preview: {}".format(response_text[:200]))
+                            if attempt < max_retries - 1:
+                                log_message("INFO", "[Step 2] Retrying with clearer prompt...")
+                                # Add more explicit instruction
+                                messages[-1].content = user_prompt + "\n\nIMPORTANT: You must return ONLY valid JSON. No explanations, no markdown, just the JSON object."
+                                time.sleep(2)
+                                continue
+                            else:
+                                # Save full response for debugging
+                                try:
+                                    debug_file = "debug_json_error_{}.txt".format(generate_id())
+                                    with open(debug_file, 'w', encoding='utf-8') as f:
+                                        f.write("Original response:\n" + str(response.content) + "\n\nExtracted text:\n" + response_text)
+                                    log_message("ERROR", "[Step 2] Full response saved to: {}".format(debug_file))
+                                except Exception as save_error:
+                                    log_message("ERROR", "[Step 2] Could not save debug file: {}".format(str(save_error)))
+                                
+                                return {"success": False, "error": "LLM did not return valid JSON. Response may be empty or malformed. Please try again."}
+                    
+                    # Clean common JSON syntax errors
+                    # Remove trailing commas before closing brackets/braces
+                    response_text = re.sub(r',(\s*[}\]])', r'\1', response_text)
+                    # Remove any comments (// style)
+                    response_text = re.sub(r'//[^\n]*', '', response_text)
+                    # Remove any comments (/* */ style)
+                    response_text = re.sub(r'/\*.*?\*/', '', response_text, flags=re.DOTALL)
+                    
+                    # Parse JSON
+                    brief_dict = json.loads(response_text)
+                    log_message("OK", "[Step 2] Successfully parsed JSON (attempt {})".format(attempt + 1))
+                    break  # Success, exit retry loop
+                    
+                except json.JSONDecodeError as e:
+                    log_message("WARNING", "[Step 2] JSON parse error (attempt {}): {}".format(attempt + 1, str(e)))
+                    log_message("WARNING", "[Step 2] Problematic JSON (first 500 chars): {}".format(response_text[:500] if response_text else "EMPTY"))
+                    
+                    if attempt < max_retries - 1:
+                        log_message("INFO", "[Step 2] Retrying...")
+                        # Add more explicit instruction
+                        messages[-1].content = user_prompt + "\n\nCRITICAL: Return ONLY valid JSON matching the schema. No markdown, no explanations, no extra text. Just the JSON object."
+                        time.sleep(2)
+                        continue
+                    else:
+                        # Save full response for debugging
+                        try:
+                            debug_file = "debug_json_error_{}.txt".format(generate_id())
+                            with open(debug_file, 'w', encoding='utf-8') as f:
+                                f.write("Original response:\n" + str(response.content if hasattr(response, 'content') else response) + "\n\nExtracted text:\n" + (response_text if response_text else "EMPTY"))
+                            log_message("ERROR", "[Step 2] Full response saved to: {}".format(debug_file))
+                        except Exception as save_error:
+                            log_message("ERROR", "[Step 2] Could not save debug file: {}".format(str(save_error)))
+                        
+                        return {"success": False, "error": "Failed to parse LLM response after {} attempts: {}. Please try again or check your API key.".format(max_retries, str(e))}
                 
-                return {"success": False, "error": "Failed to parse LLM response: {}. Please try again.".format(str(e))}
+                except Exception as e:
+                    log_message("ERROR", "[Step 2] Unexpected error (attempt {}): {}".format(attempt + 1, str(e)))
+                    if attempt < max_retries - 1:
+                        time.sleep(2)
+                        continue
+                    else:
+                        return {"success": False, "error": "Unexpected error during synthesis: {}. Please try again.".format(str(e))}
+            
+            if brief_dict is None:
+                return {"success": False, "error": "Failed to generate valid JSON after {} attempts. Please try again.".format(max_retries)}
             
             brief = MeetingBrief(**brief_dict)
             

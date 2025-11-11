@@ -30,7 +30,8 @@ REQUIREMENTS:
 - Identify non-obvious connections, risks, and opportunities
 - Be specific and actionable with clear reasoning
 
-OUTPUT ONLY JSON.
+CRITICAL OUTPUT REQUIREMENT:
+YOU MUST RETURN ONLY VALID JSON. NO MARKDOWN, NO EXPLANATIONS, NO EXTRA TEXT.
 
 CRITICAL JSON FORMATTING:
 - Use double quotes (") for all strings, never single quotes (')
@@ -38,4 +39,7 @@ CRITICAL JSON FORMATTING:
 - NO comments in the JSON
 - Escape quotes in strings with \"
 - Ensure all brackets and braces are properly closed
-- Return ONLY the JSON object, nothing before or after
+- Return ONLY the JSON object starting with { and ending with }
+- Do NOT wrap in markdown code blocks (no ```json or ```)
+- Do NOT add any text before or after the JSON
+- Your entire response must be parseable as JSON
