@@ -8,7 +8,7 @@
 
 - **One-page app**: Upload files (PDF/DOCX/PPTX/TXT) or paste notes → click **Generate Brief** → show **Recap**, **Open Items**, **Key Topics**, **Agenda**, with evidence snippets.
 - **Memory**: Save each brief to SQLite; “What happened last time?” fetches latest brief for a meeting.
-- **Costs**: $0 using **Streamlit Cloud + Gemini 1.5 Flash free tier + SQLite + FAISS**.
+- **Costs**: $0 using **Streamlit Cloud + Gemini 2.5 Flash Lite free tier + SQLite + FAISS**.
 - **No external connectors** for MVP (Calendar/Slack/Jira are stretch goals).
 
 ---
@@ -55,7 +55,7 @@ The Executive Intelligence Copilot operates as a **multi-agent system** with fou
 |--------|------|----------------|
 | **Ingestion Agent** | Parses and embeds new materials | Extracts text, chunks content, generates embeddings |
 | **Recall Agent** | Retrieves past context | Finds relevant previous discussions and briefs |
-| **Synthesis Agent** | Generates structured brief | Uses Gemini 1.5 Flash to produce meeting summary JSON |
+| **Synthesis Agent** | Generates structured brief | Uses Gemini 2.5 Flash Lite/GPT-4/Claude 3.5 Sonnet to produce meeting summary JSON |
 | **Memory Agent** | Stores and recalls meeting history | Saves briefs to SQLite and supports “What happened last time?” queries |
 
 All four agents are executed in a linear workflow — no complex orchestration or concurrency required.
@@ -64,7 +64,7 @@ All four agents are executed in a linear workflow — no complex orchestration o
 ## 2) Tech Choices (Why)
 
 - **UI**: Streamlit — deploys free, fast to build, looks clean.
-- **LLM**: Gemini 1.5 Flash (free tier) — good summarization & cost $0 for MVP.
+- **LLM**: Gemini 2.5 Flash Lite (free tier) — good summarization & cost $0 for MVP. Also supports GPT-4 and Claude 3.5 Sonnet.
 - **Embeddings**: `sentence-transformers/all-MiniLM-L6-v2` (local) — zero cost + good recall.
 - **Vector store**: FAISS (local) — zero setup, performant.
 - **DB**: SQLite — single-file store; perfect for single-user demo.
@@ -93,8 +93,10 @@ executive-intelligence-copilot/
 │   └── utils.py                   # config, logging, ids, timers
 │
 ├── prompts/
-│   ├── system_prompt.txt
-│   └── user_prompt.txt
+│   ├── system_prompt.txt      # Main brief generation (167 lines)
+│   ├── user_prompt.txt        # User prompt template
+│   ├── qa_system_prompt.txt   # Q&A system instructions
+│   └── qa_user_prompt.txt     # Q&A user template
 │
 ├── data/
 │   ├── raw/                       # uploaded files and paste dumps
@@ -205,12 +207,16 @@ def recall_context(meeting_id: str, query: str = "", k: int = 8) -> List[Dict]:
 
 ```python
 def generate_brief(meeting_id: str, meeting_title: str, meeting_date: str) -> MeetingBrief:
+    # Step 0: Check for previous meetings with same title (cross-meeting memory)
+    previous_context = get_previous_meeting_context(meeting_id, meeting_title)
+    
     # 1) fetch top-k context via recall_context()
-    # 2) format prompts
-    # 3) call Gemini 1.5 Flash → JSON
-    # 4) validate with Pydantic
-    # 5) persist brief → SQLite
-    # 6) return MeetingBrief
+    # 2) format prompts (include previous_context if available)
+    # 3) call LLM (Gemini 2.5 Flash Lite/GPT-4/Claude 3.5 Sonnet) → JSON
+    # 4) repair incomplete JSON if needed
+    # 5) validate with Pydantic
+    # 6) persist brief → SQLite
+    # 7) return MeetingBrief
 ```
 
 ### 5.4 Memory/Recall
@@ -376,18 +382,28 @@ def encode(chunks: list[str]):
     return np.array(emb).astype("float32")
 ```
 
-**`core/synth.py`** (outline)
+**`core/llm_providers.py`** (actual implementation)
 
 ```python
-import google.generativeai as genai, json
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
-def call_gemini(system_prompt: str, user_prompt: str) -> dict:
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    res = model.generate_content([system_prompt, user_prompt])
-    # attempt to parse JSON from text
-    text = res.text.strip()
-    return json.loads(text)
+def get_llm_provider(provider_name: str = "gemini"):
+    if provider_name == "gemini":
+        return ChatGoogleGenerativeAI(
+            model="gemini-2.5-flash-lite",
+            google_api_key=api_key,
+            temperature=0.7,
+            max_output_tokens=30000
+        )
+    elif provider_name == "openai":
+        return ChatOpenAI(model="gpt-4", ...)
+    elif provider_name == "anthropic":
+        return ChatAnthropic(model="claude-3-5-sonnet-20241022", ...)
 ```
+
+**Note:** Legacy `core/synth.py` exists but actual implementation uses LangChain via `agents/copilot_orchestrator.py`
 
 ---
 

@@ -15,7 +15,7 @@
 - **Frontend:** Streamlit (Python web framework)
 - **Database:** SQLite (single-file, perfect for MVP)
 - **Agent Framework:** LangChain (multi-agent orchestration)
-- **LLM Providers:** Gemini 1.5 Flash, OpenAI GPT-4, Anthropic Claude (swappable)
+- **LLM Providers:** Gemini 2.5 Flash Lite, OpenAI GPT-4, Anthropic Claude 3.5 Sonnet (swappable)
 - **Embeddings:** sentence-transformers/all-MiniLM-L6-v2 (local, 384-dim)
 - **Vector Store:** FAISS (local, fast similarity search)
 - **Validation:** Pydantic (schema validation)
@@ -69,6 +69,13 @@
 - ✅ Professional logging and error handling
 - ✅ Production-ready design
 
+### Phase 5.5: Cross-Meeting Memory (COMPLETE)
+- ✅ Automatic detection of previous meetings with same title
+- ✅ Context injection from prior briefs
+- ✅ Action items and topics from previous meetings
+- ✅ Enables continuity across recurring meetings
+- ✅ JSON repair logic for incomplete/truncated responses
+
 ### Phase 6: Day 4 - Memory & Recall UX (COMPLETE)
 - ✅ "What happened last time?" button implemented
 - ✅ Brief recall with proper MeetingBrief deserialization
@@ -120,8 +127,10 @@ intelligence_copilot/
 │   └── synth.py                    ✅ (kept for backward compatibility)
 │
 ├── prompts/                        ✅ Prompt templates
-│   ├── system_prompt.txt           ✅ LLM system instructions
-│   └── user_prompt.txt             ✅ User prompt with {{placeholders}}
+│   ├── system_prompt.txt           ✅ LLM system instructions (167 lines)
+│   ├── user_prompt.txt             ✅ User prompt with {{placeholders}}
+│   ├── qa_system_prompt.txt        ✅ Q&A system prompt
+│   └── qa_user_prompt.txt          ✅ Q&A user prompt
 │
 ├── data/                           ✅ Data storage
 │   ├── briefs.db                   ✅ SQLite database (has data)
@@ -141,6 +150,11 @@ intelligence_copilot/
 ### Four-Agent Workflow
 
 ```
+Step 0: Cross-Meeting Memory (Optional)
+    ↓ _get_previous_meeting_context()
+    ↓ Checks for previous meetings with same title
+    ↓ Injects context from prior briefs
+    ↓
 User Input
     ↓
 ┌─────────────────────────────────────────┐
@@ -162,10 +176,12 @@ User Input
            ↓
 ┌─────────────────────────────────────────┐
 │ SYNTHESIS AGENT (LangChain LLM)         │
-│ - Loads provider (Gemini/OpenAI/Claude)│
-│ - Builds system + user prompts          │
+│ - Step 0: Check previous meetings (cross-meeting memory)
+│ - Loads provider (Gemini 2.5 Flash Lite/OpenAI GPT-4/Claude 3.5 Sonnet)
+│ - Builds prompts with previous meeting context
 │ - Calls LLM API                         │
 │ - Parses & validates JSON               │
+│ - Robust JSON repair for incomplete responses
 │ - Returns MeetingBrief                  │
 └──────────┬────────────────────────────┘
            │
@@ -197,10 +213,10 @@ User Input
 ### Supported Providers
 
 ```
-✅ Google Gemini       (GEMINI_API_KEY)      - Default
-✅ OpenAI GPT-4        (OPENAI_API_KEY)      - High quality
-✅ Anthropic Claude    (ANTHROPIC_API_KEY)   - Specialized
-✅ Easy to add more     (Extend LLMProvider)  - Extensible
+✅ Google Gemini 2.5 Flash Lite  (GEMINI_API_KEY)  - Default
+✅ OpenAI GPT-4                  (OPENAI_API_KEY)  - High quality
+✅ Anthropic Claude 3.5 Sonnet   (ANTHROPIC_API_KEY) - Specialized
+✅ Easy to add more               (Extend LLMProvider)  - Extensible
 ```
 
 ### How to Switch Providers
@@ -238,8 +254,11 @@ orchestrator = CopilotOrchestrator(provider="openai")  # or "anthropic"
 
 **agents/copilot_orchestrator.py:**
 - `CopilotOrchestrator` - Main orchestration class using LangChain
-- `generate_brief()` - Executes full agent workflow
+- `generate_brief()` - Executes full agent workflow (includes Step 0: cross-meeting memory)
+- `_get_previous_meeting_context()` - Cross-meeting memory retrieval
 - `recall_previous_brief()` - Memory retrieval
+- `answer_question()` - Q&A functionality
+- `_repair_incomplete_json()` - JSON repair logic
 - Uses LangChain's message schema (HumanMessage, SystemMessage)
 
 ### Database Schema (SQLite)
@@ -293,13 +312,18 @@ orchestrator = CopilotOrchestrator(provider="openai")  # or "anthropic"
 #### 3. Vector Search Pipeline
 - ✅ Chunk text intelligently (1200 char, 120 overlap)
 - ✅ Generate embeddings (384-dim MiniLM)
+- ✅ GPU acceleration support (automatic detection)
+- ✅ CPU fallback for environments without GPU
 - ✅ Store in FAISS with per-meeting indexing
 - ✅ Top-k retrieval with similarity scores
 
 #### 4. LLM Synthesis
-- ✅ Multi-provider support (Gemini/OpenAI/Claude)
+- ✅ Multi-provider support (Gemini 2.5 Flash Lite/OpenAI GPT-4/Claude 3.5 Sonnet)
 - ✅ Dynamic prompt building
+- ✅ Cross-meeting memory integration
 - ✅ JSON response parsing and validation
+- ✅ JSON repair logic for incomplete/truncated responses
+- ✅ Automatic field validation and defaults
 - ✅ Pydantic schema enforcement
 
 #### 5. UI & User Experience

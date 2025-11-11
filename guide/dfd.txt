@@ -82,14 +82,30 @@
                  │ [formatted_context has top-8 relevant chunks]
                  │
         ┌────────▼──────────────────────────────────────────────┐
+        │   STEP 0: CROSS-MEETING MEMORY (Optional)            │
+        │   ┌──────────────────────────────────────────────┐    │
+        │   │ Step 0a: Check Previous Meetings            │    │
+        │   │ • agents/copilot_orchestrator.py            │    │
+        │   │   _get_previous_meeting_context()           │    │
+        │   │ • Find meetings with same title              │    │
+        │   │ • Get most recent brief                      │    │
+        │   │ • Format: recap, action items, topics        │    │
+        │   │ • Return: formatted context string           │    │
+        │   └──────────────────────────────────────────────┘    │
+        └────────┬──────────────────────────────────────────────┘
+                 │
+                 │ [Previous meeting context ready for injection]
+                 │
+        ┌────────▼──────────────────────────────────────────────┐
         │   AGENT 3: SYNTHESIS AGENT (LLM-based)               │
-        │   Location: agents/copilot_orchestrator.py (114-189)  │
+        │   Location: agents/copilot_orchestrator.py (194-400)  │
+        │   Note: Includes Step 0 (cross-meeting memory)       │
         │   ┌──────────────────────────────────────────────┐    │
         │   │ Step 3a: Load Prompts                        │    │
         │   │ • system_prompt.txt → SystemMessage          │    │
         │   │ • user_prompt.txt → template                 │    │
         │   │                                              │    │
-        │   │ prompts/system_prompt.txt (14 lines):        │    │
+        │   │ prompts/system_prompt.txt (167 lines):       │    │
         │   │ "You are Executive Intelligence Copilot..."  │    │
         │   │ "Return VALID JSON matching schema"          │    │
         │   │ "Be specific and actionable"                 │    │
@@ -109,6 +125,7 @@
         │   │ • user_template.replace("{{title}}", "Q4 Board") │
         │   │ • user_template.replace("{{date}}", date)    │    │
         │   │ • user_template.replace("{{context_blocks}}", ...) │
+        │   │ • If previous_meeting_context exists: prepend it │
         │   │ • Return: complete_user_prompt               │    │
         │   └──────────────────────────────────────────────┘    │
         │   ┌──────────────────────────────────────────────┐    │
@@ -121,9 +138,9 @@
         │   ┌──────────────────────────────────────────────┐    │
         │   │ Step 3d: Call LLM                            │    │
         │   │ • self.llm.invoke(messages)                  │    │
-        │   │ • LLM = ChatGoogleGenerativeAI OR            │    │
-        │   │         ChatOpenAI OR                        │    │
-        │   │         ChatAnthropic                        │    │
+        │   │ • LLM = ChatGoogleGenerativeAI (gemini-2.5-flash-lite) OR │
+        │   │         ChatOpenAI (gpt-4) OR                │    │
+        │   │         ChatAnthropic (claude-3-5-sonnet-20241022) │
         │   │ • API Key from: .env                         │    │
         │   │ • Provider from: LLM_PROVIDER env var        │    │
         │   │ • Return: response.content (JSON string)     │    │
@@ -131,7 +148,9 @@
         │   ┌──────────────────────────────────────────────┐    │
         │   │ Step 3e: Parse JSON Response                 │    │
         │   │ • Extract JSON from markdown (if present)    │    │
+        │   │ • Repair incomplete JSON (_repair_incomplete_json) │
         │   │ • json.loads(response_text)                  │    │
+        │   │ • Validate required fields, add defaults     │    │
         │   │ • Validate against schema                    │    │
         │   │ • Create MeetingBrief object                 │    │
         │   │ • Return: brief object                       │    │

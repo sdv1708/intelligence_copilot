@@ -109,8 +109,9 @@ Step 4: CHUNK TEXT
 
 Step 5: EMBED CHUNKS
   core/embed.py::encode()
-  ├─ Load sentence-transformers model (lazy)
-  ├─ Convert chunks → 384-dim vectors
+  ├─ Detect GPU availability (CUDA)
+  ├─ Load sentence-transformers model (lazy, on GPU if available)
+  ├─ Convert chunks → 384-dim vectors (batch processing)
   ├─ Normalize embeddings
   └─ Return np.array (n_chunks, 384)
 
@@ -128,15 +129,26 @@ Step 7: RETRIEVE CONTEXT
   ├─ Return chunks + scores
   └─ Format as context blocks
 
+Step 7.5: CHECK PREVIOUS MEETINGS (Optional)
+  agents/copilot_orchestrator.py::_get_previous_meeting_context()
+  ├─ Query meetings table for same title
+  ├─ Get most recent brief
+  ├─ Format previous meeting context
+  └─ Return context string (or empty)
+
 Step 8: PROMPT LLM
-  core/synth.py::generate_brief()
+  agents/copilot_orchestrator.py::generate_brief()
   ├─ Load system + user prompts
   ├─ Substitute {{title}}, {{date}}, {{context}}
-  ├─ Call Gemini API (streaming preferred)
+  ├─ Prepend previous meeting context if available
+  ├─ Call LLM via LangChain (Gemini/GPT-4/Claude)
   └─ Parse JSON from response
 
-Step 9: VALIDATE
-  core/synth.py::generate_brief()
+Step 9: REPAIR & VALIDATE
+  agents/copilot_orchestrator.py::generate_brief()
+  ├─ Extract JSON from markdown code blocks
+  ├─ Repair incomplete JSON (_repair_incomplete_json)
+  ├─ Validate required fields, add defaults
   ├─ Validate JSON matches schema
   ├─ Instantiate MeetingBrief (Pydantic)
   ├─ Catch validation errors
@@ -191,11 +203,13 @@ KEY COMPONENTS INTERACTION
    ├─ Returns: List of chunks
    └─ Output: ~5-50 chunks × 1,200 chars each
 
-3. EMBEDDING LAYER
+3. EMBEDDING LAYER (with GPU acceleration)
    Input: Chunks (list of strings)
    ├─ embed.py: MiniLM model → embeddings
+   ├─ GPU detection and automatic device selection
+   ├─ Batch processing (64 on GPU, 16 on CPU)
    ├─ Returns: np.array (n, 384)
-   └─ Output: Dense vectors
+   └─ Output: Dense vectors (GPU-accelerated if available)
 
 4. INDEXING LAYER
    Input: Dense vectors
@@ -209,9 +223,20 @@ KEY COMPONENTS INTERACTION
    ├─ Returns: List of relevant chunks
    └─ Output: Context blocks + scores
 
-6. SYNTHESIS LAYER
-   Input: Context blocks + meeting details
-   ├─ synth.py: Format prompt → Gemini API
+6. CROSS-MEETING MEMORY LAYER
+   Input: Current meeting title
+   ├─ orchestrator.py: _get_previous_meeting_context()
+   ├─ Find meetings with same title
+   ├─ Retrieve previous brief
+   ├─ Format: recap, action items, topics
+   └─ Output: Previous meeting context string
+
+6.5. SYNTHESIS LAYER
+   Input: Context blocks + meeting details + previous meeting context
+   ├─ orchestrator.py: Format prompt → LLM API (LangChain)
+   ├─ LLM: Gemini 2.5 Flash Lite / GPT-4 / Claude 3.5 Sonnet
+   ├─ JSON repair logic for incomplete responses
+   ├─ Field validation and defaults
    ├─ Returns: MeetingBrief JSON
    └─ Output: Structured brief
 
@@ -292,9 +317,21 @@ MeetingBrief
 ENVIRONMENT VARIABLES
 ================================================================================
 
-GEMINI_API_KEY (Required)
+GEMINI_API_KEY (Required for Gemini)
   └─ Google Gemini API key from console.cloud.google.com
-  └─ Used by: core/synth.py
+  └─ Used by: core/llm_providers.py (via LangChain)
+
+OPENAI_API_KEY (Required for OpenAI)
+  └─ OpenAI API key
+  └─ Used by: core/llm_providers.py (via LangChain)
+
+ANTHROPIC_API_KEY (Required for Claude)
+  └─ Anthropic API key
+  └─ Used by: core/llm_providers.py (via LangChain)
+
+LLM_PROVIDER (Optional, default: "gemini")
+  └─ Set to "gemini", "openai", or "anthropic"
+  └─ Used by: agents/copilot_orchestrator.py
 
 DB_PATH (Optional, default: "./data/briefs.db")
   └─ Path to SQLite database file
@@ -363,7 +400,7 @@ PERFORMANCE TARGETS
 
 Parsing (large PDF):        < 2 sec
 Chunking (10 chunks):       < 100 ms
-Embedding (10 chunks):      < 1 sec (model load ~5 sec first time)
+Embedding (10 chunks):      < 1 sec CPU / < 0.2 sec GPU (model load ~5 sec first time)
 FAISS indexing:             < 500 ms
 Vector search (top-8):      < 100 ms
 LLM call (context → brief): 5-15 sec
