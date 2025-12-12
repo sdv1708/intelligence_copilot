@@ -157,10 +157,10 @@ streamlit run app.py
 
 ## Contributors
 
-Sanjay Dari Veerabasappa
-Abimanyu Vijay
-Rohan Vasudevan
-Shilpitha Shetty
+- Sanjay Dari Veerabasappa  
+- Abimanyu Vijay
+- Rohan Vasudevan
+- Shilpitha Shetty
 
 ---
 
