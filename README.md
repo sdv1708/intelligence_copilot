@@ -1,183 +1,175 @@
-# intelligence_copilot
-An AI assistant that automatically prepares senior leaders for their meetings by summarizing recent conversations, documents, and decisions — reducing information overload and saving time spent on pre-meeting review.
+# Executive Intelligence Copilot
 
-🤖 Executive Intelligence Copilot
+An AI assistant that automatically prepares senior leaders for their meetings by summarizing recent conversations, documents, decisions, and action items. The goal is to reduce information overload and save time spent on pre-meeting preparation.
 
-An AI assistant that automatically prepares senior leaders for meetings by summarizing recent conversations, documents, decisions, and action items — reducing information overload and saving valuable preparation time.
+Live Demo: https://intelligence-copilot.vercel.app
 
-👉 Live Demo: https://intelligence-copilot.vercel.app
+---
 
-This project was built as part of an applied AI systems initiative, integrating LLM reasoning, semantic retrieval, and structured synthesis into a clean Streamlit dashboard for executive meeting preparation.
+## Project Overview
 
-🎯 Project Overview
+The Executive Intelligence Copilot transforms scattered meeting materials into a single, structured briefing that leaders can review in minutes.  
+The system integrates retrieval-augmented generation, structured synthesis, and semantic search to help users quickly understand key updates before any meeting.
 
-The Executive Intelligence Copilot helps leaders walk into any meeting fully prepared by transforming scattered materials — such as documents, transcripts, and notes — into a single, structured briefing.
+Key capabilities include:
 
-The system brings together:
+- AI-generated meeting briefs  
+- Automatic extraction of action items and key topics  
+- Proposed meeting agendas  
+- Interactive Q&A over all stored materials  
+- Versioned brief histories  
+- Export options (JSON and Markdown)  
 
-AI-generated meeting briefs
+---
 
-Automatic extraction of key topics and action items
+## Features
 
-Proposed meeting agendas
+### Automated Meeting Briefs
 
-Semantic search and interactive Q&A
+For each meeting, the copilot generates a structured brief containing:
 
-Versioned brief histories
+- Last meeting recap  
+- Open action items (owners, due dates, status)  
+- Key topics for discussion  
+- Proposed agenda (topics, owners, time estimates)  
+- Evidence and source snippets from uploaded materials  
 
-Export options for easy sharing
-
-This turns the manual, time-consuming process of meeting prep into a streamlined, intelligent workflow.
-
-🧠 Key Features
-🔹 Automated Meeting Brief Generation
-
-For any meeting, the copilot generates a structured brief containing:
-
-Last Meeting Recap
-
-Open Action Items (with owners, due dates, statuses)
-
-Key Topics for Today
-
-Proposed Agenda
-
-Evidence & Source Snippets from uploaded content
-
-Everything is displayed in expandable, easy-to-read sections.
-
-🔹 Multi-Source Document Ingestion
+### Multi-Source Material Ingestion
 
 Upload or paste:
 
-PDFs
+- PDFs  
+- Word documents  
+- PowerPoint files  
+- Text files  
+- Raw notes, emails, transcripts  
 
-Word documents
+All materials are:
 
-PowerPoint slides
+1. Parsed to extract text  
+2. Embedded using Sentence Transformers  
+3. Indexed using FAISS  
+4. Persistently stored via SQLModel (SQLite)  
 
-Text files
+### Interactive Q&A
 
-Raw notes or emails
+Ask natural questions such as:
 
-All materials are parsed, embedded, indexed in FAISS, and stored in SQLite for persistent retrieval.
+- “What decisions were made last meeting?”  
+- “Who owns the Q4 deliverables?”  
+- “Summarize the marketing risks mentioned this month.”  
 
-🔹 Interactive Q&A
+The system retrieves relevant content and produces grounded, source-linked answers.
 
-Ask questions like:
+### Brief History and Versioning
 
-“What decisions were made last meeting?”
+Each brief is stored with a timestamp and model information.  
+Users can reload previous versions from the History panel.
 
-“Who is responsible for the marketing deliverables?”
+### Export Options
 
-“Summarize all risks identified this month.”
+All briefs can be exported as:
 
-The system retrieves relevant content, queries the LLM, and returns grounded, source-backed answers.
+- JSON  
+- Markdown  
 
-🔹 Brief History & Versioning
+---
 
-Each generated brief is saved with a timestamp and model information.
-You can easily view or reload previous versions through the History panel.
+## System Architecture
 
-🔹 Export as JSON or Markdown
+The copilot uses a modular RAG (Retrieval-Augmented Generation) architecture:
 
-All briefs can be exported for use in:
+- Streamlit UI for meetings, materials, briefs, and Q&A  
+- SQLModel + SQLite for persistent storage  
+- Sentence Transformers for embeddings  
+- FAISS for semantic similarity search  
+- A Copilot Orchestrator that coordinates retrieval, synthesis, and Q&A  
+- Pluggable LLM providers (Gemini, OpenAI, Anthropic)  
 
-Notion
+Core directories:
 
-Google Docs
+```text
+core/        Embeddings, parsing, DB, retrieval, synthesis
+agents/      CopilotOrchestrator logic
+prompts/     Prompt templates for briefs and Q&A
+sample_data/ Example materials
+app.py       Main Streamlit application
 
-Confluence
+```
+## Tools and Techniques
 
-Internal knowledge bases
+- Streamlit  
+- Sentence Transformers  
+- FAISS  
+- SQLModel + SQLite  
+- LangChain (LLM orchestration)  
+- Pydantic v2 models  
+- PyPDF, python-docx, python-pptx  
 
-🏗️ System Architecture
+---
 
-The copilot is built on a modular retrieval-augmented generation (RAG) architecture:
+## Workflow Summary
 
-Streamlit UI for meetings, materials, briefs, and Q&A
+### Step 1: Create a Meeting
+Add a title, date, attendees, and tags.
 
-SQLModel + SQLite for meeting, brief, and document storage
+### Step 2: Add Materials
+Upload files or paste text.  
+All content is parsed, embedded, and indexed.
 
-Sentence Transformers for text embeddings
+### Step 3: Generate the Brief
+The orchestrator retrieves the most relevant information and creates a structured brief.
 
-FAISS for semantic vector search
+### Step 4: Ask Questions
+Use the Q&A section to ask questions about the stored materials.
 
-Copilot Orchestrator to coordinate retrieval, synthesis, and Q&A
+### Step 5: Review or Export
+Reload previous versions or export the brief as Markdown or JSON.
 
-LLM Providers (Gemini / OpenAI / Anthropic) for generation and reasoning
+---
 
-This design ensures scalability, adaptability, and clear separation of responsibilities.
+## Installation
 
-🧰 Tools and Techniques
-
-Frameworks: Streamlit, SQLModel, LangChain
-
-Models: Sentence Transformers (MiniLM), FAISS for similarity search
-
-LLMs: Gemini / OpenAI / Anthropic (configurable)
-
-File Handling: PyPDF, python-docx, python-pptx
-
-Data Models: Pydantic v2 for typed structured outputs
-
-📘 Workflow Summary
-Step 1 — Create a Meeting
-
-Add title, date, attendees, and tags.
-
-Step 2 — Add Materials
-
-Upload files or paste text. Everything is parsed and indexed.
-
-Step 3 — Generate the Brief
-
-The orchestrator retrieves relevant content and synthesizes a structured brief.
-
-Step 4 — Ask Follow-Up Questions
-
-Use the Q&A section to pull insights from all meeting materials.
-
-Step 5 — Review History or Export
-
-Reload earlier versions or download the brief as Markdown or JSON.
-
-🔧 Installation
-
-Clone the repo:
-
+### 1. Clone the repository
+\`\`\`bash
 git clone https://github.com/sdv1708/intelligence_copilot.git
+\`\`\`
 
-
-Install dependencies:
-
+### 2. Install dependencies
+\`\`\`bash
 pip install -r requirements.txt
+\`\`\`
 
+### 3. Configure environment variables
+Create a `.env` file based on `env.example` and add your LLM API keys.
 
-Set up .env using env.example (API keys for provider of choice)
-
-Run the app:
-
+### 4. Run the application
+\`\`\`bash
 streamlit run app.py
+\`\`\`
 
-🛣️ Future Enhancements
+---
 
-Auto-creating meetings from calendar invites
+## Future Enhancements
 
-Integrations with Slack, Gmail, and document repositories
+- Calendar integration for automatic meeting creation  
+- Slack, Teams, and Gmail ingestion  
+- Google Drive and SharePoint connectors  
+- Real-time meeting transcription and note generation  
+- Organizational multi-user deployment  
+- Analytics to identify trends across meetings  
 
-Real-time meeting assistant (transcription + note generation)
+---
 
-Organization-wide deployment with user accounts
+## Contributors
 
-Advanced analytics (topic trends, workload distribution, etc.)
-
-👤 Maintainer
-
+Sanjay Dari Veerabasappa
 Abimanyu Vijay
-MSBA — University of Maryland
-AI Systems & Decision Intelligence Enthusiast
+Rohan Vasudevan
+Shilpitha Shetty
 
-📜 License
+---
 
-This project is open-sourced under the MIT License.
+## License
+
+This project is licensed under the MIT License.
