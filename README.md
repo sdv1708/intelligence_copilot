@@ -131,22 +131,16 @@ Reload previous versions or export the brief as Markdown or JSON.
 ## Installation
 
 ### 1. Clone the repository
-\`\`\`bash
 git clone https://github.com/sdv1708/intelligence_copilot.git
-\`\`\`
 
 ### 2. Install dependencies
-\`\`\`bash
 pip install -r requirements.txt
-\`\`\`
 
 ### 3. Configure environment variables
 Create a `.env` file based on `env.example` and add your LLM API keys.
 
 ### 4. Run the application
-\`\`\`bash
 streamlit run app.py
-\`\`\`
 
 ---
 
