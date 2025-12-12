@@ -2,8 +2,6 @@
 
 An AI assistant that automatically prepares senior leaders for their meetings by summarizing recent conversations, documents, decisions, and action items. The goal is to reduce information overload and save time spent on pre-meeting preparation.
 
-Live Demo: https://intelligence-copilot.vercel.app
-
 ---
 
 ## Project Overview
