@@ -295,8 +295,7 @@ intelligence_copilot/
 │   ├── recall.py                      # Vector search + context formatting
 │   ├── llm_providers.py              # LLM provider factory (LangChain)
 │   ├── schema.py                     # Pydantic data models
-│   ├── synth.py                      # Legacy synthesis (deprecated)
-│   └── utils.py                      # Utilities (logging, config, ID generation)
+│   └── utils.py                      # Utilities (ID generation, timing)
 │
 ├── prompts/
 │   ├── system_prompt.txt             # Main brief generation system prompt
@@ -309,15 +308,7 @@ intelligence_copilot/
 │   ├── faiss/                        # FAISS index files (per-meeting)
 │   └── raw/                          # Uploaded file storage
 │
-├── guide/                            # Architecture and documentation
-│   ├── DEMO_GUIDE.md                 # Complete demo script
-│   ├── context.md                    # Project context and status
-│   ├── dfd.txt                       # Data flow diagram
-│   └── ARCHITECTURE_VISUAL.txt       # Visual architecture documentation
-│
-├── deployment/                       # Deployment configurations
-│   ├── colab/                        # Google Colab deployment
-│   └── huggingface/                  # Hugging Face Spaces deployment
+├── handoffs/                         # One document per chunk of the overhaul
 │
 ├── app.py                            # Streamlit application entry point
 ├── requirements.txt                  # Python dependencies
@@ -403,7 +394,8 @@ class Database:
 - **Type Hints**: All functions include type annotations
 - **Docstrings**: Comprehensive docstrings following Google style
 - **Error Handling**: Structured logging with error recovery
-- **Testing**: Unit tests for core modules (see guide/ for test strategies)
+- **Testing**: `pytest` over `core/`, `agents/` and the orchestrator boundary; no test
+  touches the network or downloads a model
 
 ### Logging
 
@@ -425,14 +417,6 @@ Agent-specific logging uses prefixes: `[IngestionTool]`, `[RecallTool]`, `[Synth
 2. Connect to Streamlit Cloud
 3. Configure secrets (API keys)
 4. Deploy
-
-### Hugging Face Spaces
-
-See `deployment/huggingface/README.md` for detailed instructions.
-
-### Google Colab
-
-See `deployment/colab/ENHANCED_NOTEBOOK_GUIDE.md` for Colab deployment.
 
 ---
 

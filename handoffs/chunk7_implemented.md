@@ -124,11 +124,13 @@ The specific things Chunk 8 inherits:
    drops `unsafe_allow_html`, the hand-escaping goes too — but not before.
 3. **The `Record.__getitem__` shim is gone**, so any new UI code reads records by
    attribute. There is no fallback if it guesses a field name wrong, which is the point.
-4. Stale docs still describe the pre-overhaul design: `context.md` at the repo root and
-   everything under `guide/` reference `get_llm_provider`, `recall_context` and
-   `core/synth.py`, none of which exist any more. Left alone deliberately — they are
-   planning artefacts from November 2025, not live documentation — but they will mislead
-   anyone who reads them as current.
+4. **`README.md` is the last stale document, and it is only partly stale.** `guide/`,
+   `deployment/` and the root `context.md` were deleted after this chunk (see the commit
+   following it), and the README references to them went with the folders. What is left
+   in it still describes the pre-overhaul design in places: the logging section documents
+   `[INFO]` / `[OK]` string prefixes that `core.logging_config` replaced, and the agent
+   prefixes `[IngestionTool]` / `[RecallTool]` name classes that no longer exist. Fix it
+   alongside the UI rewrite, when the screenshots would need retaking anyway.
 
 ---
 
