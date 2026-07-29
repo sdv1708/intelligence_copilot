@@ -4,21 +4,22 @@ Modern, premium interface for AI-powered meeting preparation
 """
 
 import streamlit as st
-import os
+import tempfile
+from pathlib import Path
 from dotenv import load_dotenv
 from datetime import datetime
 import json
 
+from core.config import get_settings
 from core.db import Database
-from core.parsing import parse_file, parse_pasted_text
-from core.recall import recall_context, format_context_blocks
 from core.indexing import delete_material_everywhere
-from core.synth import generate_brief, load_prompt_template
+from core.logging_config import get_logger
 from core.schema import MeetingBrief
-from core.utils import log_message
 from agents.copilot_orchestrator import CopilotOrchestrator
 
 load_dotenv()
+
+logger = get_logger(__name__)
 
 st.set_page_config(
     page_title="Executive Intelligence Copilot",
@@ -176,22 +177,35 @@ st.markdown("""
 
 # Initialize database (cached to avoid re-initialization on rerun)
 @st.cache_resource
+def init_settings():
+    """Load and cache the typed settings, preparing storage once."""
+    return get_settings()
+
+@st.cache_resource
 def init_database():
     """Initialize and return database connection."""
     return Database()
 
 @st.cache_resource(show_spinner="Loading AI models...")
 def init_orchestrator():
-    """Initialize orchestrator with configured provider."""
-    provider = os.getenv("LLM_PROVIDER", "gemini")
-    return CopilotOrchestrator(provider=provider)
+    """Initialize orchestrator with the configured provider.
+
+    Cached because the orchestrator owns the runtime: one chat client, one
+    loaded embedder and one database handle for the whole session, rather than
+    a fresh set on every Streamlit rerun.
+    """
+    return CopilotOrchestrator(provider=init_settings().llm_provider.value)
 
 @st.cache_resource(show_spinner="Loading embedding model...")
 def preload_embedding_model():
-    """Preload the embedding model to cache it."""
-    from core.embed import get_model, get_device
+    """Preload the embedding model to cache it.
+
+    This warms the same process-wide embedder the orchestrator's retriever
+    uses, so the first search does not pay for the model load.
+    """
+    from core.embed import get_device, get_model
     device = get_device()
-    model = get_model()
+    get_model()
     return {"device": device, "model_loaded": True}
 
 
@@ -246,6 +260,40 @@ def convert_brief_to_markdown(brief: MeetingBrief) -> str:
     return md
 
 
+def _is_temporary(data_dir: Path) -> bool:
+    """Whether storage fell back to the system temp directory."""
+    try:
+        return Path(data_dir).resolve().is_relative_to(Path(tempfile.gettempdir()).resolve())
+    except (OSError, ValueError):
+        return False
+
+
+def render_trace(notes, *, expanded: bool = False):
+    """Show the trace the graph emitted, one line per node.
+
+    This replaces the `log_message("[Step 2]")` calls that used to go to the
+    terminal where nobody running the app could see them. Every node appends a
+    line describing what it actually did — which searches ran, how much evidence
+    survived the merge, how many citations resolved — so a brief that came out
+    thin can be explained rather than guessed at.
+    """
+    if not notes:
+        return
+
+    with st.expander("🔬 How this was produced ({} steps)".format(len(notes)), expanded=expanded):
+        st.markdown(
+            '<div class="premium-card" style="background: #f8fafc; font-family: '
+            'ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; '
+            'line-height: 1.7;">{}</div>'.format(
+                "<br>".join(
+                    note.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                    for note in notes
+                )
+            ),
+            unsafe_allow_html=True
+        )
+
+
 def render_qa_section():
     """Render the Q&A interface with enhanced styling."""
     
@@ -298,6 +346,7 @@ def render_qa_section():
                             "question": question,
                             "answer": result["answer"],
                             "sources": result["sources"],
+                            "notes": result.get("notes", []),
                             "timestamp": datetime.now().strftime("%H:%M:%S")
                         })
                         st.rerun()
@@ -336,7 +385,9 @@ def render_qa_section():
                     st.markdown("**📄 Referenced Sources:**")
                     for source in qa["sources"]:
                         st.markdown('<span class="status-badge badge-info" style="margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block;">{}</span>'.format(source), unsafe_allow_html=True)
-            
+
+                render_trace(qa.get("notes"))
+
             st.markdown("<br>", unsafe_allow_html=True)
 
 
@@ -447,6 +498,11 @@ def main():
         st.session_state.materials_added = []
     if "generated_brief" not in st.session_state:
         st.session_state.generated_brief = None
+    if "brief_result" not in st.session_state:
+        # The whole result dict from the last generation, kept because the
+        # trace, the plan and any post-generation error are worth showing and
+        # do not survive the `st.rerun()` that follows the button press.
+        st.session_state.brief_result = None
     if "brief_meeting_id" not in st.session_state:
         st.session_state.brief_meeting_id = None
     if "show_download_options" not in st.session_state:
@@ -471,9 +527,18 @@ def main():
             unsafe_allow_html=True
         )
     
-    # Demo mode notification
-    if os.path.exists("/tmp"):
-        st.info("ℹ️ **Demo Mode**: Running with temporary storage. Data persists during session only.")
+    # Storage notice. The old version of this check was `os.path.exists("/tmp")`,
+    # which is true on every Unix machine and told users their data was
+    # temporary when it was not. `Settings.prepare_storage` only relocates to a
+    # temp directory when the configured one is unwritable, so that is the
+    # condition worth warning about.
+    settings = init_settings()
+    if _is_temporary(settings.data_dir):
+        st.warning(
+            "⚠️ **Temporary storage**: `{}` was not writable, so data is being "
+            "kept under `{}` and will not survive a restart. Set `DATA_DIR` to "
+            "a writable location to fix this.".format(Path("data").resolve(), settings.data_dir)
+        )
     
     # Enhanced Sidebar
     with st.sidebar:
@@ -509,9 +574,10 @@ def main():
                     
                     st.session_state.current_meeting_id = meeting_id
                     st.session_state.generated_brief = None
+                    st.session_state.brief_result = None
                     st.session_state.brief_meeting_id = None
                     st.session_state.qa_history = []
-                    
+
                     st.success("✅ Meeting created successfully!")
                     st.rerun()
                 else:
@@ -539,6 +605,7 @@ def main():
                     if st.session_state.current_meeting_id != selected_meeting_id:
                         st.session_state.current_meeting_id = selected_meeting_id
                         st.session_state.generated_brief = None
+                        st.session_state.brief_result = None
                         st.session_state.brief_meeting_id = None
                         st.session_state.qa_history = []
                     
@@ -584,56 +651,43 @@ def main():
                 if uploaded_files and st.button("📤 Upload Files", use_container_width=True, type="primary"):
                     meeting_id = st.session_state.current_meeting_id
                     success_count = 0
-                    error_count = 0
-                    
+
                     progress_bar = st.progress(0)
                     status_text = st.empty()
-                    
+
                     for idx, uploaded_file in enumerate(uploaded_files):
                         try:
                             progress = (idx + 1) / len(uploaded_files)
                             progress_bar.progress(progress)
                             status_text.text("Processing {}...".format(uploaded_file.name))
-                            
-                            file_bytes = uploaded_file.read()
-                            text, media_type = parse_file(file_bytes, uploaded_file.name)
-                            
-                            if text:
-                                # Save to database first
-                                material_id = db.add_material(
-                                    meeting_id=meeting_id,
-                                    filename=uploaded_file.name,
-                                    media_type=media_type,
-                                    text=text
-                                )
-                                
-                                # CRITICAL FIX: Index in FAISS via ingestion agent
-                                # This ensures materials are properly chunked, embedded, and indexed
-                                try:
-                                    orchestrator = init_orchestrator()
-                                    # Note: ingest_material will try to save to DB again, but that's okay
-                                    # The important part is FAISS indexing
-                                    ingest_result = orchestrator.ingest_material(
-                                        file_bytes=file_bytes,
-                                        filename=uploaded_file.name,
-                                        meeting_id=meeting_id
-                                    )
-                                except Exception as ingest_error:
-                                    # Log but don't fail - material is saved to DB
-                                    log_message("WARNING", "FAISS indexing failed: {}".format(str(ingest_error)))
-                                
+
+                            # One call stores, chunks, embeds and indexes. Storing
+                            # and indexing used to be two steps here, so a file
+                            # whose indexing failed was still listed as a material
+                            # and then silently never searched.
+                            orchestrator = init_orchestrator()
+                            result = orchestrator.ingest_material(
+                                file_bytes=uploaded_file.read(),
+                                filename=uploaded_file.name,
+                                meeting_id=meeting_id
+                            )
+
+                            if result.get("success"):
                                 success_count += 1
                             else:
-                                error_count += 1
+                                st.error("{}: {}".format(
+                                    uploaded_file.name,
+                                    result.get("error", "could not be ingested")
+                                ))
                         except Exception as e:
-                            error_count += 1
                             st.error("Error: {}".format(str(e)))
-                    
+
                     progress_bar.empty()
                     status_text.empty()
-                    
+
                     if success_count > 0:
                         st.session_state.generated_brief = None
+                        st.session_state.brief_result = None
                         st.session_state.qa_history = []
                         st.success("✅ Uploaded {} file(s)".format(success_count))
                         st.balloons()
@@ -649,34 +703,25 @@ def main():
                 
                 if pasted_text and st.button("📝 Save Text", use_container_width=True, type="primary"):
                     meeting_id = st.session_state.current_meeting_id
-                    text, media_type = parse_pasted_text(pasted_text)
-                    
-                    if text:
-                        material_id = db.add_material(
-                            meeting_id=meeting_id,
+
+                    if pasted_text.strip():
+                        orchestrator = init_orchestrator()
+                        result = orchestrator.ingest_material(
+                            file_bytes=pasted_text.encode("utf-8"),
                             filename="pasted_text.txt",
-                            media_type=media_type,
-                            text=text
+                            meeting_id=meeting_id,
+                            media_type="pasted"
                         )
-                        
-                        # CRITICAL FIX: Index in FAISS via ingestion agent
-                        try:
-                            orchestrator = init_orchestrator()
-                            # Convert text to bytes for ingest_material
-                            text_bytes = text.encode('utf-8')
-                            ingest_result = orchestrator.ingest_material(
-                                file_bytes=text_bytes,
-                                filename="pasted_text.txt",
-                                meeting_id=meeting_id
-                            )
-                        except Exception as ingest_error:
-                            log_message("WARNING", "FAISS indexing failed: {}".format(str(ingest_error)))
-                        
-                        st.success("✅ Saved ({:,} chars)".format(len(text)))
-                        st.session_state.generated_brief = None
-                        st.session_state.qa_history = []
-                        st.balloons()
-                        st.rerun()
+
+                        if result.get("success"):
+                            st.success("✅ Saved ({:,} chars)".format(result["characters"]))
+                            st.session_state.generated_brief = None
+                            st.session_state.brief_result = None
+                            st.session_state.qa_history = []
+                            st.balloons()
+                            st.rerun()
+                        else:
+                            st.error("Error: {}".format(result.get("error", "Unknown error")))
                     else:
                         st.warning("No text to save")
         
@@ -688,6 +733,7 @@ def main():
         # Reset button for clearing current view
         if st.button("🔄 Clear Current View", use_container_width=True, help="Clear displayed brief and Q&A history"):
             st.session_state.generated_brief = None
+            st.session_state.brief_result = None
             st.session_state.brief_meeting_id = None
             st.session_state.qa_history = []
             st.success("✅ View cleared")
@@ -712,12 +758,21 @@ def main():
                                 title=current_meeting['title'],
                                 date=current_meeting['date'] or "Today"
                             )
-                            
+
                             if result.get("success"):
                                 st.session_state.generated_brief = result["brief"]
+                                st.session_state.brief_result = result
                                 st.session_state.brief_meeting_id = st.session_state.current_meeting_id
-                                provider = result.get("provider", "unknown")
-                                st.success("✅ Brief ready • {}".format(provider.upper()))
+                                # `success` means a brief exists, not that
+                                # nothing went wrong: a brief that could not be
+                                # stored comes back successful with an error.
+                                if result.get("error"):
+                                    st.warning("⚠️ {}".format(result["error"]))
+                                else:
+                                    st.success("✅ Brief ready • {} • {}".format(
+                                        result.get("provider", "unknown").upper(),
+                                        result.get("model", "")
+                                    ))
                                 st.rerun()
                             else:
                                 st.error("Error: {}".format(result.get("error", "Unknown error")))
@@ -738,6 +793,9 @@ def main():
                         )
                         if previous_brief:
                             st.session_state.generated_brief = previous_brief
+                            # A brief read back from storage has no run behind
+                            # it, so there is no trace to show for it.
+                            st.session_state.brief_result = None
                             st.session_state.brief_meeting_id = st.session_state.current_meeting_id
                             st.success("✅ Brief loaded")
                             st.rerun()
@@ -798,9 +856,9 @@ def main():
                 
                 history_options = [
                     "{} • {}".format(
-                        b['created_at'][:16], 
-                        b['model'].upper()
-                    ) 
+                        b['created_at'][:16],
+                        (b['model'] or 'unknown model').upper()
+                    )
                     for b in brief_history
                 ]
                 
@@ -816,7 +874,11 @@ def main():
                         brief_data = db.get_brief_by_id(selected_brief_id)
                         
                         if brief_data:
-                            st.session_state.generated_brief = MeetingBrief(**brief_data["brief"])
+                            # `as_brief` validates the stored payload against
+                            # today's schema and says so when it does not fit,
+                            # rather than raising a bare pydantic error.
+                            st.session_state.generated_brief = brief_data.as_brief()
+                            st.session_state.brief_result = None
                             st.session_state.brief_meeting_id = st.session_state.current_meeting_id
                             st.success("✅ Loaded")
                             st.rerun()
@@ -857,10 +919,37 @@ def main():
         )
     
     # Display generated brief (with safety check to ensure brief matches current meeting)
-    if (st.session_state.generated_brief and 
+    if (st.session_state.generated_brief and
         st.session_state.brief_meeting_id == st.session_state.current_meeting_id):
         st.markdown('<h2 style="margin-top: 2rem;">📊 Meeting Brief</h2>', unsafe_allow_html=True)
-        st.markdown('<div class="status-badge badge-success">✓ Generated</div>', unsafe_allow_html=True)
+
+        result = st.session_state.brief_result or {}
+        badges = ['<div class="status-badge badge-success">✓ Generated</div>']
+        if result.get("plan"):
+            badges.append(
+                '<div class="status-badge badge-primary">🧭 {} • {}</div>'.format(
+                    result.get("plan_source", "plan"),
+                    ", ".join(result["plan"])
+                )
+            )
+        if result.get("chunks"):
+            badges.append(
+                '<div class="status-badge badge-info">📚 {} chunk(s) of evidence</div>'.format(
+                    result["chunks"]
+                )
+            )
+        st.markdown("".join(badges), unsafe_allow_html=True)
+
+        # A brief can be generated and still carry an error — a failed save, a
+        # specialist whose search blew up. Neither is a reason to hide the
+        # document, and both are reasons to say so.
+        if result.get("error"):
+            st.warning("⚠️ {}".format(result["error"]))
+        if result.get("failed_tasks"):
+            st.warning("⚠️ These lines of enquiry failed and are missing from the "
+                       "evidence: {}".format(", ".join(result["failed_tasks"])))
+
+        render_trace(result.get("notes"))
         st.markdown("---")
         render_brief(st.session_state.generated_brief)
     elif st.session_state.current_meeting_id:
@@ -903,7 +992,7 @@ def main():
                     st.markdown(
                         '<div style="padding: 0.75rem; text-align: center;">'
                         '<span class="status-badge badge-info">{}</span>'
-                        '</div>'.format(mat['media_type'].upper()),
+                        '</div>'.format((mat['media_type'] or 'unknown').upper()),
                         unsafe_allow_html=True
                     )
                 
@@ -931,6 +1020,7 @@ def main():
                             st.success("✅ File deleted")
                             # Clear brief if materials change
                             st.session_state.generated_brief = None
+                            st.session_state.brief_result = None
                             st.session_state.brief_meeting_id = None
                             st.rerun()
                         else:

@@ -1,284 +1,285 @@
-"""Multi-agent orchestrator using LangChain."""
-from agents.nodes import previous_brief_for_title
+"""The pre-overhaul surface, kept as a facade over the LangGraph pipeline.
+
+`app.py` calls five methods on this class. They still exist, still take the same
+arguments, and still return the same dictionaries — but nothing here does any
+work of its own any more. `generate_brief` and `answer_question` invoke
+`run_brief_graph` / `run_qa_graph`; the steps they used to run inline (recall
+previous brief, retrieve, synthesise, store) are nodes of those graphs.
+
+What is left in this module is the boundary translation, and it is worth being
+explicit about the two places it is lossy:
+
+* **`success` is not "nothing went wrong".** `BriefRun.ok` means *a brief
+  exists*. A run that produced a brief and then failed to store it comes back
+  `success=True` with `error` set, because discarding a usable document because
+  SQLite was locked serves nobody. Callers that only check `success` will miss
+  that; `app.py` reads both.
+* **Q&A is stricter.** The graph answers "I could not find relevant
+  information" without calling the model when nothing was retrieved, which is a
+  successful run. But a retrieval *failure* also lands on that node, and
+  reporting a real error as a polite non-answer would hide it — so
+  `answer_question` reports `success=False` whenever `error` is set.
+
+One `CopilotRuntime` is built in `__init__` and shared by every call, which is
+what makes a single chat client and a single loaded embedder serve the whole
+session. Tests pass a runtime in directly rather than letting one be built.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from pydantic import ValidationError
+
+from agents.graph import BriefRun, QaRun, run_brief_graph, run_qa_graph
+from agents.runtime import CopilotRuntime
 from core.db import Database
+from core.exceptions import CopilotError, InvalidBriefError
+from core.indexing import delete_material_everywhere, index_material
+from core.logging_config import get_logger
 from core.parsing import parse_file
-from core.indexing import index_material
 from core.recall import Retriever
 from core.schema import MeetingBrief
-from core.llm_providers import get_llm_provider
 from core.synthesis import Synthesizer
-from core.utils import log_message
-import json
+
+logger = get_logger(__name__)
 
 
 class CopilotOrchestrator:
-    """Multi-agent system using LangChain."""
+    """Entry point for the UI: ingestion, brief generation, and Q&A."""
 
-    def __init__(self, provider: str = "gemini"):
-        self.db = Database()
-        self.llm = get_llm_provider(provider)
-        self.provider_name = provider
-        self.retriever = Retriever(self.db)
-        self.synthesizer = Synthesizer(self.llm, provider=provider)
+    def __init__(
+        self,
+        provider: str = "gemini",
+        *,
+        runtime: CopilotRuntime | None = None,
+    ) -> None:
+        """Build the shared runtime, or adopt one that was handed in.
 
-        log_message("INFO", "Orchestrator initialized with {} ({})".format(
-            provider, self.synthesizer.model_name
-        ))
-    
-    def ingest_material(self, file_bytes: bytes, filename: str, meeting_id: str) -> dict:
+        `runtime` is how the tests drive this class against a throwaway database
+        and a scripted model; production passes only `provider`.
         """
-        Ingest material (Tool for LangChain).
-        
-        Args:
-            file_bytes: File content
-            filename: Original filename
-            meeting_id: Meeting ID
-        
-        Returns:
-            Result dictionary
-        """
-        try:
-            log_message("INFO", "[IngestionTool] Processing: {}".format(filename))
-            
-            # Parse
-            text, media_type = parse_file(file_bytes, filename)
-            if not text:
-                log_message("WARNING", "[IngestionTool] Failed to parse")
-                return json.dumps({"success": False})
-            
-            # Check if material already exists in DB (to avoid duplicates)
-            # If it exists, get the material_id, otherwise create new
-            materials = self.db.get_materials(meeting_id)
-            material_id = None
-            for mat in materials:
-                if mat['filename'] == filename:
-                    material_id = mat['id']
-                    log_message("INFO", "[IngestionTool] Material already exists: {}".format(material_id))
-                    break
-            
-            # Save to DB only if it doesn't exist
-            if not material_id:
-                material_id = self.db.add_material(
-                    meeting_id=meeting_id,
-                    filename=filename,
-                    media_type=media_type,
-                    text=text
-                )
-            
-            # Chunk, embed and index in one step. `index_material` stores the
-            # chunks as rows and indexes their primary keys, so a re-upload
-            # replaces the previous chunks and their vectors instead of
-            # appending a duplicate copy of the document to the index.
-            chunk_ids = index_material(self.db, material_id)
-            if not chunk_ids:
-                log_message("WARNING", "[IngestionTool] No chunks created")
-                return json.dumps({"success": False, "error": "No chunks created"})
+        self.runtime = runtime if runtime is not None else CopilotRuntime.build(
+            provider=provider
+        )
+        logger.info(
+            "Orchestrator ready: provider=%s model=%s supervisor=%s",
+            self.provider_name,
+            self.model_name,
+            "on" if self.runtime.plans_with_llm else "off",
+        )
 
-            log_message("OK", "[IngestionTool] Ingested: {} ({} chunks)".format(
-                filename, len(chunk_ids)
-            ))
+    # --- Shared collaborators ----------------------------------------------
 
-            return json.dumps({
-                "success": True,
-                "material_id": material_id,
-                "chunks": len(chunk_ids)
-            })
-        
-        except Exception as e:
-            log_message("ERROR", "[IngestionTool] Error: {}".format(str(e)))
-            return json.dumps({"success": False, "error": str(e)})
-    
-    def _recall(self, meeting_id: str, query: str = "", k: int = 8):
-        """Retrieve context, returning the scored chunks and their rendered form.
+    @property
+    def db(self) -> Database:
+        return self.runtime.db
 
-        Both are needed downstream: the text goes into the prompt, and the
-        objects carry the chunk ids that turn a citation into something
-        checkable rather than something trusted.
-        """
-        results = self.retriever.recall(meeting_id, query=query, k=k)
-        if not results:
-            return [], ""
-        return results, self.retriever.format_context(results, meeting_id)
+    @property
+    def retriever(self) -> Retriever:
+        return self.runtime.retriever
 
-    def recall_context_tool(self, meeting_id: str, k: int = 8) -> str:
-        """
-        Recall context (Tool for LangChain).
+    @property
+    def synthesizer(self) -> Synthesizer:
+        return self.runtime.synthesizer
 
-        Args:
-            meeting_id: Meeting ID
-            k: Number of results
+    @property
+    def provider_name(self) -> str:
+        return self.runtime.provider
 
-        Returns:
-            Context blocks as JSON string
+    @property
+    def model_name(self) -> str:
+        return self.runtime.synthesizer.model_name
+
+    # --- Ingestion ----------------------------------------------------------
+
+    def ingest_material(
+        self,
+        file_bytes: bytes,
+        filename: str,
+        meeting_id: str,
+        *,
+        media_type: str | None = None,
+    ) -> dict[str, Any]:
+        """Parse, store, chunk, embed and index one document.
+
+        This is the whole write path in one call, which is the point: there is
+        no way to reach it that stores a material without also indexing it.
+        `app.py` used to add the row itself and then call this to index, so
+        every file was parsed twice and every re-upload of the same filename
+        left a second copy of the document in the index.
         """
         try:
-            log_message("INFO", "[RecallTool] Retrieving context for: {}".format(meeting_id))
-
-            results, context_blocks = self._recall(meeting_id, k=k)
-
-            if not results:
-                log_message("WARNING", "[RecallTool] No context found")
-                return json.dumps({"success": False})
-
-            log_message("OK", "[RecallTool] Retrieved {} chunks".format(len(results)))
-
-            return json.dumps({
-                "success": True,
-                "chunks": len(results),
-                "context_blocks": context_blocks
-            })
-
-        except Exception as e:
-            log_message("ERROR", "[RecallTool] Error: {}".format(str(e)))
-            return json.dumps({"success": False, "error": str(e)})
-    
-    def generate_brief(self, meeting_id: str, title: str, date: str) -> dict:
-        """
-        Main workflow: Generate brief using LangChain agents.
-        
-        Args:
-            meeting_id: Meeting ID
-            title: Meeting title
-            date: Meeting date
-        
-        Returns:
-            Generated brief
-        """
-        log_message("INFO", "=== Starting Brief Generation ===")
-        
-        try:
-            # Step 0: Check for previous meetings with same title (cross-meeting memory)
-            #
-            # The lookup itself now lives in `agents/nodes.py`, where it is the
-            # memory node of the brief graph. This method keeps working while
-            # Chunk 6 turns the class into a facade over that graph.
-            log_message("INFO", "[Step 0] Checking for previous meetings")
-            previous_brief = previous_brief_for_title(self.db, meeting_id, title)
-
-            # Step 1: Recall
-            log_message("INFO", "[Step 1] Recalling context")
-            results, context_blocks = self._recall(meeting_id)
-
-            if not results:
-                return {"success": False, "error": "Recall failed"}
-
-            # Step 2: Synthesis
-            #
-            # The model is asked for a MeetingBrief through the provider's own
-            # structured-output channel, so there is no markdown fence to strip,
-            # no trailing comma to regex away, and no truncated object to repair
-            # by counting braces. What comes back either validates or raises.
-            log_message("INFO", "[Step 2] Synthesizing brief")
-
-            synthesis = self.synthesizer.brief(
-                title=title,
-                date=date,
-                results=results,
-                context=context_blocks,
-                previous_brief=previous_brief,
-            )
-            brief = synthesis.brief
-
-            if synthesis.dropped_sources:
-                log_message("WARNING", "[Step 2] Discarded {} unmatched citation(s)".format(
-                    len(synthesis.dropped_sources)
-                ))
-
-            log_message("OK", "[Step 2] Brief synthesized ({} citations resolved)".format(
-                len(synthesis.cited_chunk_ids)
-            ))
-            
-            # Step 3: Memory (Store)
-            log_message("INFO", "[Step 3] Storing brief")
-            
-            brief_id = self.db.save_brief(
-                meeting_id=meeting_id,
-                model=synthesis.model,
-                brief_dict=brief.model_dump()
-            )
-
-            log_message("OK", "[Step 3] Brief stored: {}".format(brief_id))
-
-            log_message("INFO", "=== Brief Generation Complete ===")
-
-            return {
-                "success": True,
-                "brief": brief,
-                "brief_id": brief_id,
-                "provider": self.provider_name,
-                "model": synthesis.model
-            }
-        
-        except Exception as e:
-            log_message("ERROR", "Workflow failed: {}".format(str(e)))
-            return {"success": False, "error": str(e)}
-    
-    def recall_previous_brief(self, meeting_id: str):
-        """Recall previous brief."""
-        log_message("INFO", "[MemoryTool] Recalling previous brief")
-        result = self.db.get_latest_brief(meeting_id)
-        if result:
-            return MeetingBrief(**result["brief"])
-        return None
-    
-    def answer_question(self, meeting_id: str, question: str) -> dict:
-        """
-        Answer a user question based on meeting materials.
-        
-        Args:
-            meeting_id: Meeting ID
-            question: User's question
-        
-        Returns:
-            Dict with answer, sources, and metadata
-        """
-        log_message("INFO", "[QA] Answering question: {}".format(question[:50]))
-        
-        try:
-            # Step 1: Recall context for the question
-            log_message("INFO", "[QA-Step 1] Recalling relevant context")
-
-            results, context_blocks = self._recall(
-                meeting_id,
-                query=question,
-                k=self.retriever.settings.qa_retrieval_k,
-            )
-
-            if not results:
-                log_message("WARNING", "[QA] No relevant context found")
+            text, detected_type = parse_file(file_bytes, filename)
+            if not text.strip():
+                logger.warning("No text could be read out of %s", filename)
                 return {
-                    "success": True,
-                    "answer": "I could not find relevant information in the documents to answer this question.",
-                    "sources": [],
-                    "provider": self.provider_name
+                    "success": False,
+                    "error": f"No readable text could be extracted from '{filename}'.",
                 }
 
-            # Step 2: Answer against that context
-            #
-            # Sources come from the chunks that were actually retrieved, not
-            # from a regex over the rendered prompt. The old regex looked for
-            # "Source: " in text that never contained it, so every answer was
-            # returned with an empty source list.
-            log_message("INFO", "[QA-Step 2] Calling LLM for answer")
-
-            answer = self.synthesizer.answer(
-                question=question,
-                results=results,
-                context=context_blocks,
+            material_id = self._store_material(
+                meeting_id, filename, media_type or detected_type, text
             )
 
-            log_message("OK", "[QA] Question answered ({} sources)".format(
-                len(answer.sources)
-            ))
+            # The runtime's embedder, not a fresh one: this is the model that is
+            # already loaded, and in tests it is the one that is not real.
+            chunk_ids = index_material(
+                self.db,
+                material_id,
+                embedder=self.retriever.embedder,
+                settings=self.runtime.settings,
+            )
+            if not chunk_ids:
+                return {
+                    "success": False,
+                    "material_id": material_id,
+                    "error": f"'{filename}' produced no chunks to index.",
+                }
 
+            logger.info("Ingested %s as %s (%d chunks)", filename, material_id, len(chunk_ids))
             return {
                 "success": True,
-                "answer": answer.text,
-                "sources": list(answer.sources),
-                "provider": self.provider_name,
-                "model": answer.model
+                "material_id": material_id,
+                "chunks": len(chunk_ids),
+                "characters": len(text),
             }
-        
-        except Exception as e:
-            log_message("ERROR", "[QA] Error answering question: {}".format(str(e)))
-            return {"success": False, "error": str(e)}
+
+        except CopilotError as error:
+            logger.error("Could not ingest %s: %s", filename, error)
+            return {"success": False, "error": str(error)}
+
+    def _store_material(
+        self, meeting_id: str, filename: str, media_type: str, text: str
+    ) -> str:
+        """Return the material id this text should be stored under.
+
+        Uploading the same filename twice is a normal thing to do — a corrected
+        deck, a longer transcript — and it must not leave the meeting holding
+        two copies of the document. An existing row with identical text is
+        reused and re-indexed; one whose text has changed is deleted along with
+        its chunks and vectors before the new version is added.
+        """
+        unchanged: str | None = None
+
+        for existing in self.db.get_materials(meeting_id):
+            if existing.filename != filename:
+                continue
+            stored = self.db.get_material(existing.id)
+            if unchanged is None and stored is not None and stored.text == text:
+                unchanged = existing.id
+                continue
+            logger.info(
+                "Replacing material %s: '%s' was re-uploaded with different content",
+                existing.id,
+                filename,
+            )
+            delete_material_everywhere(
+                self.db, existing.id, settings=self.runtime.settings
+            )
+
+        if unchanged is not None:
+            return unchanged
+
+        return self.db.add_material(
+            meeting_id=meeting_id,
+            filename=filename,
+            media_type=media_type,
+            text=text,
+        )
+
+    # --- Retrieval ----------------------------------------------------------
+
+    def recall_context_tool(self, meeting_id: str, k: int = 8) -> dict[str, Any]:
+        """Retrieve context for a meeting and render it as prompt blocks."""
+        try:
+            results = self.retriever.recall(meeting_id, k=k)
+        except CopilotError as error:
+            logger.error("Recall failed for %s: %s", meeting_id, error)
+            return {"success": False, "chunks": 0, "context_blocks": "", "error": str(error)}
+
+        if not results:
+            return {"success": False, "chunks": 0, "context_blocks": ""}
+
+        return {
+            "success": True,
+            "chunks": len(results),
+            "context_blocks": self.retriever.format_context(results, meeting_id),
+            "sources": [scored.source_ref for scored in results],
+        }
+
+    # --- Brief generation ---------------------------------------------------
+
+    def generate_brief(self, meeting_id: str, title: str, date: str) -> dict[str, Any]:
+        """Run the brief graph for one meeting."""
+        run = run_brief_graph(
+            self.runtime, meeting_id=meeting_id, title=title, date=date
+        )
+        return self._brief_result(run)
+
+    def _brief_result(self, run: BriefRun) -> dict[str, Any]:
+        """Flatten a `BriefRun` into the dictionary `app.py` reads.
+
+        `run` itself is carried along under its own key. Everything the UI shows
+        today is in the flat fields, but the trace, the plan and the findings
+        are what Chunk 8 renders, and re-deriving them from a dict would be
+        worse than passing the object.
+        """
+        return {
+            "success": run.ok,
+            "brief": run.brief,
+            "brief_id": run.brief_id,
+            "provider": self.provider_name,
+            "model": run.model or self.model_name,
+            "error": run.error,
+            "notes": list(run.notes),
+            "plan": [task.name for task in run.plan],
+            "plan_source": run.plan_source,
+            "plan_rationale": run.plan_rationale,
+            "failed_tasks": list(run.failed_tasks),
+            "chunks": len(run.results),
+            "run": run,
+        }
+
+    # --- Question answering -------------------------------------------------
+
+    def answer_question(self, meeting_id: str, question: str) -> dict[str, Any]:
+        """Run the Q&A graph for one question."""
+        run = run_qa_graph(self.runtime, meeting_id=meeting_id, question=question)
+        return self._qa_result(run)
+
+    def _qa_result(self, run: QaRun) -> dict[str, Any]:
+        return {
+            # Unlike a brief, an answer that arrived alongside an error is not
+            # worth keeping: the text in that case is the "nothing retrieved"
+            # boilerplate, and showing it would disguise the failure.
+            "success": run.ok and run.error is None,
+            "answer": run.text,
+            "sources": list(run.sources),
+            "provider": self.provider_name,
+            "model": run.answer.model if run.answer else self.model_name,
+            "error": run.error,
+            "notes": list(run.notes),
+            "chunks": len(run.results),
+            "run": run,
+        }
+
+    # --- Memory -------------------------------------------------------------
+
+    def recall_previous_brief(self, meeting_id: str) -> MeetingBrief | None:
+        """The most recent stored brief for this meeting, or `None`.
+
+        Briefs are persisted as raw dicts on purpose (see `BriefRecord`), so a
+        row written before a schema change can fail to validate. That is worth
+        reporting rather than presenting as "no previous brief".
+        """
+        record = self.db.get_latest_brief(meeting_id)
+        if record is None:
+            return None
+
+        try:
+            return record.as_brief()
+        except ValidationError as error:
+            raise InvalidBriefError(
+                f"Stored brief {record.id} does not satisfy the current schema: {error}"
+            ) from error
