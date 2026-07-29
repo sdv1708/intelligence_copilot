@@ -42,6 +42,7 @@ data/briefs.db-wal
 data/briefs.db-shm
 data/briefs.backup-*.db
 data/faiss/*.index
+data/faiss/*.faiss
 data/raw/*
 !data/raw/.gitkeep
 !data/faiss/.gitkeep

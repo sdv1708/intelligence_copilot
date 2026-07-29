@@ -162,7 +162,7 @@ def test_the_orchestrator_pattern_of_matching_a_material_by_filename(legacy_db_p
 
 
 def test_a_raw_connection_still_unpacks_rows_positionally(legacy_db_path: Path):
-    """`core.document_handler` does `for material_id, text in rows`."""
+    """The orchestrator hands a bare connection to `core.recall.recall_context`."""
     db = Database(legacy_db_path)
     conn = db.get_connection()
     try:

@@ -12,6 +12,7 @@ import json
 from core.db import Database
 from core.parsing import parse_file, parse_pasted_text
 from core.recall import recall_context, format_context_blocks
+from core.indexing import delete_material_everywhere
 from core.synth import generate_brief, load_prompt_template
 from core.schema import MeetingBrief
 from core.utils import log_message
@@ -924,7 +925,9 @@ def main():
                 
                 with col5:
                     if st.button("🗑️ Delete", key=f"delete_{mat['id']}", help="Delete this file"):
-                        if db.delete_material(mat['id']):
+                        # Removes the vectors too, so a deleted document stops
+                        # turning up in search immediately.
+                        if delete_material_everywhere(db, mat['id']):
                             st.success("✅ File deleted")
                             # Clear brief if materials change
                             st.session_state.generated_brief = None

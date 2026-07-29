@@ -2,15 +2,13 @@
 # from langchain.prompts import PromptTemplate
 from core.db import Database
 from core.parsing import parse_file
-from core.chunk import chunk_text
-from core.embed import encode, build_or_load_index, add_to_index
+from core.indexing import index_material
 from core.recall import recall_context, format_context_blocks
 from core.synth import load_prompt_template
 from core.schema import MeetingBrief
 from core.llm_providers import get_llm_provider
 from core.utils import log_message, generate_id
 import json
-import os
 import re
 
 
@@ -64,37 +62,23 @@ class CopilotOrchestrator:
                     text=text
                 )
             
-            # Chunk and embed
-            # Use improved chunking with larger chunks for better relationship preservation
-            from core.chunk import chunk_text_large
-            chunks = chunk_text_large(text, max_len=4000, overlap=800)
-            if not chunks:
+            # Chunk, embed and index in one step. `index_material` stores the
+            # chunks as rows and indexes their primary keys, so a re-upload
+            # replaces the previous chunks and their vectors instead of
+            # appending a duplicate copy of the document to the index.
+            chunk_ids = index_material(self.db, material_id)
+            if not chunk_ids:
                 log_message("WARNING", "[IngestionTool] No chunks created")
                 return json.dumps({"success": False, "error": "No chunks created"})
-            
-            embeddings = encode(chunks)
-            
-            # Index in FAISS
-            from core.utils import get_storage_path
-            faiss_path = "{}/{}.index".format(
-                os.getenv("FAISS_PATH", get_storage_path("faiss")),
-                meeting_id
-            )
-            index = build_or_load_index(faiss_path)
-            add_to_index(index, embeddings)
-            
-            # Save index to persist changes
-            from core.embed import save_index
-            save_index(index, faiss_path)
-            
-            log_message("OK", "[IngestionTool] Ingested: {} ({} chunks, {} embeddings)".format(
-                filename, len(chunks), len(embeddings)
+
+            log_message("OK", "[IngestionTool] Ingested: {} ({} chunks)".format(
+                filename, len(chunk_ids)
             ))
-            
+
             return json.dumps({
                 "success": True,
                 "material_id": material_id,
-                "chunks": len(chunks)
+                "chunks": len(chunk_ids)
             })
         
         except Exception as e:
