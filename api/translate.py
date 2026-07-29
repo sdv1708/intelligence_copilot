@@ -51,8 +51,17 @@ def brief_trace(run: BriefRun) -> Trace:
     )
 
 
-def brief_response(result: dict[str, Any]) -> BriefResponse:
-    """Translate `CopilotOrchestrator.generate_brief`'s result."""
+def brief_response(
+    result: dict[str, Any], *, stored_at: str | None = None
+) -> BriefResponse:
+    """Translate `CopilotOrchestrator.generate_brief`'s result.
+
+    `stored_at` comes from the caller rather than from the run, because the run
+    only learns the id it was saved under — the timestamp is written by the
+    database. A run whose persistence node failed has no row to read it from
+    and leaves it `None`, which is the same `None` a client already has to
+    handle.
+    """
     run: BriefRun = result["run"]
     return BriefResponse(
         ok=run.ok,
@@ -63,6 +72,7 @@ def brief_response(result: dict[str, Any]) -> BriefResponse:
         warning=run.error,
         failed_tasks=list(run.failed_tasks),
         trace=brief_trace(run),
+        stored_at=stored_at,
     )
 
 

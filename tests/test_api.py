@@ -406,6 +406,9 @@ def test_generating_a_brief_returns_the_document_and_its_trace(
     assert body["brief_id"]
     assert body["provider"] == "gemini"
     assert body["model"] == "scripted-test-model"
+    # `null` here is the value that means "not stored", so a brief that reached
+    # the database has to carry the timestamp the database gave it.
+    assert body["stored_at"] == world.db.get_brief_by_id(body["brief_id"]).created_at
 
     trace = body["trace"]
     assert [task["name"] for task in trace["plan"]] == [t.name for t in DEFAULT_ROSTER]
@@ -475,6 +478,7 @@ def test_a_brief_that_could_not_be_stored_is_a_success_with_a_warning(
     assert body["ok"] is True
     assert body["brief"] is not None
     assert body["brief_id"] is None
+    assert body["stored_at"] is None
     assert "could not be stored" in body["warning"]
 
 

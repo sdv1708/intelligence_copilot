@@ -268,6 +268,6 @@ export function askQuestion(
   );
 }
 
-export { ApiError } from "./errors";
+export { ApiError, asApiError } from "./errors";
 export type { ErrorKind, ValidationIssue } from "./errors";
 export * from "./types";

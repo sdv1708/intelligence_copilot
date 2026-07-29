@@ -1,8 +1,8 @@
 import { FileText, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-import { ApiError, deleteMaterial } from "../api/client";
-import type { MaterialOut } from "../api/client";
+import { asApiError, deleteMaterial } from "../api/client";
+import type { ApiError, MaterialOut } from "../api/client";
 import { formatCount, formatDay } from "../format";
 import type { MeetingTasks } from "../hooks/useMeetingTasks";
 import { Button, ErrorNote } from "./controls";
@@ -42,15 +42,7 @@ export function MaterialsList({
       await run(meetingId, () => deleteMaterial(materialId));
       onDeleted();
     } catch (cause) {
-      setError(
-        cause instanceof ApiError
-          ? cause
-          : new ApiError({
-              message: cause instanceof Error ? cause.message : String(cause),
-              status: 0,
-              url: "",
-            }),
-      );
+      setError(asApiError(cause));
     }
   }
 

@@ -42,7 +42,18 @@ def generate_brief(meeting_id: str) -> BriefResponse:
             date=meeting.date or "Today",
         )
 
-    return brief_response(result)
+    response = brief_response(result)
+
+    # The run knows the id it was stored under but not when — `created_at` is
+    # written by the database. Without this a brief that *did* store comes back
+    # with `stored_at: null`, which is the value that means "not stored", and
+    # every client would read a successful save as a failed one.
+    if response.brief_id:
+        record = db.get_brief_by_id(response.brief_id)
+        if record is not None:
+            response.stored_at = record.created_at
+
+    return response
 
 
 @router.get("/meetings/{meeting_id}/briefs", response_model=list[BriefStub])

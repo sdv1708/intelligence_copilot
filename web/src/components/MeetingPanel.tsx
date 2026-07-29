@@ -1,11 +1,12 @@
 import { Loader2 } from "lucide-react";
 import { useCallback, useState } from "react";
 
-import { ApiError, deleteMeeting, getMeeting, listMaterials } from "../api/client";
-import type { MeetingOut } from "../api/client";
+import { asApiError, deleteMeeting, getMeeting, listMaterials } from "../api/client";
+import type { ApiError, MeetingOut } from "../api/client";
 import { meetingTitle, plural } from "../format";
 import type { MeetingTasks } from "../hooks/useMeetingTasks";
 import { useRequest } from "../hooks/useRequest";
+import { BriefPanel } from "./BriefPanel";
 import { MaterialsList } from "./MaterialsList";
 import { Uploader } from "./Uploader";
 import { Button, ErrorNote } from "./controls";
@@ -156,15 +157,7 @@ export function MeetingPanel({
       await tasks.run(meetingId, () => deleteMeeting(meetingId));
       onDeleted();
     } catch (cause) {
-      setDeleteError(
-        cause instanceof ApiError
-          ? cause
-          : new ApiError({
-              message: cause instanceof Error ? cause.message : String(cause),
-              status: 0,
-              url: "",
-            }),
-      );
+      setDeleteError(asApiError(cause));
     }
   }
 
@@ -184,15 +177,18 @@ export function MeetingPanel({
     );
   }
 
+  // The live list wins over the meeting row's own count, which is a snapshot
+  // taken when the meeting was fetched and goes stale the moment a file lands.
+  const documents =
+    materials.state.status === "ready"
+      ? materials.state.data.length
+      : meeting.state.data.material_count;
+
   return (
     <div className="flex flex-col gap-8">
       <Heading
         meeting={meeting.state.data}
-        documents={
-          materials.state.status === "ready"
-            ? materials.state.data.length
-            : meeting.state.data.material_count
-        }
+        documents={documents}
         busy={busy}
         onDelete={() => void removeMeeting()}
       />
@@ -248,6 +244,19 @@ export function MeetingPanel({
           />
         ) : null}
       </section>
+
+      {/*
+        Keyed on the meeting for the same reason the uploader is: a generated
+        brief lives in local state, and carrying one across a selection change
+        would show one meeting's brief under another meeting's title.
+      */}
+      <BriefPanel
+        key={meetingId}
+        meetingId={meetingId}
+        documents={documents}
+        tasks={tasks}
+        onGenerated={onChanged}
+      />
     </div>
   );
 }

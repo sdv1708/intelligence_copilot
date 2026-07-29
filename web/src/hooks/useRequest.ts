@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { ApiError } from "../api/client";
-import type { RequestOptions } from "../api/client";
+import { asApiError } from "../api/client";
+import type { ApiError, RequestOptions } from "../api/client";
 
 /**
  * A request has three outcomes and the UI has to render all three, so they are
@@ -46,17 +46,7 @@ export function useRequest<T>(
       })
       .catch((error: unknown) => {
         if (controller.signal.aborted) return;
-        setState({
-          status: "failed",
-          error:
-            error instanceof ApiError
-              ? error
-              : new ApiError({
-                  message: error instanceof Error ? error.message : String(error),
-                  status: 0,
-                  url: "",
-                }),
-        });
+        setState({ status: "failed", error: asApiError(error) });
       });
 
     return () => controller.abort();

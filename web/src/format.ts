@@ -32,6 +32,26 @@ export function formatDay(value: string): string {
   return Number.isNaN(at.getTime()) ? value : DAY.format(at);
 }
 
+const MOMENT = new Intl.DateTimeFormat(undefined, {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+/**
+ * A timestamp with the time of day, for the brief history.
+ *
+ * `formatDay` is not enough there: the real database holds three briefs for one
+ * meeting written within ninety seconds of each other, and a dropdown listing
+ * them all as "11 Nov 2025" gives you no way to tell them apart.
+ */
+export function formatMoment(value: string): string {
+  const at = new Date(value);
+  return Number.isNaN(at.getTime()) ? value : MOMENT.format(at);
+}
+
 /** Six-figure character counts are unreadable without separators. */
 export function formatCount(value: number): string {
   return value.toLocaleString();

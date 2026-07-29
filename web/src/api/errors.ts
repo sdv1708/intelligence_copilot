@@ -92,6 +92,27 @@ export class ApiError extends Error {
 }
 
 /**
+ * Coerce anything a rejected promise carries into an `ApiError`.
+ *
+ * Every manual `try`/`catch` around the client needs this, because a rejection
+ * is `unknown`: usually an `ApiError`, but a `TypeError` from a bug in a
+ * `.then` would arrive here too and must still reach the screen rather than
+ * being swallowed by an `instanceof` test that fails.
+ *
+ * `status: 0` marks "never reached the server", which is what a non-API failure
+ * effectively is.
+ */
+export function asApiError(cause: unknown): ApiError {
+  return cause instanceof ApiError
+    ? cause
+    : new ApiError({
+        message: cause instanceof Error ? cause.message : String(cause),
+        status: 0,
+        url: "",
+      });
+}
+
+/**
  * Render one Pydantic issue as a line a person can act on.
  *
  * `loc` starts with the request part — `["body", "title"]` — which is noise to

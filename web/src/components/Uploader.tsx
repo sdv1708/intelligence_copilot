@@ -1,24 +1,14 @@
 import { Check, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 
-import { ApiError, pasteMaterial, uploadMaterials } from "../api/client";
-import type { IngestOutcome } from "../api/client";
+import { asApiError, pasteMaterial, uploadMaterials } from "../api/client";
+import type { ApiError, IngestOutcome } from "../api/client";
 import { formatCount, plural } from "../format";
 import type { MeetingTasks } from "../hooks/useMeetingTasks";
 import { Button, ErrorNote, Field, INPUT } from "./controls";
 
 /** What the parsers in `core/parsing.py` dispatch on. Anything else reads empty. */
 const ACCEPT = ".pdf,.docx,.pptx,.txt";
-
-function asApiError(cause: unknown): ApiError {
-  return cause instanceof ApiError
-    ? cause
-    : new ApiError({
-        message: cause instanceof Error ? cause.message : String(cause),
-        status: 0,
-        url: "",
-      });
-}
 
 interface DropzoneProps {
   disabled: boolean;

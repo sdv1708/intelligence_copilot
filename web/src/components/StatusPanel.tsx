@@ -147,7 +147,6 @@ export function StatusPanel({ state, signal, onRetry }: StatusPanelProps) {
           Not built yet
         </h2>
         <ul className="mt-2.5 flex flex-col gap-1.5 text-sm text-muted">
-          <li>Briefs — the document, its history and the run trace.</li>
           <li>Q&amp;A — questions against one meeting, with citations.</li>
         </ul>
       </section>
