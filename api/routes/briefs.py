@@ -31,7 +31,7 @@ def generate_brief(meeting_id: str) -> BriefResponse:
         # would report it as a failed run rather than as "you haven't uploaded
         # anything yet".
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Upload at least one document before generating a brief.",
         )
 

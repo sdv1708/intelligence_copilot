@@ -26,7 +26,7 @@ def ask(meeting_id: str, payload: QaRequest) -> QaResponse:
 
     if not db.get_materials(meeting_id):
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Upload at least one document before asking questions.",
         )
 

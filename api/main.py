@@ -72,6 +72,20 @@ for router in ROUTERS:
     app.include_router(router)
 
 
+def serves_index(method: str, path: str, status_code: int) -> bool:
+    """Whether an unmatched request should get `index.html` rather than JSON.
+
+    Scoped to 404s on non-`/api` GETs: an unknown API route must stay a 404
+    with a JSON body, not silently return the HTML shell, or every frontend
+    typo would look like a successful request returning nonsense.
+
+    Split out from the handler below because the handler can only be registered
+    by mounting a built bundle into the global app, and this rule is worth
+    pinning without that side effect.
+    """
+    return status_code == 404 and method == "GET" and not path.startswith("/api")
+
+
 def mount_frontend() -> bool:
     """Serve the built React app, if it has been built.
 
@@ -97,16 +111,10 @@ def mount_frontend() -> bool:
     async def spa_fallback(request, exc):  # type: ignore[no-untyped-def]
         """Send unmatched GETs to `index.html` so client-side routes work.
 
-        Scoped to 404s on non-`/api` paths: an unknown API route must stay a
-        404 with a JSON body, not silently return the HTML shell, or every
-        frontend typo would look like a successful request returning nonsense.
+        `serves_index` holds the scoping rule; see its docstring for why an
+        unknown `/api` path must not reach the HTML shell.
         """
-        wants_page = (
-            exc.status_code == 404
-            and request.method == "GET"
-            and not request.url.path.startswith("/api")
-        )
-        if wants_page:
+        if serves_index(request.method, request.url.path, exc.status_code):
             return FileResponse(FRONTEND_DIST / "index.html")
 
         return JSONResponse(
