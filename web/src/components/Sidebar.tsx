@@ -1,18 +1,44 @@
 import { PanelLeftClose, ScrollText } from "lucide-react";
 
+import type { MeetingOut } from "../api/client";
+import type { RequestState } from "../hooks/useRequest";
 import type { Theme } from "../hooks/useTheme";
 import type { Signal } from "../status";
 import { HealthLine } from "./HealthLine";
+import { MeetingList } from "./MeetingList";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface SidebarProps {
   signal: Signal;
   theme: Theme;
+  meetings: RequestState<MeetingOut[]>;
+  selectedId: string | null;
+  composing: boolean;
+  /** True while the status view is the one on screen. */
+  showingStatus: boolean;
+  isBusy: (meetingId: string) => boolean;
+  onSelect: (meetingId: string) => void;
+  onNew: () => void;
+  onStatus: () => void;
+  onReloadMeetings: () => void;
   /** Only rendered below the layout's breakpoint, where the rail overlays. */
   onClose: () => void;
 }
 
-export function Sidebar({ signal, theme, onClose }: SidebarProps) {
+export function Sidebar({
+  signal,
+  theme,
+  meetings,
+  selectedId,
+  composing,
+  showingStatus,
+  isBusy,
+  onSelect,
+  onNew,
+  onStatus,
+  onReloadMeetings,
+  onClose,
+}: SidebarProps) {
   return (
     <div className="flex h-full flex-col bg-rail">
       <header className="flex h-14 shrink-0 items-center gap-2 px-3">
@@ -32,29 +58,32 @@ export function Sidebar({ signal, theme, onClose }: SidebarProps) {
         </button>
       </header>
 
-      <nav
-        aria-label="Meetings"
-        className="min-h-0 flex-1 overflow-y-auto px-3 pb-3"
-      >
-        <h2 className="px-1 pb-2 text-[11px] font-medium tracking-wide text-faint uppercase">
-          Meetings
-        </h2>
-
-        {/*
-          A build-state note, not an empty state: the database this talks to
-          already holds meetings. The list, the create form and selection are
-          the next slice of work, and this block goes when they land.
-        */}
-        <p className="rounded-md border border-dashed border-line-strong px-3 py-4 text-xs leading-relaxed text-muted">
-          The meeting list is not wired up yet. This build is the shell — layout,
-          theming, the status line and the API client.
-        </p>
-      </nav>
+      <MeetingList
+        state={meetings}
+        selectedId={selectedId}
+        composing={composing}
+        isBusy={isBusy}
+        onSelect={onSelect}
+        onNew={onNew}
+        onRetry={onReloadMeetings}
+      />
 
       <footer className="flex shrink-0 items-center gap-2 border-t border-line px-3 py-2.5">
-        <div className="min-w-0 flex-1">
+        {/*
+          The health reading is the way into the status view rather than a
+          separate nav item: the only reason to open that screen is the reading
+          itself, so the reading is what you click.
+        */}
+        <button
+          type="button"
+          onClick={onStatus}
+          aria-current={showingStatus ? "page" : undefined}
+          className={`min-w-0 flex-1 rounded-md px-1.5 py-1 text-left transition-colors ${
+            showingStatus ? "bg-line" : "hover:bg-line"
+          }`}
+        >
           <HealthLine signal={signal} />
-        </div>
+        </button>
         <ThemeToggle theme={theme} />
       </footer>
     </div>

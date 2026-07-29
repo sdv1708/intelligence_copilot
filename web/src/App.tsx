@@ -1,19 +1,35 @@
 import { PanelLeft } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { getHealth } from "./api/client";
+import { getHealth, listMeetings } from "./api/client";
+import { MeetingPanel } from "./components/MeetingPanel";
+import { NewMeeting } from "./components/NewMeeting";
 import { Sidebar } from "./components/Sidebar";
 import { StatusPanel } from "./components/StatusPanel";
+import { useMeetingTasks } from "./hooks/useMeetingTasks";
 import { useRequest } from "./hooks/useRequest";
 import { useTheme } from "./hooks/useTheme";
 import { signalFor } from "./status";
 
 const RAIL = "w-[17rem]";
 
+/**
+ * What the main column shows. A union rather than a nullable meeting id, so
+ * "no meeting selected" and "composing a new one" cannot be the same state.
+ */
+type View =
+  | { kind: "status" }
+  | { kind: "new" }
+  | { kind: "meeting"; id: string };
+
 export function App() {
   const theme = useTheme();
-  const { state, reload } = useRequest((options) => getHealth(options));
-  const signal = signalFor(state);
+  const health = useRequest((options) => getHealth(options));
+  const meetings = useRequest((options) => listMeetings(options));
+  const signal = signalFor(health.state);
+  const tasks = useMeetingTasks();
+
+  const [view, setView] = useState<View>({ kind: "status" });
 
   // Only used below the breakpoint, where the rail overlays rather than sits
   // beside the content.
@@ -28,16 +44,36 @@ export function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, [railOpen]);
 
+  // Every navigation closes the overlay rail: on a phone the sidebar covers
+  // what was just chosen, so leaving it open hides the result of the click.
+  const go = useCallback((next: View) => {
+    setView(next);
+    setRailOpen(false);
+  }, []);
+
+  const reloadMeetings = meetings.reload;
+
+  const sidebar = (
+    <Sidebar
+      signal={signal}
+      theme={theme}
+      meetings={meetings.state}
+      selectedId={view.kind === "meeting" ? view.id : null}
+      composing={view.kind === "new"}
+      showingStatus={view.kind === "status"}
+      isBusy={tasks.isBusy}
+      onSelect={(id) => go({ kind: "meeting", id })}
+      onNew={() => go({ kind: "new" })}
+      onStatus={() => go({ kind: "status" })}
+      onReloadMeetings={reloadMeetings}
+      onClose={() => setRailOpen(false)}
+    />
+  );
+
   return (
     <div className="flex h-dvh overflow-hidden bg-paper text-ink">
-      <aside
-        className={`hidden shrink-0 border-r border-line md:block ${RAIL}`}
-      >
-        <Sidebar
-          signal={signal}
-          theme={theme}
-          onClose={() => setRailOpen(false)}
-        />
+      <aside className={`hidden shrink-0 border-r border-line md:block ${RAIL}`}>
+        {sidebar}
       </aside>
 
       {railOpen ? (
@@ -51,11 +87,7 @@ export function App() {
           <aside
             className={`fixed inset-y-0 left-0 z-40 border-r border-line md:hidden ${RAIL}`}
           >
-            <Sidebar
-              signal={signal}
-              theme={theme}
-              onClose={() => setRailOpen(false)}
-            />
+            {sidebar}
           </aside>
         </>
       ) : null}
@@ -77,7 +109,39 @@ export function App() {
 
         <main className="min-h-0 flex-1 overflow-y-auto">
           <div className="mx-auto w-full max-w-column px-5 py-10 md:px-8 md:py-14">
-            <StatusPanel state={state} signal={signal} onRetry={reload} />
+            {view.kind === "status" ? (
+              <StatusPanel
+                state={health.state}
+                signal={signal}
+                onRetry={health.reload}
+              />
+            ) : null}
+
+            {view.kind === "new" ? (
+              <NewMeeting
+                onCreated={(meeting) => {
+                  reloadMeetings();
+                  go({ kind: "meeting", id: meeting.id });
+                }}
+                onCancel={() => go({ kind: "status" })}
+              />
+            ) : null}
+
+            {view.kind === "meeting" ? (
+              // Keyed so switching meetings remounts rather than carrying the
+              // previous one's transient state — confirmations, upload reports
+              // — across to a different meeting's documents.
+              <MeetingPanel
+                key={view.id}
+                meetingId={view.id}
+                tasks={tasks}
+                onChanged={reloadMeetings}
+                onDeleted={() => {
+                  reloadMeetings();
+                  go({ kind: "status" });
+                }}
+              />
+            ) : null}
           </div>
         </main>
       </div>
