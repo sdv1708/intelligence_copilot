@@ -1,94 +1,88 @@
-"""Utility functions: config, logging, ID generation, timers."""
+"""Small shared helpers: ID generation and timing.
+
+Configuration and logging have moved to `core.config` and `core.logging_config`.
+The `get_env` / `get_storage_path` / `log_message` functions below are
+transitional shims kept only so the not-yet-migrated modules (`db`, `embed`,
+`document_handler`, `parsing`, the old orchestrator) keep running while the
+overhaul proceeds. They are removed once those modules are rewritten.
+"""
+
+from __future__ import annotations
 
 import os
-import logging
-import uuid
 import time
-from datetime import datetime
+import uuid
+from collections.abc import Callable
+from datetime import UTC, datetime
 from functools import wraps
-from typing import Any
+from typing import Any, TypeVar
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
+from core.logging_config import get_logger
 
+logger = get_logger(__name__)
 
-def get_env(key: str, default: str = None) -> str:
-    """Safely fetch environment variable."""
-    value = os.getenv(key, default)
-    if value is None:
-        logger.warning(f"Environment variable {key} not set")
-    return value
+F = TypeVar("F", bound=Callable[..., Any])
 
 
 def generate_id(prefix: str = "") -> str:
-    """Generate a unique ID with optional prefix."""
-    unique_part = str(uuid.uuid4())[:8]
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    if prefix:
-        return f"{prefix}_{timestamp}_{unique_part}"
-    return f"{timestamp}_{unique_part}"
+    """Generate a sortable, unique identifier.
+
+    The timestamp leads so IDs sort chronologically as strings, which several
+    queries and the brief history UI rely on.
+    """
+    timestamp = datetime.now(UTC).strftime("%Y%m%d%H%M%S")
+    unique = uuid.uuid4().hex[:8]
+    return f"{prefix}_{timestamp}_{unique}" if prefix else f"{timestamp}_{unique}"
 
 
-def timer(func):
-    """Decorator to time function execution."""
+def utc_now_iso() -> str:
+    """Current UTC time as an ISO-8601 string, for persisted timestamps."""
+    return datetime.now(UTC).isoformat()
+
+
+def timer(func: F) -> F:
+    """Log how long a function took. Useful on the slow pipeline stages."""
+
     @wraps(func)
-    def wrapper(*args, **kwargs) -> Any:
-        start = time.time()
-        result = func(*args, **kwargs)
-        elapsed = time.time() - start
-        logger.info(f"{func.__name__} took {elapsed:.2f}s")
-        return result
-    return wrapper
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        start = time.perf_counter()
+        try:
+            return func(*args, **kwargs)
+        finally:
+            logger.debug("%s took %.2fs", func.__qualname__, time.perf_counter() - start)
+
+    return wrapper  # type: ignore[return-value]
 
 
-def log_message(level: str, message: str):
-    """Log a message at the specified level."""
-    if level.upper() == "INFO":
-        logger.info(message)
-    elif level.upper() == "WARNING":
-        logger.warning(message)
-    elif level.upper() == "ERROR":
-        logger.error(message)
-    elif level.upper() == "DEBUG":
-        logger.debug(message)
+# --- Transitional shims -----------------------------------------------------
+
+
+def get_env(key: str, default: str | None = None) -> str | None:
+    """Deprecated. Use `core.config.get_settings()`."""
+    return os.getenv(key, default)
 
 
 def get_storage_path(path_type: str = "data") -> str:
-    """
-    Get appropriate storage path for environment (local vs Streamlit Cloud).
-    
-    Args:
-        path_type: Type of path - "data", "faiss", "db"
-    
-    Returns:
-        Appropriate path for the environment
-    """
-    if os.path.exists("/tmp"):
-        # Running on Streamlit Cloud - use /tmp
-        if path_type == "faiss":
-            path = "/tmp/faiss"
-            os.makedirs(path, exist_ok=True)
-            return path
-        elif path_type == "db":
-            return "/tmp/briefs.db"
-        else:
-            path = "/tmp/data"
-            os.makedirs(path, exist_ok=True)
-            return path
-    else:
-        # Running locally - use ./data
-        if path_type == "faiss":
-            path = "./data/faiss"
-            os.makedirs(path, exist_ok=True)
-            return path
-        elif path_type == "db":
-            os.makedirs("./data", exist_ok=True)
-            return "./data/briefs.db"
-        else:
-            path = "./data"
-            os.makedirs(path, exist_ok=True)
-            return path
+    """Deprecated. Use `core.config.get_settings()` paths."""
+    from core.config import get_settings
+
+    settings = get_settings()
+    match path_type:
+        case "faiss":
+            path = settings.faiss_dir
+        case "db":
+            return str(settings.db_path)
+        case "raw":
+            path = settings.raw_dir
+        case _:
+            path = settings.data_dir
+    path.mkdir(parents=True, exist_ok=True)
+    return str(path)
+
+
+_LEVELS = {"INFO": 20, "WARNING": 30, "ERROR": 40, "DEBUG": 10}
+
+
+def log_message(level: str, message: str) -> None:
+    """Deprecated. Use a module logger from `core.logging_config.get_logger`."""
+    logger.log(_LEVELS.get(level.upper(), 20), message)

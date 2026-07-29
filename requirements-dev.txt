@@ -1,0 +1,13 @@
+# Development and test dependencies.
+# Install alongside requirements.txt:  pip install -r requirements-dev.txt
+#
+# Note: requirements.txt is currently out of sync with the working virtualenv
+# (it pins langchain 0.3.7 while 1.0.5 is installed). Reconciling it is Chunk 7
+# of the overhaul; until then, trust the venv.
+
+-r requirements.txt
+
+pydantic-settings==2.14.2
+pytest==9.1.1
+pytest-asyncio==1.4.0
+ruff==0.16.0
