@@ -38,6 +38,9 @@ wheels/
 
 # Data and database
 data/briefs.db
+data/briefs.db-wal
+data/briefs.db-shm
+data/briefs.backup-*.db
 data/faiss/*.index
 data/raw/*
 !data/raw/.gitkeep
