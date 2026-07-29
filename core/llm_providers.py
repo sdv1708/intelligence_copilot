@@ -165,12 +165,3 @@ def describe(chat_model: BaseChatModel) -> str:
         if isinstance(value, str) and value:
             return value
     return type(chat_model).__name__
-
-
-def get_llm_provider(provider_name: str | None = None) -> BaseChatModel:
-    """Backwards-compatible alias for `build_chat_model`.
-
-    `agents/copilot_orchestrator.py` and `app.py` call this name. It goes away
-    with them in Chunk 6.
-    """
-    return build_chat_model(provider_name)

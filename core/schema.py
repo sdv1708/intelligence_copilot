@@ -3,9 +3,9 @@
 Two families live here:
 
 * **Records** (`Meeting`, `Material`, `Chunk`, `BriefRecord`, ...) mirror rows in
-  SQLite. They are frozen, and they carry a deliberately small mapping shim so
-  the not-yet-rewritten `app.py` and orchestrator can keep indexing them like
-  the plain dicts the old repository returned.
+  SQLite. They are frozen, and they are read by attribute: the mapping shim that
+  let the un-migrated UI index them like the dicts the old repository returned
+  went with the last caller.
 * **Brief structures** (`MeetingBrief` and friends) are what the model is asked
   to produce. These are validated strictly, because a malformed brief is a bug
   we want surfaced at the boundary rather than rendered half-empty in the UI.
@@ -30,30 +30,12 @@ class Record(BaseModel):
     Frozen, because a record is a snapshot of what was read: mutating it does
     not change the database, and code that assumed otherwise was one of the
     quieter bugs in the original implementation.
-
-    `__getitem__` / `get` / `__contains__` are a **transitional shim**. `app.py`
-    and `agents/copilot_orchestrator.py` do `row['filename']` against what the
-    old repository returned. Keeping the subscript working means the data layer
-    can be replaced without touching the UI, which is the order this overhaul
-    runs in. Delete these three methods in Chunk 7.
     """
 
     # No `str_strip_whitespace` here on purpose: a record must read back byte
     # for byte what was written. Stripping `Chunk.text` would silently
     # invalidate its `char_start`/`char_end` offsets into the material.
     model_config = ConfigDict(frozen=True, extra="forbid")
-
-    def __getitem__(self, key: str) -> Any:
-        try:
-            return getattr(self, key)
-        except AttributeError:
-            raise KeyError(key) from None
-
-    def get(self, key: str, default: Any = None) -> Any:
-        return getattr(self, key, default)
-
-    def __contains__(self, key: str) -> bool:
-        return hasattr(self, key)
 
 
 # --- Persisted records ------------------------------------------------------

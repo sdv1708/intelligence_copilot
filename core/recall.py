@@ -20,7 +20,6 @@ raises rather than returning something plausible.
 
 from __future__ import annotations
 
-import sqlite3
 from collections.abc import Mapping, Sequence
 
 from core.config import Settings, get_settings
@@ -254,35 +253,3 @@ def format_context_blocks(
         )
 
     return "\n".join(blocks)
-
-
-# --- Transitional shim ------------------------------------------------------
-
-
-def recall_context(
-    db_conn: sqlite3.Connection | Database,
-    meeting_id: str,
-    query: str = "",
-    k: int = 8,
-) -> list[ScoredChunk]:
-    """Retrieve context for a meeting, keeping the old call signature.
-
-    `agents.copilot_orchestrator` passes a raw `sqlite3.Connection` here. That
-    is the pre-overhaul shape and it goes away in Chunk 6 when the orchestrator
-    becomes a facade over the LangGraph pipeline; until then this bridges to
-    `Retriever` so there is only one retrieval implementation in the codebase.
-    """
-    database = db_conn if isinstance(db_conn, Database) else _database_behind(db_conn)
-    return Retriever(database).recall(meeting_id, query=query, k=k)
-
-
-def _database_behind(conn: sqlite3.Connection) -> Database:
-    """Recover the repository for the file a bare connection is attached to."""
-    row = conn.execute("PRAGMA database_list").fetchone()
-    path = row["file"] if isinstance(row, sqlite3.Row) else row[2]
-    if not path:
-        raise ValueError(
-            "recall_context needs a connection to a file-backed database; "
-            "this one is in memory."
-        )
-    return Database(path, migrate_on_open=False)

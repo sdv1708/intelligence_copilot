@@ -15,7 +15,7 @@ from core.config import Settings
 from core.db import Database
 from core.exceptions import IndexOutOfSyncError
 from core.indexing import index_material, open_index
-from core.recall import Retriever, format_context_blocks, recall_context
+from core.recall import Retriever, format_context_blocks
 from core.schema import Chunk, ScoredChunk
 from tests.fakes import HashingEmbedder
 
@@ -320,32 +320,3 @@ def test_context_blocks_label_materials_by_filename(
 
 def test_empty_results_format_to_a_statement_not_an_empty_string():
     assert format_context_blocks([]) == "No context retrieved."
-
-
-# --- The transitional shim --------------------------------------------------
-
-
-def test_recall_context_accepts_a_raw_connection(
-    db: Database, meeting_id: str, monkeypatch: pytest.MonkeyPatch, small: Settings
-):
-    """The orchestrator still passes `db.get_connection()` until Chunk 6."""
-    monkeypatch.setattr("core.recall.get_settings", lambda: small)
-    monkeypatch.setattr("core.recall.get_embedder", lambda _: HashingEmbedder())
-
-    conn = db.get_connection()
-    try:
-        results = recall_context(conn, meeting_id, query="budget forecast", k=2)
-    finally:
-        conn.close()
-
-    assert results
-    assert all(isinstance(scored, ScoredChunk) for scored in results)
-
-
-def test_recall_context_accepts_a_repository(
-    db: Database, meeting_id: str, monkeypatch: pytest.MonkeyPatch, small: Settings
-):
-    monkeypatch.setattr("core.recall.get_settings", lambda: small)
-    monkeypatch.setattr("core.recall.get_embedder", lambda _: HashingEmbedder())
-
-    assert recall_context(db, meeting_id, query="hiring plan", k=1)

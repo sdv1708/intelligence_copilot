@@ -1,8 +1,28 @@
-"""Document parsing for PDF, DOCX, PPTX, and TXT files."""
+"""Document parsing for PDF, DOCX, PPTX, and TXT files.
+
+Every parser returns `""` rather than raising when a file cannot be read. That
+is deliberate and it is the caller's job to notice: `CopilotOrchestrator.
+ingest_material` treats empty text as a failed ingestion and says so, so a
+corrupt upload is reported once, in the UI, instead of twice — as a traceback
+here and as a mysteriously empty material there.
+
+What *was* lost is the reason. `log_message("ERROR", f"...: {e}")` recorded the
+exception's `str()` and dropped the traceback, so "Failed to parse PDF: " with
+an empty message was a common and useless log line. `logger.exception` keeps
+the traceback.
+
+`parse_pasted_text` used to live here. Pasted text now arrives through
+`parse_file` as a `.txt` upload, with `media_type="pasted"` supplied by the
+caller, so there is one path in and it is the one with tests behind it.
+"""
+
+from __future__ import annotations
 
 import io
 
-from core.utils import log_message
+from core.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def parse_pdf(file_content: bytes) -> str:
@@ -13,10 +33,10 @@ def parse_pdf(file_content: bytes) -> str:
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"
-        log_message("INFO", f"Parsed PDF: {len(text)} characters")
+        logger.info("Parsed PDF: %d characters", len(text))
         return text.strip()
-    except Exception as e:
-        log_message("ERROR", f"Failed to parse PDF: {e!s}")
+    except Exception:
+        logger.exception("Failed to parse PDF")
         return ""
 
 
@@ -26,10 +46,10 @@ def parse_docx(file_content: bytes) -> str:
         from docx import Document
         doc = Document(io.BytesIO(file_content))
         text = "\n".join([para.text for para in doc.paragraphs])
-        log_message("INFO", f"Parsed DOCX: {len(text)} characters")
+        logger.info("Parsed DOCX: %d characters", len(text))
         return text.strip()
-    except Exception as e:
-        log_message("ERROR", f"Failed to parse DOCX: {e!s}")
+    except Exception:
+        logger.exception("Failed to parse DOCX")
         return ""
 
 
@@ -43,10 +63,10 @@ def parse_pptx(file_content: bytes) -> str:
             for shape in slide.shapes:
                 if hasattr(shape, "text"):
                     text += shape.text + "\n"
-        log_message("INFO", f"Parsed PPTX: {len(text)} characters")
+        logger.info("Parsed PPTX: %d characters", len(text))
         return text.strip()
-    except Exception as e:
-        log_message("ERROR", f"Failed to parse PPTX: {e!s}")
+    except Exception:
+        logger.exception("Failed to parse PPTX")
         return ""
 
 
@@ -54,10 +74,10 @@ def parse_txt(file_content: bytes) -> str:
     """Extract text from TXT file."""
     try:
         text = file_content.decode("utf-8", errors="ignore").strip()
-        log_message("INFO", f"Parsed TXT: {len(text)} characters")
+        logger.info("Parsed TXT: %d characters", len(text))
         return text
-    except Exception as e:
-        log_message("ERROR", f"Failed to parse TXT: {e!s}")
+    except Exception:
+        logger.exception("Failed to parse TXT")
         return ""
 
 
@@ -67,7 +87,7 @@ def parse_file(file_content: bytes, filename: str) -> tuple[str, str]:
     Returns (text, media_type).
     """
     filename_lower = filename.lower()
-    
+
     if filename_lower.endswith(".pdf"):
         return parse_pdf(file_content), "pdf"
     elif filename_lower.endswith(".docx"):
@@ -77,16 +97,5 @@ def parse_file(file_content: bytes, filename: str) -> tuple[str, str]:
     elif filename_lower.endswith(".txt"):
         return parse_txt(file_content), "txt"
     else:
-        log_message("WARNING", f"Unsupported file type: {filename}")
+        logger.warning("Unsupported file type: %s", filename)
         return "", "unknown"
-
-
-def parse_pasted_text(text: str) -> tuple[str, str]:
-    """Parse pasted text from textarea."""
-    text = text.strip()
-    if not text:
-        log_message("WARNING", "Empty pasted text")
-        return "", "pasted"
-    log_message("INFO", f"Parsed pasted text: {len(text)} characters")
-    return text, "pasted"
-

@@ -1,15 +1,13 @@
 """Small shared helpers: ID generation and timing.
 
-Configuration and logging have moved to `core.config` and `core.logging_config`.
-The `get_env` / `get_storage_path` / `log_message` functions below are
-transitional shims kept only so the not-yet-migrated modules (`db`, `embed`,
-`document_handler`, `parsing`, the old orchestrator) keep running while the
-overhaul proceeds. They are removed once those modules are rewritten.
+Configuration and logging live in `core.config` and `core.logging_config`. The
+`get_env` / `get_storage_path` / `log_message` shims that used to sit at the
+bottom of this module went with their last callers in Chunk 7; there is now one
+way to read configuration and one way to log.
 """
 
 from __future__ import annotations
 
-import os
 import time
 import uuid
 from collections.abc import Callable
@@ -52,37 +50,3 @@ def timer(func: F) -> F:
             logger.debug("%s took %.2fs", func.__qualname__, time.perf_counter() - start)
 
     return wrapper  # type: ignore[return-value]
-
-
-# --- Transitional shims -----------------------------------------------------
-
-
-def get_env(key: str, default: str | None = None) -> str | None:
-    """Deprecated. Use `core.config.get_settings()`."""
-    return os.getenv(key, default)
-
-
-def get_storage_path(path_type: str = "data") -> str:
-    """Deprecated. Use `core.config.get_settings()` paths."""
-    from core.config import get_settings
-
-    settings = get_settings()
-    match path_type:
-        case "faiss":
-            path = settings.faiss_dir
-        case "db":
-            return str(settings.db_path)
-        case "raw":
-            path = settings.raw_dir
-        case _:
-            path = settings.data_dir
-    path.mkdir(parents=True, exist_ok=True)
-    return str(path)
-
-
-_LEVELS = {"INFO": 20, "WARNING": 30, "ERROR": 40, "DEBUG": 10}
-
-
-def log_message(level: str, message: str) -> None:
-    """Deprecated. Use a module logger from `core.logging_config.get_logger`."""
-    logger.log(_LEVELS.get(level.upper(), 20), message)

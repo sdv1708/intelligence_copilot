@@ -1,13 +1,13 @@
-"""Guards for the two things Chunk 2 must not break.
+"""A database written by the pre-migration code is adopted in place.
 
-1. `app.py` and `agents/copilot_orchestrator.py` have not been rewritten yet.
-   They index repository results like dicts and pass raw connections around.
-   Those access patterns are pinned here so the data layer can keep changing
-   underneath them until Chunks 6-8 replace them.
-2. A database written by the pre-migration code must be adopted in place, with
-   every row intact. This is the `data/briefs.db` scenario in miniature.
+This is the `data/briefs.db` scenario in miniature: three tables, no
+`schema_version`, no `chunks`, and rows that must all still be there afterwards.
+The migrations are forward-only, so getting this wrong is not recoverable by
+re-running anything.
 
-Both files are expected to be deleted with the code they protect.
+The other half of this file — the dict-style subscripting and raw connections
+the un-migrated UI used — went with those shims in Chunk 7. What remains has
+nothing to do with legacy *code*; it is about legacy *data*, which outlives it.
 """
 
 from __future__ import annotations
@@ -20,7 +20,6 @@ import pytest
 
 from core.db import Database
 from core.migrations import LATEST_VERSION
-from core.schema import MeetingBrief
 
 LEGACY_BRIEF = {
     "meeting_title": "Q4 Planning",
@@ -120,57 +119,16 @@ def test_migration_runs_only_once_across_reopens(legacy_db_path: Path):
         assert conn.execute("SELECT COUNT(*) FROM schema_version").fetchone()[0] == LATEST_VERSION
 
 
-# --- Access patterns the un-migrated UI still uses -------------------------
+def test_a_migrated_material_can_still_be_matched_by_filename(legacy_db_path: Path):
+    """`ingest_material` deduplicates a re-upload against the rows already there.
 
-
-def test_the_ui_can_index_records_like_dicts(legacy_db_path: Path):
-    """Mirrors the subscripting in app.py; see `core.schema.Record`."""
-    db = Database(legacy_db_path)
-
-    meeting = db.list_meetings()[0]
-    assert "{} ({})".format(meeting["title"], meeting["date"] or "No date") == (
-        "AI engineering (2025-11-11)"
-    )
-
-    material = db.get_materials(meeting["id"])[0]
-    assert material["filename"] == "transcript.pdf"
-    assert material["char_count"] == 4693
-
-    history = db.get_brief_history(meeting["id"])[0]
-    assert "{} • {}".format(history["created_at"][:16], history["model"].upper()) == (
-        "2025-11-11T15:20 • GEMINI"
-    )
-
-
-def test_the_ui_can_splat_a_stored_brief_into_the_model(legacy_db_path: Path):
-    """app.py does `MeetingBrief(**brief_data["brief"])`."""
-    db = Database(legacy_db_path)
-    record = db.get_brief_by_id("brief_1")
-
-    assert MeetingBrief(**record["brief"]).meeting_title == "Q4 Planning"
-
-
-def test_the_orchestrator_pattern_of_matching_a_material_by_filename(legacy_db_path: Path):
-    """Deduplication in `ingest_material` iterates summaries and compares fields."""
+    A meeting adopted from the old database is the case where that matters
+    most: those materials predate the chunk store entirely.
+    """
     db = Database(legacy_db_path)
 
     existing = next(
-        (m["id"] for m in db.get_materials("meeting_1") if m["filename"] == "transcript.pdf"),
+        (m.id for m in db.get_materials("meeting_1") if m.filename == "transcript.pdf"),
         None,
     )
     assert existing == "material_1"
-
-
-def test_a_raw_connection_still_unpacks_rows_positionally(legacy_db_path: Path):
-    """The orchestrator hands a bare connection to `core.recall.recall_context`."""
-    db = Database(legacy_db_path)
-    conn = db.get_connection()
-    try:
-        rows = conn.execute(
-            "SELECT id, text FROM materials WHERE meeting_id = ?", ("meeting_1",)
-        ).fetchall()
-        unpacked = [(material_id, len(text)) for material_id, text in rows]
-    finally:
-        conn.close()
-
-    assert unpacked == [("material_1", 4693)]

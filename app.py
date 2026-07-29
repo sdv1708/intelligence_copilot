@@ -589,8 +589,8 @@ def main():
             meetings = db.list_meetings()
             
             if meetings:
-                meeting_options = ["{} ({})".format(m['title'], m['date'] or 'No date') for m in meetings]
-                meeting_ids = [m['id'] for m in meetings]
+                meeting_options = ["{} ({})".format(m.title, m.date or 'No date') for m in meetings]
+                meeting_ids = [m.id for m in meetings]
                 
                 selected_index = st.selectbox(
                     "Choose a meeting",
@@ -616,9 +616,9 @@ def main():
                         '<strong>Date:</strong> {}<br>'
                         '<strong>Created:</strong> {}</small>'
                         '</div>'.format(
-                            selected_meeting['title'],
-                            selected_meeting['date'] or 'Not set',
-                            selected_meeting['created_at'][:10]
+                            selected_meeting.title,
+                            selected_meeting.date or 'Not set',
+                            selected_meeting.created_at[:10]
                         ),
                         unsafe_allow_html=True
                     )
@@ -755,8 +755,8 @@ def main():
                             
                             result = orchestrator.generate_brief(
                                 meeting_id=st.session_state.current_meeting_id,
-                                title=current_meeting['title'],
-                                date=current_meeting['date'] or "Today"
+                                title=current_meeting.title,
+                                date=current_meeting.date or "Today"
                             )
 
                             if result.get("success"):
@@ -856,8 +856,8 @@ def main():
                 
                 history_options = [
                     "{} • {}".format(
-                        b['created_at'][:16],
-                        (b['model'] or 'unknown model').upper()
+                        b.created_at[:16],
+                        (b.model or 'unknown model').upper()
                     )
                     for b in brief_history
                 ]
@@ -870,7 +870,7 @@ def main():
                 
                 if st.button("📖 Load", use_container_width=True):
                     try:
-                        selected_brief_id = brief_history[selected_brief_idx]['id']
+                        selected_brief_id = brief_history[selected_brief_idx].id
                         brief_data = db.get_brief_by_id(selected_brief_id)
                         
                         if brief_data:
@@ -902,8 +902,8 @@ def main():
                 '📆 {} • 📎 {} material(s) • {} brief'
                 '</p>'
                 '</div>'.format(
-                    current_meeting['title'],
-                    current_meeting['date'] or 'No date set',
+                    current_meeting.title,
+                    current_meeting.date or 'No date set',
                     materials_count,
                     "✅ Generated" if st.session_state.generated_brief else "⏳ Pending"
                 ),
@@ -984,7 +984,7 @@ def main():
                     st.markdown(
                         '<div class="premium-card" style="padding: 0.75rem; margin-bottom: 0.5rem;">'
                         '<strong>📄 {}</strong>'
-                        '</div>'.format(mat['filename']),
+                        '</div>'.format(mat.filename or 'Untitled'),
                         unsafe_allow_html=True
                     )
                 
@@ -992,7 +992,7 @@ def main():
                     st.markdown(
                         '<div style="padding: 0.75rem; text-align: center;">'
                         '<span class="status-badge badge-info">{}</span>'
-                        '</div>'.format((mat['media_type'] or 'unknown').upper()),
+                        '</div>'.format((mat.media_type or 'unknown').upper()),
                         unsafe_allow_html=True
                     )
                 
@@ -1000,7 +1000,7 @@ def main():
                     st.markdown(
                         '<div style="padding: 0.75rem; text-align: center;">'
                         '<small>{:,} chars</small>'
-                        '</div>'.format(mat['char_count']),
+                        '</div>'.format(mat.char_count),
                         unsafe_allow_html=True
                     )
                 
@@ -1008,15 +1008,15 @@ def main():
                     st.markdown(
                         '<div style="padding: 0.75rem; text-align: center;">'
                         '<small>{}</small>'
-                        '</div>'.format(mat['created_at'][:16]),
+                        '</div>'.format(mat.created_at[:16]),
                         unsafe_allow_html=True
                     )
                 
                 with col5:
-                    if st.button("🗑️ Delete", key=f"delete_{mat['id']}", help="Delete this file"):
+                    if st.button("🗑️ Delete", key=f"delete_{mat.id}", help="Delete this file"):
                         # Removes the vectors too, so a deleted document stops
                         # turning up in search immediately.
-                        if delete_material_everywhere(db, mat['id']):
+                        if delete_material_everywhere(db, mat.id):
                             st.success("✅ File deleted")
                             # Clear brief if materials change
                             st.session_state.generated_brief = None
@@ -1027,7 +1027,7 @@ def main():
                             st.error("Failed to delete file")
             
             # Summary
-            total_chars = sum([m['char_count'] for m in materials])
+            total_chars = sum([m.char_count for m in materials])
             st.markdown(
                 '<div style="text-align: right; margin-top: 1rem;">'
                 '<span class="status-badge badge-info">📊 {} material(s) • {:,} total characters</span>'

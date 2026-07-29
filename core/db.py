@@ -109,15 +109,6 @@ class Database:
         finally:
             conn.close()
 
-    def get_connection(self) -> sqlite3.Connection:
-        """Return a bare connection the caller is responsible for closing.
-
-        Transitional: `core.recall` and the legacy orchestrator take a raw
-        connection. Prefer `connect()`. Removed once those callers are
-        rewritten in Chunk 3.
-        """
-        return self._new_connection()
-
     # --- Schema -------------------------------------------------------------
 
     def init_db(self) -> int:

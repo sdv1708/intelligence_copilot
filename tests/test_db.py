@@ -131,7 +131,7 @@ def test_get_materials_omits_the_text_but_reports_its_length(db: Database, meeti
 
     assert summary.char_count == 1234
     assert summary.filename == "notes.txt"
-    assert summary["meeting_id"] == meeting_id
+    assert summary.meeting_id == meeting_id
 
 
 def test_get_material_returns_the_full_text(db: Database, meeting_id):
@@ -336,7 +336,7 @@ def test_save_and_reload_a_brief(db: Database, meeting_id):
 
     record = db.get_brief_by_id(brief_id)
     assert record.model == "gemini"
-    assert record["brief"] == payload
+    assert record.brief == payload
     assert record.as_brief().key_topics_today == ["Hiring"]
 
 

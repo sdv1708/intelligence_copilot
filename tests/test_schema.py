@@ -1,4 +1,4 @@
-"""Model validation, including the compatibility shim the legacy UI leans on."""
+"""Model validation for the persisted records and the LLM-facing brief."""
 
 from __future__ import annotations
 
@@ -35,7 +35,13 @@ def make_chunk(**overrides) -> Chunk:
 # --- Records ---------------------------------------------------------------
 
 
-def test_records_support_dict_style_access_for_the_legacy_ui():
+def test_records_are_read_by_attribute_not_by_key():
+    """The mapping shim is gone; a subscript is now a mistake, loudly.
+
+    It existed so the data layer could be replaced before the UI was. Both
+    have been, and leaving it would let a typo'd key read a default instead
+    of failing.
+    """
     material = Material(
         id="mat1",
         meeting_id="m1",
@@ -44,11 +50,9 @@ def test_records_support_dict_style_access_for_the_legacy_ui():
         text="hello",
         created_at="2026-07-28T00:00:00+00:00",
     )
-    assert material["filename"] == "notes.txt"
-    assert material.get("missing", "fallback") == "fallback"
-    assert "media_type" in material
-    with pytest.raises(KeyError):
-        material["nope"]
+    assert material.filename == "notes.txt"
+    with pytest.raises(TypeError):
+        material["filename"]
 
 
 def test_records_are_frozen():
@@ -228,7 +232,7 @@ def test_brief_record_keeps_the_payload_raw():
         model="gemini",
         brief={"meeting_title": "Weekly", "time_window": "nonsense"},
     )
-    assert record["brief"]["time_window"] == "nonsense"
+    assert record.brief["time_window"] == "nonsense"
     with pytest.raises(ValidationError):
         record.as_brief()
 

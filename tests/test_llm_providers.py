@@ -16,7 +16,6 @@ from core.llm_providers import (
     NO_SAMPLING_PARAMS,
     build_chat_model,
     describe,
-    get_llm_provider,
     resolve_provider,
     structured,
     supports_sampling_params,
@@ -164,11 +163,18 @@ def test_timeout_and_retries_come_from_settings(configured: Settings):
     assert model.max_retries == 5
 
 
-def test_get_llm_provider_still_works_for_the_legacy_callers(
+def test_the_provider_defaults_to_the_configured_one(
     configured: Settings, monkeypatch: pytest.MonkeyPatch
 ):
+    """Called with no provider, `build_chat_model` reads `Settings`.
+
+    `CopilotRuntime.build` relies on this, and it is what replaced the
+    `get_llm_provider` alias the pre-overhaul UI called.
+    """
     monkeypatch.setattr("core.llm_providers.get_settings", lambda: configured)
-    assert describe(get_llm_provider("gemini")).endswith(configured.gemini_model)
+    assert describe(build_chat_model()).endswith(
+        configured.model_for(configured.llm_provider)
+    )
 
 
 # --- Structured output ------------------------------------------------------
