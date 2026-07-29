@@ -1,4 +1,5 @@
 """Multi-agent orchestrator using LangChain."""
+from agents.nodes import previous_brief_for_title
 from core.db import Database
 from core.parsing import parse_file
 from core.indexing import index_material
@@ -131,54 +132,6 @@ class CopilotOrchestrator:
             log_message("ERROR", "[RecallTool] Error: {}".format(str(e)))
             return json.dumps({"success": False, "error": str(e)})
     
-    def _get_previous_meeting_brief(self, current_meeting_id: str, title: str):
-        """
-        Get the stored brief from the most recent meeting with the same title.
-        Enables cross-meeting memory for recurring meetings.
-
-        Args:
-            current_meeting_id: Current meeting ID (to exclude)
-            title: Meeting title to match
-
-        Returns:
-            The previous brief as a raw dict, or None. Rendering it for the
-            prompt is `core.synthesis.format_previous_brief`'s job -- keeping
-            the two apart means the same memory can be handed to a LangGraph
-            node in Chunk 5 without dragging a prompt fragment along with it.
-        """
-        try:
-            # Get all meetings with same title
-            all_meetings = self.db.list_meetings()
-            same_title_meetings = [
-                m for m in all_meetings 
-                if m['title'].lower().strip() == title.lower().strip() 
-                and m['id'] != current_meeting_id
-            ]
-            
-            if not same_title_meetings:
-                log_message("INFO", "[Step 0] No previous meetings found with title: {}".format(title))
-                return None
-
-            # Get most recent meeting (by created_at)
-            most_recent = max(same_title_meetings, key=lambda x: x['created_at'])
-            log_message("INFO", "[Step 0] Found previous meeting: {} from {}".format(
-                most_recent['title'], most_recent['date'] or most_recent['created_at'][:10]
-            ))
-            
-            # Get brief from that meeting
-            prev_brief = self.db.get_latest_brief(most_recent['id'])
-            
-            if not prev_brief:
-                log_message("INFO", "[Step 0] Previous meeting has no brief yet")
-                return None
-
-            log_message("OK", "[Step 0] Carrying context from previous meeting")
-            return prev_brief['brief']
-
-        except Exception as e:
-            log_message("ERROR", "[Step 0] Error getting previous meeting context: {}".format(str(e)))
-            return None
-    
     def generate_brief(self, meeting_id: str, title: str, date: str) -> dict:
         """
         Main workflow: Generate brief using LangChain agents.
@@ -195,8 +148,12 @@ class CopilotOrchestrator:
         
         try:
             # Step 0: Check for previous meetings with same title (cross-meeting memory)
+            #
+            # The lookup itself now lives in `agents/nodes.py`, where it is the
+            # memory node of the brief graph. This method keeps working while
+            # Chunk 6 turns the class into a facade over that graph.
             log_message("INFO", "[Step 0] Checking for previous meetings")
-            previous_brief = self._get_previous_meeting_brief(meeting_id, title)
+            previous_brief = previous_brief_for_title(self.db, meeting_id, title)
 
             # Step 1: Recall
             log_message("INFO", "[Step 1] Recalling context")

@@ -1,0 +1,17 @@
+MEETING_TITLE: {{title}}
+MEETING_DATE: {{date}}
+
+MATERIALS AVAILABLE:
+{{materials}}
+
+{{previous_meeting}}
+
+---
+
+The standing roster, used when no one plans anything, is:
+
+{{default_tasks}}
+
+It is a reasonable floor, not a target. Probe the materials, then produce the
+plan this meeting actually warrants: keep what fits, drop what this meeting has
+no version of, and add the questions specific to what you find.

@@ -112,6 +112,24 @@ class Settings(BaseSettings):
     neighbour_radius: int = Field(default=1, ge=0)
     min_similarity: float = Field(default=0.15, ge=-1.0, le=1.0)
 
+    # --- Multi-agent research ----------------------------------------------
+    #
+    # A brief is assembled from several specialists searching in parallel, so
+    # each one asks for fewer hits than a single-shot retrieval would; the
+    # union is what reaches the model.
+
+    research_k: int = Field(default=6, gt=0)
+    # Ceiling on the merged context. Five specialists at k=6, each hit carrying
+    # two neighbours, is ~90 chunks of ~900 characters -- more than a brief
+    # needs and enough to push out the instructions. Hits survive the cut before
+    # neighbours do.
+    brief_max_chunks: int = Field(default=60, gt=0)
+    # Whether the supervisor node asks a model what to research. Off means the
+    # default roster runs, which is a complete plan on its own; a supervisor
+    # that fails for any reason falls back to it rather than failing the run.
+    plan_with_llm: bool = True
+    planner_max_tasks: int = Field(default=8, gt=0)
+
     # --- Observability -----------------------------------------------------
 
     log_level: str = "INFO"

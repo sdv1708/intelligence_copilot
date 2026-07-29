@@ -28,3 +28,6 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]
+# The TYPE_CHECKING block there declares the names re-exported lazily by
+# `__getattr__`; they are unused at runtime by construction.
+"agents/__init__.py" = ["F401"]

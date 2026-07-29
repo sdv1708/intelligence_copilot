@@ -35,6 +35,8 @@ BRIEF_SYSTEM = "system_prompt"
 BRIEF_USER = "user_prompt"
 QA_SYSTEM = "qa_system_prompt"
 QA_USER = "qa_user_prompt"
+PLANNER_SYSTEM = "planner_system"
+PLANNER_USER = "planner_user"
 
 _PLACEHOLDER = re.compile(r"\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}")
 

@@ -14,6 +14,8 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 import numpy as np
+from langchain_core.language_models import BaseChatModel
+from pydantic import Field
 
 _TOKEN = re.compile(r"[a-z0-9]+")
 
@@ -160,3 +162,69 @@ def _as_message(response: str | Mapping[str, Any], message_cls):
             ],
         )
     return message_cls(content=response)
+
+
+class ScriptedToolCallingModel(BaseChatModel):
+    """A real `BaseChatModel` that replays scripted tool calls.
+
+    `ScriptedChatModel` above is a duck type: enough surface for `Synthesizer`,
+    which only ever calls `invoke` and `with_structured_output`. The supervisor
+    goes through `langchain.agents.create_agent`, which builds a graph around
+    the model and calls `bind_tools`, so it needs the genuine base class.
+
+    Script entries, replayed in order:
+
+    * a **string** — the model answered with text and the agent loop ends
+    * a **mapping** — a tool call, given as `{"name": ..., "args": {...}}`. Use
+      the response-format schema's name (e.g. `"ResearchPlan"`) to make the
+      agent produce a structured response rather than call a tool.
+
+    `bound_tool_names` records what the agent offered, which is how a test
+    asserts the supervisor was actually given the corpus tools.
+    """
+
+    responses: list[Any] = Field(default_factory=list)
+    call_count: int = 0
+    bound_tool_names: list[str] = Field(default_factory=list)
+    prompts: list[Any] = Field(default_factory=list)
+
+    @property
+    def _llm_type(self) -> str:
+        return "scripted-tool-calling"
+
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs):
+        from langchain_core.messages import AIMessage
+        from langchain_core.outputs import ChatGeneration, ChatResult
+
+        self.prompts.append(list(messages))
+        if self.call_count >= len(self.responses):
+            raise AssertionError(
+                f"ScriptedToolCallingModel exhausted: {len(self.responses)} "
+                f"responses configured but invoked {self.call_count + 1} times."
+            )
+        response = self.responses[self.call_count]
+        self.call_count += 1
+
+        if isinstance(response, Mapping):
+            message = AIMessage(
+                content="",
+                tool_calls=[
+                    {
+                        "name": response["name"],
+                        "args": dict(response.get("args", {})),
+                        "id": f"call_{self.call_count}",
+                    }
+                ],
+            )
+        else:
+            message = AIMessage(content=str(response))
+
+        return ChatResult(generations=[ChatGeneration(message=message)])
+
+    def bind_tools(self, tools, **kwargs):
+        for candidate in tools:
+            name = getattr(candidate, "name", None)
+            if name is None and isinstance(candidate, type):
+                name = candidate.__name__
+            self.bound_tool_names.append(str(name or candidate))
+        return self
