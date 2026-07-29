@@ -1,4 +1,4 @@
-import { Download, Info, Sparkles } from "lucide-react";
+import { Download, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
@@ -14,7 +14,7 @@ import { formatMoment } from "../format";
 import type { MeetingTasks } from "../hooks/useMeetingTasks";
 import { BriefDocument } from "./BriefDocument";
 import { TraceView } from "./TraceView";
-import { Button, ErrorNote } from "./controls";
+import { Button, ErrorNote, Note } from "./controls";
 
 /**
  * The brief: generating one, reading one back, and showing how it was made.
@@ -105,15 +105,6 @@ function HistoryPicker({
         ))}
       </select>
     </label>
-  );
-}
-
-function Note({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="flex items-start gap-2 text-xs leading-relaxed text-muted">
-      <Info size={13} strokeWidth={1.75} aria-hidden="true" className="mt-0.5 shrink-0" />
-      <span className="min-w-0 flex-1">{children}</span>
-    </p>
   );
 }
 

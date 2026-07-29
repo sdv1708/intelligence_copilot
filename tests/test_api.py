@@ -30,6 +30,7 @@ from fastapi.testclient import TestClient
 
 from agents.copilot_orchestrator import CopilotOrchestrator
 from agents.graph import BriefRun
+from agents.nodes import NO_CONTEXT_ANSWER
 from agents.planner import DEFAULT_ROSTER
 from agents.state import Finding, ResearchTask
 from api import deps
@@ -596,8 +597,13 @@ def test_an_answer_comes_back_with_its_sources(wire, world: World) -> None:
     assert all("#c" in source for source in body["sources"])
     assert body["error"] is None
     assert body["trace"]["chunks"] > 0
-    # A Q&A run has no plan behind it, so those fields stay empty.
+    # A Q&A run has no plan behind it, so those fields stay empty. `plan_source`
+    # in particular: `web/src/components/TraceView.tsx` reads the empty string as
+    # "this run did no planning" and omits its header on the strength of it, so a
+    # placeholder here would put a sentence about planning on an answer.
     assert body["trace"]["plan"] == []
+    assert body["trace"]["plan_source"] == ""
+    assert body["trace"]["plan_rationale"] == ""
 
 
 def test_a_retrieval_failure_is_reported_rather_than_dressed_as_no_answer(
@@ -623,6 +629,9 @@ def test_a_retrieval_failure_is_reported_rather_than_dressed_as_no_answer(
     body = response.json()
     assert body["ok"] is False
     assert body["error"] == "index unreadable"
+    # And the text alongside it really is the boilerplate, which is why the UI
+    # withholds `answer` whenever `ok` is false rather than rendering it.
+    assert body["answer"] == NO_CONTEXT_ANSWER
 
 
 def test_asking_about_a_meeting_with_no_materials_is_refused(

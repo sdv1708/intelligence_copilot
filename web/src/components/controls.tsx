@@ -1,4 +1,4 @@
-import { Loader2, TriangleAlert } from "lucide-react";
+import { Info, Loader2, TriangleAlert } from "lucide-react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 import { ApiError } from "../api/client";
@@ -60,6 +60,41 @@ export function Button({
 }
 
 /**
+ * Something went wrong, whether or not a request is what went wrong with it.
+ *
+ * Split out of `ErrorNote` because a Q&A run can fail *in band*: the response is
+ * a 200 carrying `ok: false` and a reason, so there is no `ApiError` to hand to
+ * `ErrorNote` and inventing one would misreport an answered request as a failed
+ * one. Same chrome, different provenance.
+ */
+export function Alert({
+  children,
+  action,
+  className = "",
+}: {
+  children: ReactNode;
+  /** Usually a `Button`. Omitted when there is nothing useful to offer. */
+  action?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      role="alert"
+      className={`flex items-start gap-3 rounded-lg border border-crit/40 px-4 py-3 ${className}`}
+    >
+      <TriangleAlert
+        size={16}
+        strokeWidth={1.75}
+        aria-hidden="true"
+        className="mt-0.5 shrink-0 text-crit"
+      />
+      <div className="min-w-0 flex-1 text-sm leading-relaxed text-ink">{children}</div>
+      {action}
+    </div>
+  );
+}
+
+/**
  * A failed request, said in words rather than as a status code.
  *
  * `kind` carries the `core.exceptions` class the server raised, and the two
@@ -79,25 +114,35 @@ export function ErrorNote({
   const retryable = !error.isConfiguration && error.kind !== "MeetingNotFoundError";
 
   return (
-    <div
-      role="alert"
-      className={`flex items-start gap-3 rounded-lg border border-crit/40 px-4 py-3 ${className}`}
+    <Alert
+      className={className}
+      action={
+        onRetry && retryable ? (
+          <Button size="sm" onClick={onRetry}>
+            Retry
+          </Button>
+        ) : null
+      }
     >
-      <TriangleAlert
-        size={16}
-        strokeWidth={1.75}
-        aria-hidden="true"
-        className="mt-0.5 shrink-0 text-crit"
-      />
-      <p className="min-w-0 flex-1 text-sm leading-relaxed text-ink">
-        {error.message}
-      </p>
-      {onRetry && retryable ? (
-        <Button size="sm" onClick={onRetry}>
-          Retry
-        </Button>
-      ) : null}
-    </div>
+      {error.message}
+    </Alert>
+  );
+}
+
+/**
+ * Something worth saying that is not a failure.
+ *
+ * Deliberately quiet — no `role="alert"`, no colour — because what it carries is
+ * a precondition ("add a document first") or an absence that would otherwise
+ * read as a bug ("this brief has no trace because it was recalled"). Written for
+ * the brief panel and hoisted here when Q&A needed the same voice.
+ */
+export function Note({ children }: { children: ReactNode }) {
+  return (
+    <p className="flex items-start gap-2 text-xs leading-relaxed text-muted">
+      <Info size={13} strokeWidth={1.75} aria-hidden="true" className="mt-0.5 shrink-0" />
+      <span className="min-w-0 flex-1">{children}</span>
+    </p>
   );
 }
 

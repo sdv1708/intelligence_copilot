@@ -138,18 +138,6 @@ export function StatusPanel({ state, signal, onRetry }: StatusPanelProps) {
           </p>
         ) : null}
       </section>
-
-      {/*
-        A build-state note. It goes when the phases it names have landed.
-      */}
-      <section className="rounded-xl border border-dashed border-line-strong px-4 py-4">
-        <h2 className="text-[11px] font-medium tracking-wide text-faint uppercase">
-          Not built yet
-        </h2>
-        <ul className="mt-2.5 flex flex-col gap-1.5 text-sm text-muted">
-          <li>Q&amp;A — questions against one meeting, with citations.</li>
-        </ul>
-      </section>
     </div>
   );
 }

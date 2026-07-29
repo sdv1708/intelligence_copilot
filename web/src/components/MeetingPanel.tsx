@@ -2,14 +2,18 @@ import { Loader2 } from "lucide-react";
 import { useCallback, useState } from "react";
 
 import { asApiError, deleteMeeting, getMeeting, listMaterials } from "../api/client";
-import type { ApiError, MeetingOut } from "../api/client";
+import type { ApiError, MaterialOut, MeetingOut } from "../api/client";
 import { meetingTitle, plural } from "../format";
 import type { MeetingTasks } from "../hooks/useMeetingTasks";
 import { useRequest } from "../hooks/useRequest";
 import { BriefPanel } from "./BriefPanel";
 import { MaterialsList } from "./MaterialsList";
+import { QaPanel } from "./QaPanel";
 import { Uploader } from "./Uploader";
 import { Button, ErrorNote } from "./controls";
+
+/** Stable, so the Q&A panel's citation lookup is not rebuilt every render. */
+const NO_MATERIALS: MaterialOut[] = [];
 
 interface MeetingPanelProps {
   meetingId: string;
@@ -256,6 +260,24 @@ export function MeetingPanel({
         documents={documents}
         tasks={tasks}
         onGenerated={onChanged}
+      />
+
+      {/*
+        Keyed for the same reason, and more sharply: a Q&A thread is nowhere but
+        in this component's state, so carrying one across a selection change
+        would show one meeting's answers under another meeting's documents with
+        nothing on the server to contradict it.
+
+        No `onChanged` — asking a question writes no rows, so no count moves.
+      */}
+      <QaPanel
+        key={`qa-${meetingId}`}
+        meetingId={meetingId}
+        documents={documents}
+        materials={
+          materials.state.status === "ready" ? materials.state.data : NO_MATERIALS
+        }
+        tasks={tasks}
       />
     </div>
   );

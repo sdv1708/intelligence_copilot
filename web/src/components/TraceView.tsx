@@ -4,12 +4,19 @@ import type { FindingOut, Trace } from "../api/client";
 import { formatCount, plural } from "../format";
 
 /**
- * How a brief was produced.
+ * How a run produced what it produced.
  *
  * This is the headline of Phase 5 and the thing the Streamlit UI could only
  * render as a wall of monospace inside a collapsed expander: what the
  * supervisor decided to look for, what each specialist came back with, which
  * enquiries failed, and the order the nodes ran in.
+ *
+ * Every block is conditional, which is what lets a Q&A trace through the same
+ * component: `api/translate.py`'s `qa_response` builds a `Trace` from notes and
+ * a chunk count alone, so the plan and findings blocks simply do not render and
+ * the timeline carries it. The one thing that did *not* degrade was the header —
+ * an empty `plan_source` used to render as "Plan source: unknown", a sentence
+ * about planning on a run that never planned — so the header is conditional too.
  */
 
 /** `plan_source` is one of three values from `agents/planner.py`. */
@@ -162,15 +169,18 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
 
 export function TraceView({
   trace,
-  failedTasks,
+  failedTasks = [],
 }: {
   trace: Trace;
   /**
    * From the response rather than the trace. It is derivable from the findings,
    * but a run that failed before dispatching has failed tasks and no findings
    * at all, so the two are not interchangeable.
+   *
+   * Optional because a Q&A run dispatches no enquiries and `QaResponse` has no
+   * field for them — not because a brief may leave it out.
    */
-  failedTasks: string[];
+  failedTasks?: string[];
 }) {
   // One scale across every finding, so the bars compare with each other rather
   // than each row silently using its own axis.
@@ -181,15 +191,30 @@ export function TraceView({
 
   return (
     <div className="flex flex-col gap-6 rounded-xl border border-line bg-panel px-4 py-5">
-      <div className="flex flex-col gap-1.5">
-        <p className="flex items-center gap-2 text-sm text-ink">
-          <Radar size={14} strokeWidth={1.75} aria-hidden="true" className="text-faint" />
-          {PLAN_SOURCE[trace.plan_source] ?? `Plan source: ${trace.plan_source || "unknown"}`}
-        </p>
-        {trace.plan_rationale ? (
-          <p className="text-xs leading-relaxed text-muted">{trace.plan_rationale}</p>
-        ) : null}
-      </div>
+      {/*
+        Omitted entirely for a run that did no planning. `plan_source` is `""` on
+        a Q&A trace, and the alternative — a mode flag, or having `qa_response`
+        supply a plan source it does not have — would either duplicate what the
+        empty string already says or put a fiction on the wire.
+      */}
+      {trace.plan_source || trace.plan_rationale ? (
+        <div className="flex flex-col gap-1.5">
+          {trace.plan_source ? (
+            <p className="flex items-center gap-2 text-sm text-ink">
+              <Radar
+                size={14}
+                strokeWidth={1.75}
+                aria-hidden="true"
+                className="text-faint"
+              />
+              {PLAN_SOURCE[trace.plan_source] ?? `Plan source: ${trace.plan_source}`}
+            </p>
+          ) : null}
+          {trace.plan_rationale ? (
+            <p className="text-xs leading-relaxed text-muted">{trace.plan_rationale}</p>
+          ) : null}
+        </div>
+      ) : null}
 
       {failedTasks.length ? (
         <p className="rounded-lg border border-warn/40 px-3 py-2 text-xs leading-relaxed text-warn">
