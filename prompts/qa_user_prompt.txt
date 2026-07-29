@@ -1,72 +1,25 @@
 QUESTION: {{question}}
 
-RELEVANT EXCERPTS FROM MATERIALS:
+RELEVANT EXCERPTS FROM THE MATERIALS:
 {{context_blocks}}
 
 ---
 
-INSTRUCTIONS:
+Answer the question above.
 
-Write a comprehensive, detailed, executive-ready response. Answer the question immediately - no beating around the bush. Use the materials as context, but leverage your extensive business knowledge to provide a thorough, actionable answer.
+- Open with the direct answer — no preamble, no restating the question
+- Ground every factual claim in the excerpts; cite specifics (names, numbers,
+  dates) where they appear rather than summarising them away
+- Excerpts marked `(surrounding context)` are neighbouring text included for
+  continuity; use them freely, but they were not themselves search hits
+- Add your own analysis and recommendations after the grounded answer, and make
+  the seam obvious — the executive needs to know which is which
+- If the excerpts do not answer the question, say so plainly in one line, then
+  give the best guidance your expertise supports
 
-STRUCTURE YOUR RESPONSE:
+Match the shape of your answer to the question: a factual lookup deserves a
+couple of sentences; a strategic question deserves the full treatment —
+direct answer, key details, strategic insight, and concrete recommendations.
 
-**1. Direct Answer (1-2 paragraphs)**
-Answer the question directly and confidently. Use both the materials AND your expertise to provide a detailed, comprehensive answer. Include specific names, numbers, dates, or facts from materials when available. Then add your expert analysis, interpretation, and insights. Be detailed - executives need full context to make decisions.
-
-**2. Key Details (1-2 paragraphs or bullets)**
-Provide essential context from the materials. Then add your expert knowledge about what this means in a business context. What are the implications? What patterns or best practices apply? Use bullet points if listing multiple items.
-
-**3. Strategic Insight (1-2 paragraphs)**
-What does this mean strategically? What should the executive know about implications, risks, or opportunities? Connect this to broader business strategies, industry trends, and best practices. Be detailed and actionable.
-
-**4. Recommendations (bullets)**
-Specific, actionable next steps. For each:
-- What to do
-- Why it matters (briefly)
-- Who should be involved (if relevant)
-- When it should happen (if time-sensitive)
-
----
-
-FORMATTING GUIDELINES:
-
-- **Mix paragraphs and bullet points** for optimal readability
-- Use **bold** for key facts, numbers, dates, names, and critical information
-- Use bullet points for lists, recommendations, and actionable items
-- Use paragraphs for explanations, analysis, and strategic thinking
-- Keep paragraphs focused but detailed (3-5 lines max)
-- Add white space between sections for easy scanning
-
-EXAMPLE STRUCTURE:
-
-**[Direct, detailed answer combining materials and your expertise]**. [Additional context and analysis].
-
-**Key Details:**
-• [Fact from materials]
-• [Your expert insight about what this means]
-• [Best practice or industry context]
-
-**Strategic Insight:**
-[Detailed paragraph on what this means strategically, connecting to broader business context and best practices]
-
-**Recommendations:**
-• [Action 1] - [Why it matters]
-• [Action 2] - [Why it matters]
-
----
-
-IMPORTANT GUIDELINES:
-
-- **Be direct** - Answer the question immediately, don't hedge
-- **Be confident** - Use definitive language when you have facts or expertise
-- **Be comprehensive** - Provide detailed, thorough answers using your knowledge
-- **Use your expertise** - Don't just summarize documents, add strategic value
-- If documents are limited, provide detailed answers based on your business knowledge
-- Connect document context to broader strategies, best practices, and industry knowledge
-- Avoid excessive qualifying language ("suggests", "appears", "might indicate") - be direct
-- Weave source citations naturally (don't mechanically list them)
-- Always end with actionable recommendations
-- Think: "What detailed, actionable insights can I provide that will help the executive make decisions?"
-
-Output your response as direct, comprehensive, well-structured text that provides maximum value.
+Format as readable prose with bullets where they help. Bold the facts worth
+scanning for. End with next steps when the question implies action.

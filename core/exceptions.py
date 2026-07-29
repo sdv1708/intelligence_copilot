@@ -35,6 +35,15 @@ class UnknownProviderError(ConfigurationError):
     """The configured LLM provider is not one we support."""
 
 
+class PromptError(ConfigurationError):
+    """A prompt template is missing, or was rendered with the wrong values.
+
+    Rendering is strict on purpose: a renamed placeholder used to survive as a
+    literal `{{context_blocks}}` in the text sent to the model, which produced a
+    confidently wrong brief instead of an error.
+    """
+
+
 # --- Ingestion --------------------------------------------------------------
 
 

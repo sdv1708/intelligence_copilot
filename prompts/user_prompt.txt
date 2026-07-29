@@ -1,101 +1,49 @@
 MEETING_TITLE: {{title}}
 MEETING_DATE: {{date}}
 
-CONTEXT (top-k snippets with citations):
+{{previous_meeting}}
+
+CONTEXT (retrieved excerpts, each with its Source identifier):
 {{context_blocks}}
 
 ---
 
-TASK: Analyze the meeting context and create a comprehensive, executive-ready MeetingBrief JSON.
+TASK: Analyse the context above and produce the executive brief for this
+meeting. Work through each section deliberately.
 
-THINK ABOUT:
+1. LAST_MEETING_RECAP
+   - What were the key outcomes and decisions previously?
+   - What has changed or moved since then?
+   - Which threads were left unresolved, and why do they matter now?
+   - Three to five sentences. Give enough context to walk in cold.
 
-1. LAST_MEETING_RECAP:
-   - What were the key outcomes and decisions from previous meetings?
-   - What has changed or evolved since then?
-   - What unresolved threads need attention?
-   - Why do these matter for the upcoming meeting?
-   - Provide a detailed summary (3-5 sentences minimum) that gives full context
+2. OPEN_ACTION_ITEMS
+   - What is still outstanding, and who owns it? Use "TBD" where the materials
+     do not name an owner — do not guess a name.
+   - For each item, say why it matters: urgency, impact, or what it blocks.
+   - Set `due` only when a date appears in or follows clearly from the
+     materials, formatted YYYY-MM-DD. Otherwise leave it null.
+   - Status is `open`, `blocked`, or `done`.
 
-2. OPEN_ACTION_ITEMS:
-   - What actions are pending and who owns them?
-   - Which items are critical vs. nice-to-have?
-   - Are there dependencies or blockers to flag?
-   - What's the strategic importance of each item?
-   - For each item, explain WHY it matters, not just WHAT it is
-   - Include specific context about urgency, impact, or dependencies
+3. KEY_TOPICS_TODAY
+   - The handful of things that genuinely need discussion this meeting.
+   - Write each entry as "Topic name: what needs to be decided, why it matters
+     now, and what is at stake if it slips."
+   - A bare topic name with no explanation is not useful. Be specific.
 
-3. KEY_TOPICS_TODAY:
-   - What are the most critical topics that need discussion?
-   - For each topic, explain:
-     * What decision needs to be made or what outcome is needed?
-     * Why is this topic important right now?
-     * What's at stake if we don't address it?
-     * What background context or preparation might be needed?
-   - Format each topic as: "Topic Name: [Detailed explanation of why it matters, what needs to be decided, what's at stake, and any strategic implications]"
-   - Be specific and detailed - don't just list topic names
-   - Identify underlying issues, opportunities, or strategic implications
+4. PROPOSED_AGENDA
+   - Sequence the discussion to maximise value: quick decisions first, then the
+     items that need real deliberation.
+   - Each entry names the topic *and* the outcome it should reach, plus a
+     realistic time box in minutes and an owner where one is known.
+   - Leave room for decisions, not just status updates.
 
-4. PROPOSED_AGENDA:
-   - How should time be allocated to maximize value?
-   - What's the logical flow of topics?
-   - What outcomes should each agenda item achieve?
-   - Where might the discussion get stuck or need facilitation?
-   - Start with quick wins, then tackle complex topics
-   - Include time for decisions, not just updates
-   - For each topic, suggest: What outcome should we achieve?
+5. EVIDENCE
+   - The specific facts, figures, and quotes underpinning the brief above.
+   - `source` must be copied verbatim from a `Source:` line in the context.
+   - `snippet` is the relevant excerpt itself, not your paraphrase of it.
+   - Prefer evidence that supports the load-bearing claims: the risks, the
+     numbers, and anything an executive would push back on.
 
-5. EVIDENCE:
-   - What key facts, data, or quotes support your analysis?
-   - What patterns or trends emerge from the materials?
-   - What concerns or red flags should the executive know about?
-   - Include actionable quotes or data points
-   - Highlight any concerning trends or red flags
-
-USE YOUR JUDGMENT:
-- Think beyond what's written to what's implied or missing
-- Identify strategic opportunities and risks
-- Connect ideas across different materials
-- Add context that helps the executive prepare mentally
-- Reason about priorities, trade-offs, and next steps
-- Be insightful about the "why" and "so what"
-- Provide detailed, comprehensive content - executives need full context
-
-SCHEMA:
-{
-  "meeting_title": string,
-  "time_window": string or null (format: "YYYY-MM-DD..YYYY-MM-DD" if inferable),
-  "last_meeting_recap": string (detailed summary with key outcomes and changes - 3-5 sentences minimum),
-  "open_action_items": [
-    {
-      "owner": string (name or "TBD"),
-      "item": string (specific action with context on why it matters - be detailed),
-      "due": string or null (YYYY-MM-DD format),
-      "status": "open" | "blocked" | "done"
-    }
-  ],
-  "key_topics_today": [
-    string (format: "Topic Name: [Detailed explanation of why it matters, what needs to be decided, what's at stake, and any strategic implications]")
-  ],
-  "proposed_agenda": [
-    {
-      "topic": string (what + desired outcome),
-      "minutes": int (estimated duration),
-      "owner": string or null (who leads this topic)
-    }
-  ],
-  "evidence": [
-    {
-      "source": string (format: "material_id#c{chunk_idx}"),
-      "snippet": string (relevant excerpt with context)
-    }
-  ]
-}
-
-Output ONLY valid JSON, no markdown, no extra text.
-
-CRITICAL JSON RULES:
-- Double quotes for all strings
-- No trailing commas (e.g., NOT: ["item1", "item2",])
-- Escape quotes inside strings with \"
-- Close all brackets properly
+If `time_window` can be inferred from the dates in the materials, give it as
+"YYYY-MM-DD..YYYY-MM-DD". Otherwise leave it null.

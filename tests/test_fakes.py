@@ -6,9 +6,12 @@ similarity behaviour needs to be trustworthy and stable.
 
 from __future__ import annotations
 
+import json
+
 import numpy as np
 import pytest
 
+from core.schema import MeetingBrief
 from tests.fakes import HashingEmbedder, ScriptedChatModel
 
 
@@ -88,3 +91,53 @@ class TestScriptedChatModel:
 
         assert "you are a copilot" in model.last_prompt_text
         assert "hi" in model.last_prompt_text
+
+
+class TestScriptedStructuredOutput:
+    """The fake stands in for `with_structured_output`, so it has to match it."""
+
+    def test_a_mapping_response_validates_into_the_schema(self) -> None:
+        model = ScriptedChatModel([{"meeting_title": "Q3 Review"}])
+
+        brief = model.with_structured_output(MeetingBrief).invoke([])
+
+        assert isinstance(brief, MeetingBrief)
+        assert brief.meeting_title == "Q3 Review"
+
+    def test_a_json_string_response_validates_too(self) -> None:
+        model = ScriptedChatModel(['{"meeting_title": "Q3 Review"}'])
+
+        brief = model.with_structured_output(MeetingBrief).invoke([])
+
+        assert brief.meeting_title == "Q3 Review"
+
+    def test_include_raw_reports_the_failure_instead_of_raising(self) -> None:
+        model = ScriptedChatModel(["not json at all"])
+
+        result = model.with_structured_output(MeetingBrief, include_raw=True).invoke([])
+
+        assert result["parsed"] is None
+        assert result["parsing_error"] is not None
+        assert result["raw"].content == "not json at all"
+
+    def test_without_include_raw_the_failure_is_raised(self) -> None:
+        model = ScriptedChatModel(["not json at all"])
+
+        with pytest.raises(json.JSONDecodeError):
+            model.with_structured_output(MeetingBrief).invoke([])
+
+    def test_a_mapping_response_arrives_as_tool_call_arguments(self) -> None:
+        """Which is the shape structured output actually produces."""
+        model = ScriptedChatModel([{"meeting_title": ""}])
+
+        result = model.with_structured_output(MeetingBrief, include_raw=True).invoke([])
+
+        assert result["parsing_error"] is not None  # empty title fails min_length
+        assert result["raw"].tool_calls[0]["args"] == {"meeting_title": ""}
+
+    def test_structured_calls_draw_from_the_same_script(self) -> None:
+        model = ScriptedChatModel([{"meeting_title": "First"}, "second"])
+        structured = model.with_structured_output(MeetingBrief)
+
+        assert structured.invoke([]).meeting_title == "First"
+        assert model.invoke([]).content == "second"

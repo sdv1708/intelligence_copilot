@@ -55,7 +55,19 @@ class Settings(BaseSettings):
     openai_api_key: SecretStr | None = None
     anthropic_api_key: SecretStr | None = None
 
+    # Model ids are configuration, not constants: they change faster than this
+    # codebase does. The defaults are the current generation of each provider;
+    # override with ANTHROPIC_MODEL / OPENAI_MODEL / GEMINI_MODEL.
+    anthropic_model: str = "claude-opus-5"
+    openai_model: str = "gpt-4o"
+    gemini_model: str = "gemini-2.5-flash"
+
     llm_temperature: float = Field(default=0.3, ge=0.0, le=2.0)
+    # A brief is a few thousand tokens of JSON, but reasoning models spend
+    # output budget on thinking before they emit any of it, and the cap covers
+    # both. 16k leaves room without risking an HTTP timeout on a non-streaming
+    # request; every model in the defaults above allows at least that much.
+    llm_max_tokens: int = Field(default=16000, gt=0)
     llm_timeout_seconds: int = Field(default=120, gt=0)
     llm_max_retries: int = Field(default=2, ge=0)
 
@@ -148,6 +160,15 @@ class Settings(BaseSettings):
         if secret is None or not secret.get_secret_value().strip():
             raise MissingAPIKeyError(provider.value, _API_KEY_ENV_VARS[provider])
         return secret.get_secret_value()
+
+    def model_for(self, provider: Provider | None = None) -> str:
+        """Return the configured model id for `provider`."""
+        provider = provider or self.llm_provider
+        return {
+            Provider.GEMINI: self.gemini_model,
+            Provider.OPENAI: self.openai_model,
+            Provider.ANTHROPIC: self.anthropic_model,
+        }[provider]
 
     def has_api_key(self, provider: Provider | None = None) -> bool:
         """Check for a usable key without raising. For UI status display."""
