@@ -1,18 +1,19 @@
 """LLM synthesis using Gemini 1.5 Flash."""
 
-from typing import Dict, Any, Optional
 import json
-from core.utils import get_env, log_message
+from typing import Any
+
 from core.schema import MeetingBrief
+from core.utils import get_env, log_message
 
 
 def load_prompt_template(prompt_file: str) -> str:
     """Load a prompt template from file."""
     try:
-        with open(prompt_file, "r") as f:
+        with open(prompt_file) as f:
             return f.read()
     except Exception as e:
-        log_message("ERROR", f"Failed to load prompt {prompt_file}: {str(e)}")
+        log_message("ERROR", f"Failed to load prompt {prompt_file}: {e!s}")
         return ""
 
 
@@ -37,7 +38,7 @@ def build_user_prompt(title: str, date: str, context_blocks: str) -> str:
     return user_prompt
 
 
-def call_gemini(system_prompt: str, user_prompt: str) -> Dict[str, Any]:
+def call_gemini(system_prompt: str, user_prompt: str) -> dict[str, Any]:
     """
     Call Google Gemini 1.5 Flash API and return JSON.
     
@@ -89,14 +90,14 @@ def call_gemini(system_prompt: str, user_prompt: str) -> Dict[str, Any]:
         return result
     
     except json.JSONDecodeError as e:
-        log_message("ERROR", f"Failed to parse Gemini JSON response: {str(e)}")
+        log_message("ERROR", f"Failed to parse Gemini JSON response: {e!s}")
         return {}
     except Exception as e:
-        log_message("ERROR", f"Gemini API error: {str(e)}")
+        log_message("ERROR", f"Gemini API error: {e!s}")
         return {}
 
 
-def generate_brief(title: str, date: str, context_blocks: str) -> Optional[MeetingBrief]:
+def generate_brief(title: str, date: str, context_blocks: str) -> MeetingBrief | None:
     """
     Generate a meeting brief using LLM.
     
@@ -127,6 +128,6 @@ def generate_brief(title: str, date: str, context_blocks: str) -> Optional[Meeti
         log_message("INFO", "Brief successfully validated")
         return brief
     except Exception as e:
-        log_message("ERROR", f"Brief validation failed: {str(e)}")
+        log_message("ERROR", f"Brief validation failed: {e!s}")
         return None
 

@@ -1,10 +1,10 @@
 """Text chunking utility for preparing documents for embedding."""
 
-from typing import List
+
 from core.utils import log_message
 
 
-def chunk_text(txt: str, max_len: int = 1200, overlap: int = 120) -> List[str]:
+def chunk_text(txt: str, max_len: int = 1200, overlap: int = 120) -> list[str]:
     """
     Split text into overlapping chunks.
     Attempts to split on sentence boundaries for better semantic coherence.
@@ -49,7 +49,7 @@ def chunk_text(txt: str, max_len: int = 1200, overlap: int = 120) -> List[str]:
     return chunks
 
 
-def chunk_text_large(txt: str, max_len: int = 4000, overlap: int = 800) -> List[str]:
+def chunk_text_large(txt: str, max_len: int = 4000, overlap: int = 800) -> list[str]:
     """
     Chunk text with larger chunks and more overlap to preserve relationships.
     Use this for documents where context preservation is critical.

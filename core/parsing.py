@@ -1,7 +1,7 @@
 """Document parsing for PDF, DOCX, PPTX, and TXT files."""
 
-from typing import Optional
 import io
+
 from core.utils import log_message
 
 
@@ -16,7 +16,7 @@ def parse_pdf(file_content: bytes) -> str:
         log_message("INFO", f"Parsed PDF: {len(text)} characters")
         return text.strip()
     except Exception as e:
-        log_message("ERROR", f"Failed to parse PDF: {str(e)}")
+        log_message("ERROR", f"Failed to parse PDF: {e!s}")
         return ""
 
 
@@ -29,7 +29,7 @@ def parse_docx(file_content: bytes) -> str:
         log_message("INFO", f"Parsed DOCX: {len(text)} characters")
         return text.strip()
     except Exception as e:
-        log_message("ERROR", f"Failed to parse DOCX: {str(e)}")
+        log_message("ERROR", f"Failed to parse DOCX: {e!s}")
         return ""
 
 
@@ -46,7 +46,7 @@ def parse_pptx(file_content: bytes) -> str:
         log_message("INFO", f"Parsed PPTX: {len(text)} characters")
         return text.strip()
     except Exception as e:
-        log_message("ERROR", f"Failed to parse PPTX: {str(e)}")
+        log_message("ERROR", f"Failed to parse PPTX: {e!s}")
         return ""
 
 
@@ -57,7 +57,7 @@ def parse_txt(file_content: bytes) -> str:
         log_message("INFO", f"Parsed TXT: {len(text)} characters")
         return text
     except Exception as e:
-        log_message("ERROR", f"Failed to parse TXT: {str(e)}")
+        log_message("ERROR", f"Failed to parse TXT: {e!s}")
         return ""
 
 

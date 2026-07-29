@@ -1,10 +1,11 @@
 """Embedding and FAISS index management with GPU support."""
 
-from typing import List, Optional
-import numpy as np
 import os
+
+import numpy as np
 import torch
-from core.utils import get_env, log_message
+
+from core.utils import log_message
 
 # Lazy-load the model
 _model = None
@@ -74,10 +75,10 @@ def save_index(index, path: str):
         faiss.write_index(index, path)
         log_message("INFO", f"Saved FAISS index to {path}")
     except Exception as e:
-        log_message("ERROR", f"Failed to save FAISS index: {str(e)}")
+        log_message("ERROR", f"Failed to save FAISS index: {e!s}")
 
 
-def encode(chunks: List[str], batch_size: int = 32, show_progress: bool = False) -> np.ndarray:
+def encode(chunks: list[str], batch_size: int = 32, show_progress: bool = False) -> np.ndarray:
     """
     Encode a list of text chunks into embeddings with GPU acceleration.
     

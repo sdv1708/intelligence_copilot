@@ -1,8 +1,9 @@
 """LLM Provider Factory using LangChain."""
 
-from langchain_openai import ChatOpenAI
-from langchain_anthropic  import ChatAnthropic
+from langchain_anthropic import ChatAnthropic
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
+
 from core.utils import get_env, log_message
 
 
@@ -50,8 +51,8 @@ def get_llm_provider(provider_name: str = None):
             )
         
         else:
-            raise ValueError("Unknown provider: {}".format(provider_name))
+            raise ValueError(f"Unknown provider: {provider_name}")
     
     except Exception as e:
-        log_message("ERROR", "Failed to initialize LLM: {}".format(str(e)))
+        log_message("ERROR", f"Failed to initialize LLM: {e!s}")
         raise

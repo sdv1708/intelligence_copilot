@@ -1,16 +1,17 @@
 """Database initialization and CRUD operations using SQLite."""
 
-import sqlite3
 import json
-from typing import Optional, List, Dict, Any
+import sqlite3
 from datetime import datetime
-from core.utils import get_env, generate_id, log_message
+from typing import Any
+
+from core.utils import generate_id, get_env, log_message
 
 
 class Database:
     """SQLite database manager for meetings, materials, and briefs."""
 
-    def __init__(self, db_path: Optional[str] = None):
+    def __init__(self, db_path: str | None = None):
         import os
         
         if db_path:
@@ -31,7 +32,7 @@ class Database:
                 if db_dir:  # Only create if there's a directory component
                     os.makedirs(db_dir, exist_ok=True)
                 
-                log_message("INFO", "Using local storage: {}".format(self.db_path))
+                log_message("INFO", f"Using local storage: {self.db_path}")
         
         self.init_db()
 
@@ -45,9 +46,9 @@ class Database:
                 os.makedirs(db_dir, exist_ok=True)
             return sqlite3.connect(self.db_path)
         except sqlite3.OperationalError as e:
-            log_message("ERROR", "Failed to connect to database at: {}".format(self.db_path))
-            log_message("ERROR", "Error: {}".format(str(e)))
-            log_message("ERROR", "Directory exists: {}".format(os.path.exists(os.path.dirname(self.db_path))))
+            log_message("ERROR", f"Failed to connect to database at: {self.db_path}")
+            log_message("ERROR", f"Error: {e!s}")
+            log_message("ERROR", f"Directory exists: {os.path.exists(os.path.dirname(self.db_path))}")
             raise
 
     def init_db(self):
@@ -96,8 +97,8 @@ class Database:
         conn.close()
         log_message("INFO", f"Database initialized at {self.db_path}")
 
-    def create_meeting(self, title: str, date: Optional[str] = None, 
-                      attendees: Optional[str] = None, tags: Optional[str] = None) -> str:
+    def create_meeting(self, title: str, date: str | None = None, 
+                      attendees: str | None = None, tags: str | None = None) -> str:
         """Create a new meeting. Returns meeting_id."""
         meeting_id = generate_id("meeting")
         created_at = datetime.now().isoformat()
@@ -113,7 +114,7 @@ class Database:
         log_message("INFO", f"Created meeting: {meeting_id} - {title}")
         return meeting_id
 
-    def get_meeting(self, meeting_id: str) -> Optional[Dict[str, Any]]:
+    def get_meeting(self, meeting_id: str) -> dict[str, Any] | None:
         """Fetch a meeting by ID."""
         conn = self.get_connection()
         cursor = conn.cursor()
@@ -132,7 +133,7 @@ class Database:
             }
         return None
 
-    def list_meetings(self) -> List[Dict[str, Any]]:
+    def list_meetings(self) -> list[dict[str, Any]]:
         """List all meetings."""
         conn = self.get_connection()
         cursor = conn.cursor()
@@ -185,10 +186,10 @@ class Database:
             
             return deleted
         except Exception as e:
-            log_message("ERROR", f"Failed to delete material {material_id}: {str(e)}")
+            log_message("ERROR", f"Failed to delete material {material_id}: {e!s}")
             return False
 
-    def get_materials(self, meeting_id: str) -> List[Dict[str, Any]]:
+    def get_materials(self, meeting_id: str) -> list[dict[str, Any]]:
         """Get all materials for a meeting."""
         conn = self.get_connection()
         cursor = conn.cursor()
@@ -210,7 +211,7 @@ class Database:
             for row in rows
         ]
 
-    def save_brief(self, meeting_id: str, model: str, brief_dict: Dict[str, Any]) -> str:
+    def save_brief(self, meeting_id: str, model: str, brief_dict: dict[str, Any]) -> str:
         """Save a generated brief. Returns brief_id."""
         brief_id = generate_id("brief")
         created_at = datetime.now().isoformat()
@@ -227,7 +228,7 @@ class Database:
         log_message("INFO", f"Saved brief: {brief_id} for meeting {meeting_id}")
         return brief_id
 
-    def get_latest_brief(self, meeting_id: str) -> Optional[Dict[str, Any]]:
+    def get_latest_brief(self, meeting_id: str) -> dict[str, Any] | None:
         """Get the latest brief for a meeting."""
         conn = self.get_connection()
         cursor = conn.cursor()
@@ -247,7 +248,7 @@ class Database:
             }
         return None
 
-    def get_brief_history(self, meeting_id: str) -> List[Dict[str, Any]]:
+    def get_brief_history(self, meeting_id: str) -> list[dict[str, Any]]:
         """Get all briefs for a meeting (history)."""
         conn = self.get_connection()
         cursor = conn.cursor()
@@ -267,7 +268,7 @@ class Database:
             for row in rows
         ]
 
-    def get_brief_by_id(self, brief_id: str) -> Optional[Dict[str, Any]]:
+    def get_brief_by_id(self, brief_id: str) -> dict[str, Any] | None:
         """Fetch a specific brief by ID."""
         conn = self.get_connection()
         cursor = conn.cursor()

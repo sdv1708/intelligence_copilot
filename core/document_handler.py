@@ -1,11 +1,10 @@
 """Document handling with smart chunking and direct LLM upload options."""
 
-from typing import List, Dict, Any, Tuple
 import sqlite3
-from core.chunk import chunk_text
-from core.embed import encode, search_index, build_or_load_index, save_index
-from core.utils import get_env, log_message, get_storage_path
+from typing import Any
 
+from core.embed import build_or_load_index, encode, save_index, search_index
+from core.utils import get_env, get_storage_path, log_message
 
 # Token estimation: ~4 characters per token (rough estimate)
 # Most LLMs have 100k+ token context windows
@@ -28,7 +27,7 @@ def should_send_directly(text: str) -> bool:
     return char_count <= MAX_DIRECT_CHARS
 
 
-def get_improved_chunks(text: str, max_len: int = 4000, overlap: int = 800) -> List[str]:
+def get_improved_chunks(text: str, max_len: int = 4000, overlap: int = 800) -> list[str]:
     """
     Improved chunking with larger chunks and more overlap to preserve relationships.
     
@@ -78,7 +77,7 @@ def recall_with_context(
     query: str = "", 
     k: int = 8,
     include_surrounding: bool = True
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """
     Retrieve context with surrounding chunks to preserve relationships.
     
@@ -238,11 +237,11 @@ def recall_with_context(
         return results[:k]
     
     except Exception as e:
-        log_message("ERROR", f"Error during recall with context: {str(e)}")
+        log_message("ERROR", f"Error during recall with context: {e!s}")
         return []
 
 
-def format_context_with_relationships(results: List[Dict[str, Any]]) -> str:
+def format_context_with_relationships(results: list[dict[str, Any]]) -> str:
     """
     Format retrieved chunks preserving relationships and context.
     

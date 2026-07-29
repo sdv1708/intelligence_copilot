@@ -1,12 +1,13 @@
 """Recall and retrieval logic for fetching relevant context."""
 
-from typing import List, Dict, Any
 import sqlite3
-from core.document_handler import recall_with_context, format_context_with_relationships
+from typing import Any
+
+from core.document_handler import format_context_with_relationships, recall_with_context
 
 
 def recall_context(db_conn: sqlite3.Connection, meeting_id: str, 
-                   query: str = "", k: int = 8) -> List[Dict[str, Any]]:
+                   query: str = "", k: int = 8) -> list[dict[str, Any]]:
     """
     Retrieve top-k relevant context for a meeting.
     Uses improved recall with surrounding chunks to preserve relationships.
@@ -24,7 +25,7 @@ def recall_context(db_conn: sqlite3.Connection, meeting_id: str,
     return recall_with_context(db_conn, meeting_id, query=query, k=k, include_surrounding=True)
 
 
-def format_context_blocks(results: List[Dict[str, Any]]) -> str:
+def format_context_blocks(results: list[dict[str, Any]]) -> str:
     """
     Format retrieved chunks into context blocks for the LLM prompt.
     Uses improved formatting that preserves relationships.
