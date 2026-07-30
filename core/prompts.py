@@ -115,7 +115,7 @@ def clear_prompt_cache() -> None:
 def load_prompt_template(prompt_file: str | Path) -> str:
     """Read a template by path, unrendered.
 
-    Kept because `app.py` and the pre-overhaul orchestrator call it that way.
+    Kept because the pre-overhaul orchestrator calls it that way.
     Unlike the version in `core/synth.py` it raises instead of returning an
     empty string, and it resolves a bare `prompts/...` path against the package
     rather than the working directory.

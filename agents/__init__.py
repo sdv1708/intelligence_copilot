@@ -2,12 +2,12 @@
 
 `graph.py` is the entry point: `run_brief_graph` and `run_qa_graph`, both taking
 a `CopilotRuntime` holding the database, retriever and synthesizer they should
-work through. `CopilotOrchestrator` is the pre-overhaul surface `app.py` still
-calls; Chunk 6 turns it into a facade over these graphs.
+work through. `CopilotOrchestrator` is the pre-overhaul surface, now a facade
+over these graphs and the only thing `api/` calls.
 
 Imported lazily through `__getattr__` because `agents.graph` pulls in LangGraph
 and, through the synthesizer, a provider SDK. `import agents` should stay cheap
-enough for a Streamlit rerun.
+enough for a module that only wants a type name.
 """
 
 from __future__ import annotations

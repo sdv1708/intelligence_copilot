@@ -1,14 +1,48 @@
-streamlit==1.39.0
-pydantic==2.9.0
-sqlmodel==0.0.22
-faiss-cpu==1.9.0.post1
-sentence-transformers==3.3.0
-pypdf==5.1.0
-python-docx==1.1.2
+# Runtime dependencies, pinned to the versions the test suite is green against.
+# Test and lint tooling lives in requirements-dev.txt.
+#
+# Every package here is imported somewhere under core/, agents/, api/ or
+# scripts/. Two packages that used to be pinned are gone because nothing ever
+# imported them: sqlmodel (core/db.py uses the stdlib sqlite3 module directly)
+# and pandas. streamlit went with the UI it served.
+
+# --- Web layer -------------------------------------------------------------
+# api/main.py mounts the built React bundle out of web/dist, so serving the
+# frontend needs no extra package. python-multipart is not imported by our code
+# but FastAPI requires it to parse the multipart upload in
+# api/routes/materials.py, and without it that route fails at request time.
+fastapi==0.140.13
+uvicorn==0.51.0
+python-multipart==0.0.32
+starlette==1.3.1
+
+# --- Models and settings ---------------------------------------------------
+# pydantic-settings backs core/config.py's Settings, so it belongs here and not
+# with the dev tooling: without it the application does not import at all.
+pydantic==2.12.4
+pydantic-settings==2.14.2
+python-dotenv==1.2.1
+
+# --- LangGraph and LLM providers -------------------------------------------
+# The langchain umbrella package is needed for `create_agent` in
+# agents/planner.py; everything else imports from langchain-core.
+langgraph==1.0.2
+langchain==1.0.5
+langchain-core==1.0.4
+langchain-google-genai==3.0.1
+langchain-openai==1.0.2
+langchain-anthropic==1.0.2
+
+# --- Embeddings and vector search ------------------------------------------
+# torch is imported directly by core/embed.py for device detection but is
+# deliberately left unpinned: sentence-transformers already requires it, and an
+# exact pin here would fight the platform- and CUDA-specific wheel selection
+# that installing torch correctly depends on.
+sentence-transformers==5.1.2
+faiss-cpu==1.12.0
+numpy==2.3.4
+
+# --- Document parsing ------------------------------------------------------
+pypdf==6.1.3
+python-docx==1.2.0
 python-pptx==1.0.2
-python-dotenv==1.0.1
-langchain==0.3.7
-langchain-google-genai==2.0.5
-langchain-openai==0.2.9
-langchain-anthropic==0.3.0
-pandas==2.2.3

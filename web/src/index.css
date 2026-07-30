@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/*
+ * Theming is class-driven rather than media-query-driven: an inline script in
+ * `index.html` puts `.dark` on `<html>` before first paint, so the toggle can
+ * override the OS preference in both directions without a media query to fight
+ * and without a flash of the wrong theme.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * The palette. Cool-to-warm neutrals with a deep pine accent — the accent is
+ * used only for focus, the active meeting, and links, so the surface stays as
+ * quiet as the ChatGPT reference the design is calibrated against.
+ *
+ * Semantic colours are deliberately separate from the accent: a healthy
+ * provider and a selected meeting must not read as the same signal.
+ */
+:root {
+  color-scheme: light;
+
+  --paper: #ffffff;
+  --rail: #f7f7f5;
+  --panel: #fbfbfa;
+  --line: #e5e4e0;
+  --line-strong: #d3d2cd;
+  --ink: #14161a;
+  --muted: #6b6e74;
+  --faint: #94979d;
+  --accent: #14675b;
+  --accent-ink: #0f5147;
+  --accent-soft: #e6f0ed;
+  --ok: #2f7a58;
+  --warn: #8a6218;
+  --crit: #a23e39;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --paper: #1a1b1c;
+  --rail: #141516;
+  --panel: #202223;
+  --line: #2c2e30;
+  --line-strong: #3d4043;
+  --ink: #ececec;
+  --muted: #9ba0a6;
+  --faint: #74797f;
+  --accent: #5ec2ac;
+  --accent-ink: #7ad0bc;
+  --accent-soft: #17332e;
+  --ok: #58b389;
+  --warn: #cfa14f;
+  --crit: #d97a72;
+}
+
+/*
+ * `inline` so the utilities compile to the raw `var(--paper)` rather than to a
+ * frozen copy of its value — that is what lets `.dark` re-point every colour at
+ * runtime instead of needing a `dark:` variant on every element.
+ */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-rail: var(--rail);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-crit: var(--crit);
+
+  /*
+   * System faces in both roles. The ChatGPT look this is calibrated against is
+   * the system UI face, and shipping no webfont means there is no CDN request
+   * to fail and no silent fallback to notice too late.
+   */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    ui-monospace, "Cascadia Mono", "Cascadia Code", Consolas, "SF Mono", Menlo,
+    monospace;
+
+  /* The reading column. Wide enough for a table, narrow enough for prose. */
+  --container-column: 46rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Digits that sit in columns — counts, sizes, timestamps — should line up. */
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

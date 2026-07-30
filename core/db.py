@@ -59,9 +59,10 @@ _MAX_PARAMS = 500
 class Database:
     """Repository over the application's SQLite file.
 
-    Cheap to construct and safe to build per Streamlit rerun: no connection is
-    held open between calls, which also sidesteps SQLite's rule that a
-    connection may not cross threads.
+    Cheap to construct and safe to build per request: no connection is held open
+    between calls, which also sidesteps SQLite's rule that a connection may not
+    cross threads — the rule that would otherwise make a single shared handle
+    unusable from FastAPI's threadpool.
     """
 
     def __init__(
@@ -254,6 +255,31 @@ class Database:
                 (meeting_id,),
             ).fetchall()
         return [MaterialSummary(**dict(row)) for row in rows]
+
+    def material_counts(self) -> dict[str, int]:
+        """How many materials each meeting holds, keyed by meeting id.
+
+        The meeting list needs a count beside every row. Asking `get_materials`
+        once per meeting would be a query per row for a number SQLite can group
+        in one pass — and `get_materials` also computes `LENGTH(text)` over every
+        body, which is real work to throw away.
+
+        Meetings with no materials are absent rather than zero; callers read
+        this with `.get(id, 0)`.
+        """
+        with self.connect() as conn:
+            rows = conn.execute(
+                "SELECT meeting_id, COUNT(*) AS n FROM materials GROUP BY meeting_id"
+            ).fetchall()
+        return {row["meeting_id"]: row["n"] for row in rows}
+
+    def brief_counts(self) -> dict[str, int]:
+        """How many briefs each meeting has, keyed by meeting id."""
+        with self.connect() as conn:
+            rows = conn.execute(
+                "SELECT meeting_id, COUNT(*) AS n FROM briefs GROUP BY meeting_id"
+            ).fetchall()
+        return {row["meeting_id"]: row["n"] for row in rows}
 
     def iter_material_texts(self, meeting_id: str) -> list[Material]:
         """All materials for a meeting, with text. Used by ingestion and recall."""

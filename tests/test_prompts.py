@@ -166,7 +166,7 @@ def test_templates_are_cached(tmp_path: Path):
 
 
 def test_prompts_resolve_relative_to_the_package_not_the_cwd(tmp_path: Path):
-    """Launching Streamlit from anywhere but the repo root used to lose them."""
+    """Launching the app from anywhere but the repo root used to lose them."""
     original = Path.cwd()
     os.chdir(tmp_path)
     try:
