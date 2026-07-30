@@ -1,4 +1,4 @@
-"""The compatibility facade: the surface `app.py` calls.
+"""The compatibility facade: the surface `api/` calls.
 
 `tests/test_graph.py` covers the pipeline. What is left to pin here is the
 translation at the boundary — which `BriefRun` fields become which dictionary
@@ -200,8 +200,8 @@ def test_ingesting_a_document_stores_chunks_and_indexes_them(world):
 
 
 def test_re_uploading_the_same_file_replaces_it_rather_than_duplicating_it(world):
-    """`app.py` used to add the row itself and then ask for indexing separately,
-    so a second upload left two copies of the document in the meeting."""
+    """The Streamlit UI used to add the row itself and then ask for indexing
+    separately, so a second upload left two copies of the document."""
     copilot = orchestrator_for(world, responses=[])
     meeting_id = world.db.create_meeting("Fresh Meeting")
     payload = b"The budget was approved."

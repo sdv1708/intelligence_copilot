@@ -3,30 +3,40 @@
 .env.local
 .env.*.local
 
-# Python
+# Python — caches and compiled artefacts, at any depth
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-env/
-venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
+
+# Python — virtualenvs and packaging output.
+#
+# Every one of these is anchored with a leading slash, and that matters. An
+# unanchored `lib/` or `dist/` matches a directory of that name at *any* depth,
+# which used to mean a `web/src/lib/` full of frontend source was silently
+# untracked — `git add` reported success and committed nothing. Keep the slashes.
+/.venv/
+/env/
+/venv/
+/ENV/
+/build/
+/develop-eggs/
+/dist/
+/downloads/
+/eggs/
+/.eggs/
+/lib/
+/lib64/
+/parts/
+/sdist/
+/var/
+/wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Frontend build output is ignored by web/.gitignore, next to what it describes.
 
 # IDE
 .vscode/
@@ -47,10 +57,6 @@ data/raw/*
 !data/raw/.gitkeep
 !data/faiss/.gitkeep
 
-# Streamlit
-.streamlit/cache/
-.streamlit/secrets.toml
-
 # Testing
 .pytest_cache/
 .coverage
@@ -58,4 +64,3 @@ htmlcov/
 
 # OS
 Thumbs.db
-

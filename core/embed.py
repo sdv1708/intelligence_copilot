@@ -57,8 +57,9 @@ class SentenceTransformerEmbedder:
     """The real encoder: `all-MiniLM-L6-v2` by default, GPU when available.
 
     Model loading is deferred to the first `encode` call. Constructing one of
-    these during a Streamlit rerun should not cost several seconds and a
-    gigabyte of RAM if nothing ends up being embedded.
+    these should not cost several seconds and a gigabyte of RAM if nothing ends
+    up being embedded — `api/deps.py` warms it deliberately at startup instead,
+    so the cost lands before the first request rather than inside it.
     """
 
     def __init__(self, settings: Settings | None = None) -> None:

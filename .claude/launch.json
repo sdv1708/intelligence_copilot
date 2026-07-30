@@ -8,10 +8,10 @@
       "port": 5173
     },
     {
-      "name": "copilot",
+      "name": "api",
       "runtimeExecutable": ".venv/Scripts/python.exe",
-      "runtimeArgs": ["-m", "streamlit", "run", "app.py", "--server.port", "8501", "--server.headless", "true"],
-      "port": 8501
+      "runtimeArgs": ["-m", "uvicorn", "api.main:app", "--port", "8077", "--reload"],
+      "port": 8077
     }
   ]
 }

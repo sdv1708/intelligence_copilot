@@ -1,488 +1,328 @@
 # Executive Intelligence Copilot
 
-A production-grade AI system that automates executive meeting preparation through intelligent document analysis, semantic search, and multi-agent orchestration. Transforms hours of manual preparation into minutes of automated briefing generation.
+Turns a pile of meeting documents into an executive brief — a recap, open action
+items, the topics worth raising, a timed agenda, and quoted evidence for each of
+them — and answers follow-up questions against the same material.
 
----
-
-## Overview
-
-Executive Intelligence Copilot is a sophisticated multi-agent AI system designed to analyze meeting materials, extract actionable insights, and generate executive-ready briefs. Built with enterprise-grade architecture patterns, the system leverages neural networks for semantic understanding, vector search for intelligent retrieval, and large language models for content synthesis.
-
-**Core Value Proposition:** Reduce executive meeting preparation time from 2+ hours to under 10 minutes while improving information accuracy and traceability through source citations.
+Every claim in a brief is traceable. The UI shows what the system searched for,
+which specialist found what, how much evidence survived the merge, and which
+lines of enquiry failed, so a thin brief can be explained rather than guessed at.
 
 ---
 
 ## Architecture
 
-### Multi-Agent System Design
-
-The system implements a four-agent orchestration pattern using LangChain, where each agent specializes in a distinct phase of the document processing pipeline:
+Two LangGraph state graphs over a shared runtime. The shape is deliberate:
+deterministic edges where the pipeline is fixed, an agent only where judgment is
+actually needed.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Orchestration Layer                       │
-│              (agents/copilot_orchestrator.py)               │
-└─────────────────────────────────────────────────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-        ▼                   ▼                   ▼
-┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│  Ingestion   │   │    Recall    │   │  Synthesis   │
-│    Agent     │   │    Agent     │   │    Agent     │
-└──────────────┘   └──────────────┘   └──────────────┘
-        │                   │                   │
-        └───────────────────┼───────────────────┘
-                            │
-                            ▼
-                    ┌──────────────┐
-                    │   Memory     │
-                    │    Agent     │
-                    └──────────────┘
+                       brief graph
+    START -> memory -> supervisor -=<  research (xN, parallel)  >=- merge
+                                                                     |
+                                                        +------------+------------+
+                                                        |                         |
+                                                   synthesize                   abort
+                                                        |                         |
+                                                     persist -------------------> END
+
+                        Q&A graph
+    START -> retrieve -=<  answer | no_context  >=- END
 ```
 
-**Agent Responsibilities:**
+| Node | What it does |
+|---|---|
+| `memory` | Looks for a previous brief for the same meeting title and carries its action items forward |
+| `supervisor` | An LLM agent with search tools decides what to look for. Optional — off, a standing roster of specialists runs instead, which is a complete plan on its own |
+| `research` | One node per plan task, fanned out in parallel, each with its own query |
+| `merge` | Merges the findings and caps the context; search hits survive the cut before the neighbouring chunks pulled in around them |
+| `synthesize` | Writes the brief and validates it against the Pydantic schema |
+| `abort` | The branch taken when there is nothing to write a brief from |
+| `persist` | Stores the brief. **A brief that cannot be stored is still returned** — see below |
 
-1. **Ingestion Agent**: Parses documents (PDF, DOCX, PPTX, TXT), chunks text intelligently, generates semantic embeddings using SentenceTransformer neural networks, and indexes content in FAISS for vector search.
+The two conditional edges are the only genuinely open decisions: *is there
+anything here to write from* after the merge, and *is there anything to answer
+from* after Q&A retrieval.
 
-2. **Recall Agent**: Performs semantic similarity search across meeting materials using FAISS, retrieves top-k relevant chunks based on query context, and formats retrieved content with source citations.
+Graphs are compiled once per shape and cached. The runtime — database, retriever,
+synthesizer, chat model — is passed at invocation time as context, so one
+compiled graph serves every meeting.
 
-3. **Synthesis Agent**: Orchestrates LLM interactions via LangChain abstraction layer, builds context-aware prompts with cross-meeting memory integration, parses and validates structured JSON responses, and implements robust error handling with JSON repair logic.
+### The success/error asymmetry
 
-4. **Memory Agent**: Persists generated briefs to SQLite with full audit trail, enables historical brief retrieval, and supports cross-meeting context injection for recurring meetings.
+Worth knowing before reading any result dict or API response, because it is not
+symmetric between the two graphs:
 
-### Technical Stack
+- **A brief** reports `ok` when *a document exists*. A brief that was generated
+  and then failed to store comes back successful **with a warning**, because
+  throwing away a usable document over a locked database serves nobody.
+- **An answer** reports failure whenever an error is set. The graph answers "I
+  could not find relevant information" without calling the model when nothing was
+  retrieved — a legitimate success — but a retrieval *failure* lands on the same
+  node, and reporting a real error as a polite non-answer would hide it.
 
-**Core Framework:**
-- **LangChain 0.3.7**: Multi-agent orchestration and LLM abstraction layer
-- **Streamlit 1.39.0**: Production-grade web interface
-- **Pydantic 2.9.0**: Type-safe data validation and serialization
+### Technical stack
 
-**Machine Learning & AI:**
-- **SentenceTransformers 3.3.0**: Neural network embeddings (all-MiniLM-L6-v2, 384-dimensional)
-- **FAISS-CPU 1.9.0**: High-performance vector similarity search
-- **LangChain Providers**: Multi-cloud LLM support (Gemini 2.5 Flash Lite, GPT-4, Claude 3.5 Sonnet)
+**Backend** — Python 3.11+, FastAPI, LangGraph 1.0 over LangChain 1.0, Pydantic
+v2 throughout, SQLite via the stdlib `sqlite3`.
 
-**Data Layer:**
-- **SQLite**: Relational database for structured data persistence
-- **FAISS**: Vector database for semantic search indices
+**Frontend** — React 19, TypeScript, Vite, Tailwind v4, `lucide-react`. The API
+client is hand-written against `api/schemas.py` rather than generated.
 
-**Document Processing:**
-- **PyPDF 5.1.0**: PDF text extraction
-- **python-docx 1.1.2**: Microsoft Word document parsing
-- **python-pptx 1.0.2**: PowerPoint presentation extraction
+**Retrieval** — `sentence-transformers` (`all-MiniLM-L6-v2`, 384-dim) for
+embeddings, FAISS `IndexFlatIP` for search, one index per meeting.
 
----
-
-## Key Features
-
-### Intelligent Document Processing
-- Multi-format support: PDF, DOCX, PPTX, TXT with robust parsing
-- Intelligent text chunking with sentence-boundary awareness (1200 char chunks, 120 char overlap)
-- GPU-accelerated embedding generation with automatic CPU fallback
-- Per-meeting vector index isolation for data privacy
-
-### Semantic Search & Retrieval
-- Neural network-powered semantic search (not keyword-based)
-- Top-k retrieval with similarity scoring
-- Context-aware query processing
-- Source citation tracking (material_id#chunk_idx format)
-
-### AI-Powered Brief Generation
-- Multi-provider LLM support (Gemini, OpenAI, Anthropic) with seamless switching
-- Cross-meeting memory for recurring meeting continuity
-- Structured output generation with JSON schema validation
-- Robust error handling with automatic JSON repair
-- Field-level validation with intelligent defaults
-
-### Enterprise Features
-- Complete audit trail (meeting history, brief versions, model tracking)
-- Export capabilities (JSON, Markdown formats)
-- Interactive Q&A interface with conversation history
-- Source attribution for every generated insight
-- Professional logging with structured error handling
+**Providers** — Gemini (`gemini-2.5-flash`, the default), OpenAI (`gpt-4o`) or
+Anthropic (`claude-opus-5`), selected with `LLM_PROVIDER`.
 
 ---
 
 ## Installation
 
-### Prerequisites
-
-- Python 3.11+
-- pip package manager
-- CUDA-capable GPU (optional, for accelerated embeddings)
-
-### Setup
-
-1. **Clone the repository**
 ```bash
 git clone <repository-url>
 cd intelligence_copilot
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements-dev.txt
 ```
 
-2. **Create virtual environment**
+`requirements-dev.txt` includes `requirements.txt`, so that one command gets both
+the app and the test tooling. For a deployment that will not run tests, install
+`requirements.txt` alone.
+
+Building the frontend additionally needs Node 20+ and npm.
+
+Then copy `env.example` to `.env` and set `LLM_PROVIDER` and the matching API key.
+`env.example` documents every setting `core/config.py` reads. Storage
+directories are created on first run.
+
+## Running it
+
+**One port, production shape** — builds the React bundle, then serves it and the
+API from the same FastAPI process. No CORS, no proxy, one URL:
+
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m scripts.serve
 ```
 
-3. **Install dependencies**
+That opens on <http://127.0.0.1:8000>. `--port`, `--host`, `--skip-build` and
+`--build-only` are all available. The build has to finish *before* the app is
+imported, because `api/main.py` decides whether it has a bundle to serve at
+import time — which is the reason this wrapper exists rather than a bare uvicorn
+command.
+
+**Two ports, for frontend work** — Vite with hot reload, proxying `/api` to
+uvicorn. Two terminals:
+
 ```bash
-pip install -r requirements.txt
+.venv/Scripts/python.exe -m uvicorn api.main:app --port 8077 --reload
 ```
 
-4. **Configure environment variables**
-
-Create a `.env` file in the project root:
-
-```env
-# LLM Provider Selection (gemini, openai, or anthropic)
-LLM_PROVIDER=gemini
-
-# API Keys (provide the one matching LLM_PROVIDER)
-GEMINI_API_KEY=your_gemini_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# Data Storage Paths (optional, defaults shown)
-DB_PATH=./data/briefs.db
-FAISS_PATH=./data/faiss
-```
-
-5. **Initialize data directories**
 ```bash
-mkdir -p data/faiss data/raw
+npm run dev --prefix web
 ```
 
-### Verification
+Then open <http://localhost:5173>. Vite is pinned to that port with
+`strictPort`, because the API's CORS allowlist names it and nothing else — a
+silent move to 5174 would fail every request with an opaque CORS error instead.
 
-Run the application:
-```bash
-streamlit run app.py
-```
+**API only** — uvicorn on its own serves the API perfectly well, and logs that it
+found no bundle rather than treating it as an error.
 
-The application will initialize the database schema automatically on first run.
+Either way, **startup takes about twenty seconds**: the process builds the chat
+client and loads the embedding model before accepting requests, so that the cost
+lands before the first request rather than inside it. A health check that fails
+in the first few seconds is not a fault.
 
 ---
 
 ## Usage
 
-### Basic Workflow
+1. **Create a meeting** in the sidebar — title, date, attendees, tags.
+2. **Add materials.** Drag in PDF, DOCX, PPTX or TXT files, or paste text. Each
+   file is parsed, chunked, embedded and indexed in one operation, and reports its
+   own outcome; one bad file in a batch does not sink the others.
+3. **Generate a brief.** Recap, action items, topics, agenda and evidence, plus
+   the plan that produced it, per-specialist findings with hit and neighbour
+   counts, any failed enquiries, and a node-by-node timeline.
+4. **Ask questions** against the indexed material. Answers carry grouped source
+   citations and their own trace.
 
-1. **Create or Select Meeting**
-   - Use sidebar to create new meeting or select existing
-   - Provide meeting metadata (title, date, attendees, tags)
+Briefs are versioned per meeting; the history dropdown loads any earlier one.
+Export is JSON or Markdown.
 
-2. **Upload Materials**
-   - Upload documents (PDF, DOCX, PPTX, TXT) or paste text content
-   - System automatically processes and indexes materials
-
-3. **Generate Brief**
-   - Click "Generate Brief" to trigger multi-agent pipeline
-   - System retrieves relevant context, synthesizes brief, and saves to database
-
-4. **Review & Export**
-   - Review generated brief across five sections: Recap, Action Items, Topics, Agenda, Evidence
-   - Export brief in JSON or Markdown format
-   - Access brief history for version comparison
-
-### Advanced Features
-
-**Cross-Meeting Memory:**
-When creating a meeting with the same title as a previous meeting, the system automatically injects context from the prior meeting, including action items and key topics.
-
-**Interactive Q&A:**
-Use the Q&A interface to ask natural language questions about uploaded materials. The system performs semantic search to find relevant context and generates answers with source citations.
-
-**Brief History:**
-Access all previously generated briefs for a meeting through the history dropdown. Each brief includes timestamp and model provider information.
+**Cross-meeting memory:** a new meeting whose title matches an earlier one
+inherits that meeting's context, so recurring meetings carry their action items
+forward.
 
 ---
 
-## Architecture Deep Dive
+## HTTP API
 
-### Data Flow
+Fourteen endpoints, all under `/api`. The interactive schema is at `/docs`.
 
-```
-Document Upload
-    ↓
-[Ingestion Agent]
-    ├─ Parse document → Extract text
-    ├─ Chunk text (1200 chars, 120 overlap)
-    ├─ Generate embeddings (384-dim vectors)
-    └─ Index in FAISS (per-meeting namespace)
-    ↓
-Material stored in SQLite + FAISS indexed
-    ↓
-[Recall Agent] (on brief generation)
-    ├─ Query FAISS for top-8 relevant chunks
-    ├─ Format context blocks with citations
-    └─ Return formatted context
-    ↓
-[Synthesis Agent]
-    ├─ Check for previous meetings (cross-meeting memory)
-    ├─ Build prompts with context
-    ├─ Call LLM (Gemini/GPT-4/Claude)
-    ├─ Parse JSON response
-    ├─ Repair incomplete JSON (if needed)
-    └─ Validate against Pydantic schema
-    ↓
-[Memory Agent]
-    ├─ Serialize MeetingBrief to JSON
-    └─ Persist to SQLite
-    ↓
-Brief displayed in UI
-```
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/api/health` | Provider, model, device, storage, whether the supervisor is on |
+| `GET` | `/api/meetings` | List meetings |
+| `POST` | `/api/meetings` | Create a meeting (`201`) |
+| `GET` | `/api/meetings/{id}` | One meeting |
+| `DELETE` | `/api/meetings/{id}` | Delete a meeting and everything under it (`204`) |
+| `GET` | `/api/meetings/{id}/materials` | List materials |
+| `POST` | `/api/meetings/{id}/materials` | Upload files (multipart, multiple), per-file outcomes |
+| `POST` | `/api/meetings/{id}/materials/text` | Add pasted text |
+| `DELETE` | `/api/materials/{id}` | Delete a material and its vectors (`204`) |
+| `POST` | `/api/meetings/{id}/brief` | Generate a brief — **costs tokens** |
+| `GET` | `/api/meetings/{id}/briefs` | Brief history (stubs) |
+| `GET` | `/api/meetings/{id}/brief/latest` | Most recent stored brief |
+| `GET` | `/api/briefs/{id}` | One stored brief, validated against today's schema |
+| `POST` | `/api/meetings/{id}/qa` | Ask a question — **costs tokens** |
 
-### Database Schema
+Only the two marked endpoints call a provider. Everything else reads stored rows.
 
-**meetings**
-- `id` (TEXT PRIMARY KEY): Unique meeting identifier
-- `title` (TEXT NOT NULL): Meeting title
-- `date` (TEXT): Meeting date (ISO format)
-- `attendees` (TEXT): Comma-separated attendee list
-- `tags` (TEXT): Comma-separated tags
-- `created_at` (TEXT NOT NULL): Creation timestamp
+`core/exceptions.py`'s hierarchy is mapped to status codes by
+`api/errors.py`, so a missing meeting is a `404` with a JSON body rather than a
+`500`.
 
-**materials**
-- `id` (TEXT PRIMARY KEY): Unique material identifier
-- `meeting_id` (TEXT FOREIGN KEY): Reference to meetings table
-- `filename` (TEXT): Original filename
-- `media_type` (TEXT): Format (pdf, docx, pptx, txt, pasted)
-- `text` (TEXT): Extracted text content
-- `created_at` (TEXT NOT NULL): Upload timestamp
+### Concurrency
 
-**briefs**
-- `id` (TEXT PRIMARY KEY): Unique brief identifier
-- `meeting_id` (TEXT FOREIGN KEY): Reference to meetings table
-- `created_at` (TEXT NOT NULL): Generation timestamp
-- `model` (TEXT): LLM provider used (gemini/openai/anthropic)
-- `brief_json` (TEXT NOT NULL): Serialized MeetingBrief (JSON)
+`index_material`, `delete_material_everywhere` **and retrieval** all write a
+meeting's FAISS index — retrieval does because it backfills anything unindexed.
+Two of those at once on the same meeting corrupts the index file.
 
-### Vector Search Architecture
-
-The system uses FAISS (Facebook AI Similarity Search) for efficient vector similarity search:
-
-- **Index Type**: IndexFlatIP (Inner Product for cosine similarity on normalized vectors)
-- **Embedding Dimension**: 384 (all-MiniLM-L6-v2 model)
-- **Index Isolation**: Per-meeting namespace (separate index per meeting_id)
-- **Retrieval Strategy**: Top-k similarity search (default k=8 for briefs, k=5 for Q&A)
-
-### LLM Provider Abstraction
-
-The system implements a provider abstraction layer via LangChain, enabling seamless switching between LLM providers:
-
-- **Google Gemini 2.5 Flash Lite**: Default provider, optimized for speed and cost
-- **OpenAI GPT-4**: High-quality output for complex synthesis tasks
-- **Anthropic Claude 3.5 Sonnet**: Specialized for structured output generation
-
-Provider selection is configured via environment variable (`LLM_PROVIDER`), with runtime switching supported through orchestrator initialization.
+`api/deps.py` holds a **per-meeting** lock, not a global one, so a forty-second
+brief on one meeting never blocks an upload to another.
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
 intelligence_copilot/
-├── agents/
-│   └── copilot_orchestrator.py      # Multi-agent orchestration layer
+├── api/                    FastAPI layer
+│   ├── main.py             the ASGI app; mounts web/dist when it exists
+│   ├── routes/             one module per resource
+│   ├── schemas.py          request/response models
+│   ├── translate.py        BriefRun/QaRun -> wire format
+│   ├── errors.py           CopilotError -> HTTP status
+│   └── deps.py             the process-wide runtime, and the per-meeting lock
+│
+├── agents/                 the LangGraph core
+│   ├── graph.py            both graphs; run_brief_graph / run_qa_graph
+│   ├── nodes.py            every node and routing function
+│   ├── state.py            graph state models
+│   ├── planner.py          the supervisor, and the standing roster it falls back to
+│   ├── tools.py            the search tools the supervisor calls
+│   ├── runtime.py          CopilotRuntime: the shared collaborators
+│   └── copilot_orchestrator.py   pre-overhaul facade; what api/ calls
 │
 ├── core/
-│   ├── db.py                         # SQLite database operations
-│   ├── parsing.py                    # Document parsing (PDF/DOCX/PPTX/TXT)
-│   ├── chunk.py                      # Text chunking logic
-│   ├── embed.py                      # Embedding generation + FAISS management
-│   ├── recall.py                      # Vector search + context formatting
-│   ├── llm_providers.py              # LLM provider factory (LangChain)
-│   ├── schema.py                     # Pydantic data models
-│   └── utils.py                      # Utilities (ID generation, timing)
+│   ├── config.py           typed settings
+│   ├── db.py               SQLite repository
+│   ├── migrations.py       versioned schema
+│   ├── parsing.py          PDF/DOCX/PPTX/TXT extraction
+│   ├── chunk.py            chunking
+│   ├── embed.py            embeddings and FAISS
+│   ├── indexing.py         the write path, and index health checks
+│   ├── recall.py           retrieval with neighbour expansion
+│   ├── synthesis.py        prompt assembly and response parsing
+│   ├── llm_providers.py    provider factory
+│   ├── schema.py           MeetingBrief and friends
+│   └── exceptions.py       the error hierarchy
 │
-├── prompts/
-│   ├── system_prompt.txt             # Main brief generation system prompt
-│   ├── user_prompt.txt               # User prompt template
-│   ├── qa_system_prompt.txt          # Q&A system prompt
-│   └── qa_user_prompt.txt            # Q&A user prompt template
-│
-├── data/
-│   ├── briefs.db                     # SQLite database
-│   ├── faiss/                        # FAISS index files (per-meeting)
-│   └── raw/                          # Uploaded file storage
-│
-├── handoffs/                         # One document per chunk of the overhaul
-│
-├── app.py                            # Streamlit application entry point
-├── requirements.txt                  # Python dependencies
-├── .env.example                      # Environment variable template
-└── README.md                         # This file
+├── web/                    React frontend (see web/src/)
+├── prompts/                prompt templates
+├── scripts/
+│   ├── serve.py            build the frontend, serve both on one port
+│   └── reindex.py          rebuild chunk stores and indices
+├── tests/                  pytest; no network, no model downloads
+├── handoffs/               one document per chunk of the overhaul
+├── data/                   SQLite file, FAISS indices, uploaded originals
+├── requirements.txt        runtime pins
+└── requirements-dev.txt    test and lint tooling; includes the above
 ```
 
 ---
 
-## Performance Characteristics
+## Database schema
 
-### Processing Times (Typical)
+Versioned migrations in `core/migrations.py`, tracked in a `schema_version`
+table. `PRAGMA foreign_keys` is on for every connection.
 
-- **Document Parsing**: < 2 seconds per file (varies by size)
-- **Text Chunking**: < 100ms for 10 chunks
-- **Embedding Generation**: 
-  - CPU: < 1 second per 10 chunks
-  - GPU: < 0.2 seconds per 10 chunks
-  - Model load: ~5 seconds (first time only)
-- **FAISS Indexing**: < 500ms per batch
-- **Vector Search**: < 100ms for top-k retrieval
-- **LLM Brief Generation**: 5-15 seconds (provider-dependent)
-- **Total Pipeline**: 7-20 seconds for typical meeting (2 files)
+**meetings** — `id`, `title`, `date`, `attendees`, `tags`, `created_at`
 
-### Scalability Considerations
+**materials** — `id`, `meeting_id`, `filename`, `media_type`, `text`,
+`created_at`
 
-- **Per-Meeting Isolation**: FAISS indices are isolated per meeting, enabling horizontal scaling
-- **GPU Acceleration**: Automatic GPU detection with CPU fallback for embedding generation
-- **Batch Processing**: Embeddings generated in batches (64 on GPU, 16 on CPU)
-- **Database Optimization**: SQLite with proper indexing on foreign keys
+**briefs** — `id`, `meeting_id`, `created_at`, `model`, `brief_json`
 
----
+**chunks** — `id` (`INTEGER PRIMARY KEY AUTOINCREMENT`), `material_id`,
+`meeting_id`, `chunk_index`, `text`, `char_start`, `char_end`, `created_at`
 
-## API Reference
-
-### Core Orchestrator Methods
-
-**CopilotOrchestrator Class** (`agents/copilot_orchestrator.py`)
-
-```python
-class CopilotOrchestrator:
-    def __init__(provider: str = "gemini")
-        """Initialize orchestrator with specified LLM provider."""
-    
-    def ingest_material(file_bytes: bytes, filename: str, meeting_id: str) -> dict
-        """Ingest document: parse, chunk, embed, index."""
-    
-    def generate_brief(meeting_id: str, title: str, date: str) -> dict
-        """Generate meeting brief via multi-agent pipeline."""
-    
-    def recall_previous_brief(meeting_id: str) -> MeetingBrief
-        """Retrieve most recent brief for meeting."""
-    
-    def answer_question(meeting_id: str, question: str) -> dict
-        """Answer question using semantic search + LLM."""
-```
-
-### Database Operations
-
-**Database Class** (`core/db.py`)
-
-```python
-class Database:
-    def create_meeting(title: str, date: str, ...) -> str
-        """Create new meeting, returns meeting_id."""
-    
-    def add_material(meeting_id: str, filename: str, ...) -> str
-        """Add material to meeting, returns material_id."""
-    
-    def save_brief(meeting_id: str, model: str, brief_dict: dict) -> str
-        """Persist brief to database, returns brief_id."""
-    
-    def get_latest_brief(meeting_id: str) -> dict
-        """Retrieve most recent brief for meeting."""
-```
+`AUTOINCREMENT` on `chunks.id` is load-bearing, not decorative: that id *is* the
+FAISS vector id. Without it SQLite reuses `max(id) + 1` after a delete, and a
+stale vector would then resolve to unrelated text — the retrieval-misalignment
+defect this table exists to eliminate.
 
 ---
 
 ## Development
 
-### Code Standards
+```bash
+.venv/Scripts/python.exe -m pytest
+```
 
-- **Type Hints**: All functions include type annotations
-- **Docstrings**: Comprehensive docstrings following Google style
-- **Error Handling**: Structured logging with error recovery
-- **Testing**: `pytest` over `core/`, `agents/` and the orchestrator boundary; no test
-  touches the network or downloads a model
+```bash
+.venv/Scripts/python.exe -m ruff check core/ tests/ agents/ scripts/ api/
+```
+
+```bash
+npm run typecheck --prefix web
+```
+
+```bash
+npm run build --prefix web
+```
+
+No test touches the network or downloads a model: `tests/fakes.py` provides a
+hashing embedder and a scripted chat model, and the API tests drive a
+`TestClient` against a `tmp_path` database.
+
+Two warnings during the suite come from dependencies, not from this repo — one
+from `fastapi.testclient` about httpx, one from inside LangGraph about
+`AgentStatePydantic`, which nothing here imports.
 
 ### Logging
 
-The system uses structured logging with consistent prefixes:
-- `[INFO]`: Informational messages
-- `[OK]`: Successful operations
-- `[WARNING]`: Non-critical issues
-- `[ERROR]`: Error conditions
+Standard-library logging, configured once by `core/logging_config.py`. Plain
+format is `%H:%M:%S LEVEL logger.name | message`; set `LOG_FORMAT=json` for JSON
+lines. Logger names are module paths (`core.indexing`, `agents.nodes`), so
+`LOG_LEVEL` and per-logger filtering both work normally. Chatty third-party
+loggers are pinned to `WARNING`.
 
-Agent-specific logging uses prefixes: `[IngestionTool]`, `[RecallTool]`, `[Synthesis]`, `[MemoryTool]`, `[QA]`
+### Storage
 
----
+If the configured data directory is not writable, `Settings.prepare_storage`
+relocates to a temporary one and the UI's status line says so, rather than
+letting briefs quietly not survive a restart.
 
-## Deployment
-
-### Streamlit Cloud
-
-1. Push repository to GitHub
-2. Connect to Streamlit Cloud
-3. Configure secrets (API keys)
-4. Deploy
+`scripts/reindex.py` rebuilds every chunk store and index from material text,
+which is the source of truth. It reports by default and only writes with
+`--apply`.
 
 ---
 
-## Technical Highlights
+## Limitations
 
-### Neural Network Integration
-- SentenceTransformer model (all-MiniLM-L6-v2) for semantic embeddings
-- 384-dimensional vector representations
-- GPU acceleration with automatic CPU fallback
-- Batch processing optimization
-
-### Vector Search Implementation
-- FAISS IndexFlatIP for cosine similarity search
-- Per-meeting index isolation for data privacy
-- Top-k retrieval with similarity scoring
-- Efficient index persistence and loading
-
-### LLM Integration Patterns
-- LangChain abstraction layer for multi-provider support
-- Structured output generation with JSON schema validation
-- Robust error handling with JSON repair logic
-- Cross-meeting memory injection for context continuity
-
-### Data Architecture
-- SQLite for structured data with foreign key relationships
-- FAISS for vector embeddings with per-meeting namespacing
-- Pydantic models for type-safe data validation
-- Complete audit trail with timestamps and model tracking
-
----
-
-## Limitations & Future Enhancements
-
-### Current Limitations
-- Single-user architecture (SQLite-based)
-- Local vector storage (FAISS indices on filesystem)
-- No real-time collaboration features
-- Limited to text-based document formats
-
-### Planned Enhancements
-- Multi-user support with PostgreSQL backend
-- Cloud vector database integration (Pinecone, Weaviate)
-- Real-time collaboration features
-- Audio/video transcription support
-- Calendar integration for automatic meeting detection
-- Email integration for material ingestion
+- Single-user: SQLite, and FAISS indices on the local filesystem.
+- Text-based documents only — no audio or video transcription.
+- No real-time collaboration.
+- The supervisor's plan costs an extra LLM round trip with tool calls. Turn it
+  off with `PLAN_WITH_LLM=false` to run the standing roster instead.
 
 ---
 
 ## License
 
-See LICENSE file for details.
-
----
-
-## Acknowledgments
-
-Built with:
-- LangChain for multi-agent orchestration
-- SentenceTransformers for semantic embeddings
-- FAISS for vector search
-- Streamlit for web interface
-- Pydantic for data validation
-
----
-
-**Status**: Production-ready MVP  
-**Version**: 1.0.0  
-**Last Updated**: November 2025
+See LICENSE.

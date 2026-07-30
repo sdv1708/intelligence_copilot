@@ -25,8 +25,9 @@ def configure_logging(
 ) -> None:
     """Install a root handler. Idempotent unless `force` is set.
 
-    Streamlit re-executes the script on every interaction, so this must be safe
-    to call repeatedly without stacking duplicate handlers.
+    Both the ASGI lifespan and every `scripts/` entry point call this, and
+    uvicorn's `--reload` calls it again on each restart, so it must be safe to
+    call repeatedly without stacking duplicate handlers.
     """
     global _configured
     if _configured and not force:

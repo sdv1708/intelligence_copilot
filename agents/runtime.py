@@ -35,7 +35,7 @@ logger = get_logger(__name__)
 class CopilotRuntime:
     """Collaborators shared by every node of every graph.
 
-    Built once per process (or per Streamlit session) and passed to
+    Built once per process — `api/deps.py` does it at startup — and passed to
     `graph.invoke(..., context=runtime)`.
     """
 

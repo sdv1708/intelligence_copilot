@@ -1,8 +1,8 @@
 """The pre-overhaul surface, kept as a facade over the LangGraph pipeline.
 
-`app.py` calls five methods on this class. They still exist, still take the same
-arguments, and still return the same dictionaries — but nothing here does any
-work of its own any more. `generate_brief` and `answer_question` invoke
+`api/` calls five methods on this class. They still take the same arguments and
+still return the same dictionaries the Streamlit UI read — but nothing here does
+any work of its own any more. `generate_brief` and `answer_question` invoke
 `run_brief_graph` / `run_qa_graph`; the steps they used to run inline (recall
 previous brief, retrieve, synthesise, store) are nodes of those graphs.
 
@@ -13,7 +13,7 @@ explicit about the two places it is lossy:
   exists*. A run that produced a brief and then failed to store it comes back
   `success=True` with `error` set, because discarding a usable document because
   SQLite was locked serves nobody. Callers that only check `success` will miss
-  that; `app.py` reads both.
+  that; `api/translate.py` reads both.
 * **Q&A is stricter.** The graph answers "I could not find relevant
   information" without calling the model when nothing was retrieved, which is a
   successful run. But a retrieval *failure* also lands on that node, and
@@ -105,8 +105,8 @@ class CopilotOrchestrator:
 
         This is the whole write path in one call, which is the point: there is
         no way to reach it that stores a material without also indexing it.
-        `app.py` used to add the row itself and then call this to index, so
-        every file was parsed twice and every re-upload of the same filename
+        The Streamlit UI used to add the row itself and then call this to index,
+        so every file was parsed twice and every re-upload of the same filename
         left a second copy of the document in the index.
         """
         try:
@@ -218,12 +218,13 @@ class CopilotOrchestrator:
         return self._brief_result(run)
 
     def _brief_result(self, run: BriefRun) -> dict[str, Any]:
-        """Flatten a `BriefRun` into the dictionary `app.py` reads.
+        """Flatten a `BriefRun` into the dictionary the facade returns.
 
-        `run` itself is carried along under its own key. Everything the UI shows
-        today is in the flat fields, but the trace, the plan and the findings
-        are what Chunk 8 renders, and re-deriving them from a dict would be
-        worse than passing the object.
+        `run` itself is carried along under its own key, and that is the key
+        `api/translate.py` actually reads: the trace, the plan and the findings
+        are what the React UI renders, and re-deriving them from a dict would be
+        worse than passing the object. The flat siblings are what the Streamlit
+        UI read and are kept only because the facade's contract is public.
         """
         return {
             "success": run.ok,

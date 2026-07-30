@@ -1,13 +1,22 @@
-# Development and test dependencies.
-# Install alongside requirements.txt:  pip install -r requirements-dev.txt
+# Test and lint tooling. This file installs the runtime pins too, so it is the
+# only one a contributor needs:
 #
-# Note: requirements.txt is currently out of sync with the working virtualenv
-# (it pins langchain 0.3.7 while 1.0.5 is installed). Reconciling it is Chunk 7
-# of the overhaul; until then, trust the venv.
+#     pip install -r requirements-dev.txt
+#
+# pydantic-settings moved out of here and into requirements.txt, where it
+# belongs: core/config.py imports it, so a production install without it does
+# not start.
+#
+# pytest-asyncio was dropped. There is not a single `async def` test in tests/,
+# and the one async function in the codebase — the SPA fallback in api/main.py —
+# is driven by TestClient through anyio, which arrives with starlette.
 
 -r requirements.txt
 
-pydantic-settings==2.14.2
 pytest==9.1.1
-pytest-asyncio==1.4.0
+
+# Not imported by any test, but fastapi.testclient.TestClient is built on it, so
+# tests/test_api.py cannot even be collected without it.
+httpx==0.28.1
+
 ruff==0.16.0

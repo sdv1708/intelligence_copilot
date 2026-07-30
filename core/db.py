@@ -59,9 +59,10 @@ _MAX_PARAMS = 500
 class Database:
     """Repository over the application's SQLite file.
 
-    Cheap to construct and safe to build per Streamlit rerun: no connection is
-    held open between calls, which also sidesteps SQLite's rule that a
-    connection may not cross threads.
+    Cheap to construct and safe to build per request: no connection is held open
+    between calls, which also sidesteps SQLite's rule that a connection may not
+    cross threads — the rule that would otherwise make a single shared handle
+    unusable from FastAPI's threadpool.
     """
 
     def __init__(
