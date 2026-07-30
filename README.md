@@ -237,7 +237,6 @@ intelligence_copilot/
 │   ├── serve.py            build the frontend, serve both on one port
 │   └── reindex.py          rebuild chunk stores and indices
 ├── tests/                  pytest; no network, no model downloads
-├── handoffs/               one document per chunk of the overhaul
 ├── data/                   SQLite file, FAISS indices, uploaded originals
 ├── requirements.txt        runtime pins
 └── requirements-dev.txt    test and lint tooling; includes the above

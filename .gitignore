@@ -38,6 +38,10 @@ __pycache__/
 
 # Frontend build output is ignored by web/.gitignore, next to what it describes.
 
+# Working notes from the overhaul: one document per chunk, kept on disk but
+# deliberately not published. Anchored, so a `handoffs/` anywhere else is yours.
+/handoffs/
+
 # IDE
 .vscode/
 .idea/
